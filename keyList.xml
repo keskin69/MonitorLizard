@@ -5,5 +5,10 @@
 		</base>
 		<connectBy>peste</connectBy>
 		<key name="Toplam İşlenen CDR" delim=" " field="3">TimeMap</key>
+		<key name="Raw CDR Insert" delim=" " field="12">rawCDRInsert</key>
+		<key name="Fatura Insert" delim=" " field="12">faturaInsert</key>
+		<key name="Total Memory" delim="=" field="2">Total Memory</key>
+		<key name="Used Memory" delim="=" field="2">Used Memory</key>
+		<key name="Thread Count" delim="=" field="2">Thread Count</key>
 	</keyList>
 </config>
