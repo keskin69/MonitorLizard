@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<keyList name="key1">
+		<base>tail -500 /girdi/ARECA_DEPLOYMENT/areca/log/areca.out | grep
+		</base>
+		<connectBy>peste</connectBy>
+		<key name="Toplam İşlenen CDR" delim=" " field="3">TimeMap</key>
+	</keyList>
+</config>

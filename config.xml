@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<connectionsFile>./connections.xml</connectionsFile>
+	<commandsFile>./commands.xml</commandsFile>
+	<commandsFile>./keyList.xml</commandsFile>
+</config>
+
