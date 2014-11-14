@@ -5,14 +5,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Enumeration;
 
 import org.h2.Driver;
-import org.h2.jdbc.JdbcSQLException;
-
 import tr.com.telekom.kmsh.config.Key;
 
 public class H2Manager {
@@ -34,20 +30,51 @@ public class H2Manager {
 				ResultSet rs = stat.executeQuery(sql);
 
 				// read only one line
-				rs.next();
-				try {
+				if (rs.next()) {
 					out += rs.getString("date") + ";";
-				} catch (JdbcSQLException ex) {
-					out += "-;";
-				}
-
-				out += key.name + ";";
-
-				try {
+					out += rs.getString("key") + ";";
 					out += rs.getString("value");
-				} catch (JdbcSQLException ex) {
-					out += "-;";
+
+					if (!out.endsWith("\n")) {
+						out += "\n";
+					}
 				}
+			}
+
+			conn.close();
+			stat.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return out;
+	}
+
+	public static String readAll(String key) {
+		Connection conn = null;
+		String out = "";
+
+		try {
+			Class.forName("org.h2.Driver");
+
+			conn = DriverManager.getConnection(
+					"jdbc:h2:tcp://localhost/~/kmsh", "sa", "");
+			Statement stat = conn.createStatement();
+
+			String sql = "select * from tblKey where key='" + key
+					+ "' order by date desc";
+
+			ResultSet rs = stat.executeQuery(sql);
+
+			while (rs.next()) {
+				out += rs.getString("date") + ";";
+				out += rs.getString("key") + ";";
+				out += rs.getString("value");
 
 				if (!out.endsWith("\n")) {
 					out += "\n";
@@ -89,7 +116,7 @@ public class H2Manager {
 			conn = DriverManager.getConnection(
 					"jdbc:h2:tcp://localhost/~/kmsh", "sa", "");
 
-			String date = getCurrentTimeStamp();
+			String date = KmshUtil.getCurrentTimeStamp();
 			String sql = "insert into tblKey values ('" + date + "','" + key
 					+ "','" + value + "')";
 			Statement stat = conn.createStatement();
@@ -104,13 +131,6 @@ public class H2Manager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	public static String getCurrentTimeStamp() {
-		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date now = new Date();
-		String strDate = sdfDate.format(now);
-		return strDate;
 	}
 
 	// public static void main(String... args) throws Exception {

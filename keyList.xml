@@ -10,5 +10,6 @@
 		<key name="Total Memory" delim="=" field="2">Total Memory</key>
 		<key name="Used Memory" delim="=" field="2">Used Memory</key>
 		<key name="Thread Count" delim="=" field="2">Thread Count</key>
+		<key name="Dummy" delim="=" field="2">XXXXXXX</key>
 	</keyList>
 </config>

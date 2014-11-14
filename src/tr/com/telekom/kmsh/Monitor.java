@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.varia.NullAppender;
 
 import tr.com.telekom.kmsh.config.ConfigManager;
+import tr.com.telekom.kmsh.util.KmshLogger;
 
 public class Monitor {
 	static Logger logger = Logger.getLogger(Monitor.class);
@@ -34,6 +35,7 @@ public class Monitor {
 		} else if (type.equals("-r")) {
 			new Repgen(conf, name);
 		}
-
+		
+		KmshLogger.log("Operations completed");
 	}
 }

@@ -1,6 +1,10 @@
 package tr.com.telekom.kmsh.web;
 
 import java.io.File;
+
+import tr.com.telekom.kmsh.util.KmshLogger;
+import tr.com.telekom.kmsh.util.KmshUtil;
+
 import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -51,14 +55,51 @@ public class PageMaker {
 		String out = "";
 		String values = H2Manager.readDB(keyConf.keyList);
 
-		out += "Rapor Zamanı: " + H2Manager.getCurrentTimeStamp();
+		out += "Rapor Zamanı: " + KmshUtil.getCurrentTimeStamp();
 		out += "<BR><BR>\n<TABLE border=\"1\">";
-		out += "<TR><TH>Zaman</TH><TH>Veri</TH><TH>Değer</TH></TR>";
+		out += "<TR><TH>Zaman</TH><TH>Veri</TH><TH>Değer</TH><TH>Detay</TH></TR>";
+
 		for (String row : values.split("\n")) {
 			out += "<TR>";
 
+			int cnt = 0;
+			String key = "";
 			for (String col : row.split(";")) {
-				out += "<TD>" + col + "</TD>";
+				if (cnt == 1) {
+					key = col;
+				}
+
+				out += "<TD>" + col + "</TD>\n";
+				cnt++;
+			}
+
+			out += "<TD><CENTER><INPUT TYPE=\"BUTTON\" VALUE=\"?\" ONCLICK=\"detail('"
+					+ key + "')\"><CENTER></TD>";
+			out += "</TR>";
+		}
+
+		out += "</TABLE>";
+
+		return out;
+	}
+
+	public static String getDetail(String key) {
+		String out = "";
+		String values = H2Manager.readAll(key);
+
+		out += "Rapor Zamanı: " + KmshUtil.getCurrentTimeStamp();
+		out += "<BR><BR>\n<TABLE border=\"1\">";
+		out += "<TR><TH>Zaman</TH><TH>Değer</TH></TR>";
+
+		for (String row : values.split("\n")) {
+			out += "<TR>";
+
+			int cnt = 0;
+			for (String col : row.split(";")) {
+				if (cnt != 1) {
+					out += "<TD>" + col + "</TD>\n";
+				}
+				cnt++;
 			}
 
 			out += "</TR>";
@@ -75,11 +116,11 @@ public class PageMaker {
 
 		if (args.length == 2) {
 			conf = args[0];
-			name = args[2];
+			name = args[1];
 		}
 
 		PageMaker page = new PageMaker(conf, name);
-		System.out.println(page.process());
+		KmshLogger.log(page.process());
 	}
 
 }

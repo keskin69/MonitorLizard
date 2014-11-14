@@ -10,6 +10,7 @@ import java.util.Properties;
 
 import tr.com.telekom.kmsh.config.ConfigManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
+import tr.com.telekom.kmsh.util.KmshLogger;
 
 public class DataManager {
 	private static Connection connect(ConnectionConfig conf) {
@@ -32,12 +33,10 @@ public class DataManager {
 
 	public static String executeSQL(ConnectionConfig conf, String sql) {
 		String output = null;
-
+		KmshLogger.log("Executing SQL >" + sql);
 		// creating PreparedStatement object to execute query
 		Statement statement = null;
 		ResultSet result = null;
-
-		System.out.println("Executing SQL:" + sql);
 
 		Connection conn = connect(conf);
 		try {
@@ -78,6 +77,7 @@ public class DataManager {
 			e.printStackTrace();
 		}
 
+		KmshLogger.log("Executing sql completed");
 		return output;
 	}
 }

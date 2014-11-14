@@ -10,6 +10,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import tr.com.telekom.kmsh.config.MailConfig;
+import tr.com.telekom.kmsh.util.KmshLogger;
 
 import com.sun.mail.smtp.SMTPTransport;
 
@@ -18,7 +19,7 @@ public class SMTPManager {
 	public static String sendMail(MailConfig conf, String subject,
 			String content) {
 		String response = null;
-
+		KmshLogger.log("Sending mail");
 		InternetAddress[] addressTo = new InternetAddress[conf.receipents
 				.size()];
 		for (int i = 0; i < conf.receipents.size(); i++) {

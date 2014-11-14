@@ -1,10 +1,5 @@
 package tr.com.telekom.kmsh;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import tr.com.telekom.kmsh.config.ConfigManager;
 import tr.com.telekom.kmsh.config.MailConfig;
 import tr.com.telekom.kmsh.config.ReportConfig;
@@ -12,6 +7,8 @@ import tr.com.telekom.kmsh.config.SMSConfig;
 import tr.com.telekom.kmsh.manager.ReportManager;
 import tr.com.telekom.kmsh.manager.SMSManager;
 import tr.com.telekom.kmsh.manager.SMTPManager;
+import tr.com.telekom.kmsh.util.KmshUtil;
+import tr.com.telekom.kmsh.util.KmshLogger;
 
 import com.twilio.sdk.TwilioRestException;
 
@@ -25,6 +22,7 @@ public class Repgen {
 
 				boolean condition = report.process(conf);
 				content = report.getContent();
+				KmshLogger.log("Processing Report " + repName);
 
 				if (condition) {
 					// send mail
@@ -35,14 +33,14 @@ public class Repgen {
 				}
 
 				// write content to report log
-				writeLog("log/" + repConf.name + ".log", content);
+				KmshUtil.writeLog("log/" + repConf.name + ".log", content);
 
-				System.out.println(content);
+				KmshLogger.log(content);
 			}
 		}
 
 		if (content == null) {
-			System.out.println("Cannot find report definition for " + repName);
+			KmshLogger.log("Cannot find report definition for " + repName);
 		}
 	}
 
@@ -56,7 +54,7 @@ public class Repgen {
 				String response = SMTPManager.sendMail(mailConf, repConf.title,
 						content);
 
-				System.out.println("SMTP Response: " + response);
+				KmshLogger.log("SMTP Response: " + response);
 			}
 		}
 	}
@@ -80,20 +78,4 @@ public class Repgen {
 		}
 	}
 
-	private void writeLog(String logFile, String content) {
-		File file = new File(logFile);
-
-		try {
-			file.createNewFile();
-			FileWriter fw = new FileWriter(file.getAbsoluteFile());
-			BufferedWriter bw = new BufferedWriter(fw);
-
-			bw.write(content);
-			bw.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
 }

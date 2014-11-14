@@ -13,22 +13,30 @@ public class KeyManager {
 		this.keyConf = keyConf;
 	}
 
-	public void process(ConfigManager conf) {
+	public String process(ConfigManager conf) {
+		String out = "";
+
 		// execute all commands
 		ConnectionConfig connection = conf.findConnection(keyConf.connectBy);
 		if (connection != null) {
 			for (Key key : keyConf.keyList) {
-				String command = keyConf.base + " " + key.grep + " | tail -1";
+				String command = keyConf.base + " \"" + key.grep
+						+ "\" | tail -1";
 				if (key.delim != null) {
 					command += "| cut -d\"" + key.delim + "\"" + " -f "
 							+ key.field;
 				}
 
 				String result = SSHManager.executeCommand(connection, command);
-				H2Manager.writeDB(key.name, result);
-				// System.out.println(command + "\n" + result);
+				result = result.trim();
+
+				if (!result.equals("")) {
+					H2Manager.writeDB(key.name, result);
+					out += key.grep + "=" + result + ";";
+				}
 			}
 		}
-	}
 
+		return out;
+	}
 }

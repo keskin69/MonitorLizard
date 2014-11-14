@@ -3,6 +3,8 @@ package tr.com.telekom.kmsh;
 import tr.com.telekom.kmsh.config.ConfigManager;
 import tr.com.telekom.kmsh.config.KeyConfig;
 import tr.com.telekom.kmsh.manager.KeyManager;
+import tr.com.telekom.kmsh.util.KmshUtil;
+import tr.com.telekom.kmsh.util.KmshLogger;
 
 public class Keygen {
 
@@ -11,15 +13,19 @@ public class Keygen {
 
 		for (KeyConfig keyConf : conf.keyList) {
 			if (keyConf.name.equals(name)) {
+				KmshLogger.log("Processing KeyList " + name);
 				KeyManager keyMan = new KeyManager(keyConf);
 
-				keyMan.process(conf);
+				String content = keyMan.process(conf);
 				found = true;
+
+				// write content to report log
+				KmshUtil.writeLog("log/" + name + ".log", content);
 			}
 		}
 
 		if (!found) {
-			System.out.println("Cannot find key list definition for " + name);
+			KmshLogger.log("Cannot find key list definition for " + name);
 		}
 	}
 
