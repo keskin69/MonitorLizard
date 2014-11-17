@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
 
 import tr.com.telekom.kmsh.ui.CommandArea;
 
@@ -43,23 +42,5 @@ public class Terminal extends JFrame {
 
 		pack();
 		this.setVisible(true);
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(final String[] args) {
-
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				String arg = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/config.xml";
-				if (args.length == 1) {
-					arg = args[0];
-				}
-
-				new Terminal(arg);
-			}
-		});
 	}
 }
