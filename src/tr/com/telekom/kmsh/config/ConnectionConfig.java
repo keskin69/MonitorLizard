@@ -27,7 +27,7 @@ public class ConnectionConfig extends AConfig {
 					.getTextContent();
 
 			if (password.startsWith("ENC(")) {
-				password = ConfigManager.decrypt(password.substring(4,
+				password = XMLManager.decrypt(password.substring(4,
 						password.length() - 1));
 			}
 

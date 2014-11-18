@@ -15,12 +15,14 @@ public class H2Manager {
 	public static String readDB(ArrayList<Key> keyList) {
 		Connection conn = null;
 		String out = "";
+		ConfigReader conf = ConfigReader.getInstance();
 
 		try {
-			Class.forName("org.h2.Driver");
+			Class.forName(conf.getProperty("driver"));
 
 			conn = DriverManager.getConnection(
-					"jdbc:h2:tcp://localhost/~/kmsh", "sa", "");
+					conf.getProperty("sqlConnection"),
+					conf.getProperty("dbUser"), conf.getProperty("dbPassword"));
 			Statement stat = conn.createStatement();
 
 			for (Key key : keyList) {
@@ -31,8 +33,8 @@ public class H2Manager {
 
 				// read only one line
 				if (rs.next()) {
-					out += rs.getString("date") + ";";
-					out += rs.getString("key") + ";";
+					out += rs.getString("date") + conf.getProperty("DELIM");
+					out += rs.getString("key") + conf.getProperty("DELIM");
 					out += rs.getString("value");
 
 					if (!out.endsWith("\n")) {
@@ -58,12 +60,14 @@ public class H2Manager {
 	public static String readAll(String key) {
 		Connection conn = null;
 		String out = "";
+		ConfigReader conf = ConfigReader.getInstance();
 
 		try {
-			Class.forName("org.h2.Driver");
+			Class.forName(conf.getProperty("driver"));
 
 			conn = DriverManager.getConnection(
-					"jdbc:h2:tcp://localhost/~/kmsh", "sa", "");
+					conf.getProperty("sqlConnection"),
+					conf.getProperty("dbUser"), conf.getProperty("dbPassword"));
 			Statement stat = conn.createStatement();
 
 			String sql = "select * from tblKey where key='" + key
@@ -72,8 +76,8 @@ public class H2Manager {
 			ResultSet rs = stat.executeQuery(sql);
 
 			while (rs.next()) {
-				out += rs.getString("date") + ";";
-				out += rs.getString("key") + ";";
+				out += rs.getString("date") + conf.getProperty("DELIM");
+				out += rs.getString("key") + conf.getProperty("DELIM");
 				out += rs.getString("value");
 
 				if (!out.endsWith("\n")) {

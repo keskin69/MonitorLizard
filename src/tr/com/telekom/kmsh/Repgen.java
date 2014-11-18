@@ -1,6 +1,6 @@
 package tr.com.telekom.kmsh;
 
-import tr.com.telekom.kmsh.config.ConfigManager;
+import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.MailConfig;
 import tr.com.telekom.kmsh.config.ReportConfig;
 import tr.com.telekom.kmsh.config.SMSConfig;
@@ -13,7 +13,7 @@ import tr.com.telekom.kmsh.util.KmshLogger;
 import com.twilio.sdk.TwilioRestException;
 
 public class Repgen {
-	public Repgen(ConfigManager conf, String repName) {
+	public Repgen(XMLManager conf, String repName) {
 		String content = null;
 
 		for (ReportConfig repConf : conf.reportList) {
@@ -44,7 +44,7 @@ public class Repgen {
 		}
 	}
 
-	private void sendMail(ConfigManager conf, ReportConfig repConf,
+	private void sendMail(XMLManager conf, ReportConfig repConf,
 			String content) {
 		// Send content to SMS
 		if (repConf.useMail != null) {
@@ -59,7 +59,7 @@ public class Repgen {
 		}
 	}
 
-	private void sendSMS(ConfigManager conf, ReportConfig repConf,
+	private void sendSMS(XMLManager conf, ReportConfig repConf,
 			String content) {
 		// Send content to SMS
 		if (repConf.useSms != null) {

@@ -14,7 +14,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class ConfigManager extends AConfigManager {
+public class XMLManager extends AConfigManager {
 	public ArrayList<MailConfig> mailList = null;
 	public ArrayList<ConnectionConfig> connectionList = null;
 	public ArrayList<CommandConfig> commandList = null;
@@ -23,7 +23,7 @@ public class ConfigManager extends AConfigManager {
 	public HashMap<String, String> aliasList = null;
 	public ArrayList<KeyConfig> keyList = null;
 
-	public ConfigManager() {
+	public XMLManager() {
 		mailList = new ArrayList<MailConfig>();
 		connectionList = new ArrayList<ConnectionConfig>();
 		reportList = new ArrayList<ReportConfig>();

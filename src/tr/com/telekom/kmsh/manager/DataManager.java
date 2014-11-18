@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import tr.com.telekom.kmsh.config.ConfigManager;
+import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.util.KmshLogger;
 
@@ -59,7 +59,7 @@ public class DataManager {
 					colNumber = rsmd.getColumnCount();
 					String header = "";
 					for (int i = 1; i <= colNumber; i++) {
-						header += rsmd.getColumnName(i) + ConfigManager.DELIM;
+						header += rsmd.getColumnName(i) + XMLManager.DELIM;
 					}
 
 					output = header;
@@ -67,7 +67,7 @@ public class DataManager {
 
 				String row = "";
 				for (int i = 1; i <= colNumber; i++) {
-					row += result.getString(i) + ConfigManager.DELIM;
+					row += result.getString(i) + XMLManager.DELIM;
 				}
 
 				output += "\n" + row;

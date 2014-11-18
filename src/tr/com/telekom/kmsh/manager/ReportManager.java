@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import tr.com.telekom.kmsh.config.CommandConfig;
-import tr.com.telekom.kmsh.config.ConfigManager;
+import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.ReportConfig;
 import tr.com.telekom.kmsh.db.NoDB;
@@ -23,7 +23,7 @@ public class ReportManager {
 		content = new ArrayList<ContentPart>();
 	}
 
-	public boolean process(ConfigManager conf) {
+	public boolean process(XMLManager conf) {
 		String result = null;
 		boolean condition = true;
 
@@ -114,7 +114,7 @@ public class ReportManager {
 				String lines[] = p.body.split("\n");
 
 				for (String str : lines) {
-					String col[] = str.split(ConfigManager.DELIM);
+					String col[] = str.split(XMLManager.DELIM);
 
 					for (String c : col) {
 						output += c + ";";
@@ -143,7 +143,7 @@ public class ReportManager {
 				output += p.title + "<BR><TABLE>\n";
 
 				for (String str : lines) {
-					String col[] = str.split(ConfigManager.DELIM);
+					String col[] = str.split(XMLManager.DELIM);
 
 					output += "<TR>";
 					for (String c : col) {

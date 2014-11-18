@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import tr.com.telekom.kmsh.config.ConfigManager;
+import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
 
 public class CommandManager {
@@ -16,7 +16,7 @@ public class CommandManager {
 	private Map<String, String> variables = null;
 
 	public CommandManager(String configFile) {
-		ConfigManager conf = new ConfigManager();
+		XMLManager conf = new XMLManager();
 		conf.readConfig(configFile);
 		commandClass = conf.reportList.get(0).commandClass;
 		connectionList = conf.connectionList;

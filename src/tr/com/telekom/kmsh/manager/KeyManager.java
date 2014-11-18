@@ -1,6 +1,6 @@
 package tr.com.telekom.kmsh.manager;
 
-import tr.com.telekom.kmsh.config.ConfigManager;
+import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.Key;
 import tr.com.telekom.kmsh.config.KeyConfig;
@@ -13,7 +13,7 @@ public class KeyManager {
 		this.keyConf = keyConf;
 	}
 
-	public String process(ConfigManager conf) {
+	public String process(XMLManager conf) {
 		String out = "";
 
 		// execute all commands

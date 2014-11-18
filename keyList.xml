@@ -7,9 +7,17 @@
 		<key name="Toplam İşlenen CDR" delim=" " field="3">TimeMap</key>
 		<key name="Raw CDR Insert" delim=" " field="12">rawCDRInsert</key>
 		<key name="Fatura Insert" delim=" " field="12">faturaInsert</key>
-		<key name="Total Memory" delim="=" field="2">Total Memory</key>
-		<key name="Used Memory" delim="=" field="2">Used Memory</key>
-		<key name="Thread Count" delim="=" field="2">Thread Count</key>
+		<key delim="=" field="2">Total Memory</key>
+		<key delim="=" field="2">Used Memory</key>
+		<key delim="=" field="2">Thread Count</key>
+		<key delim="=" field="2">DirtyMemoryUsage</key>
+		<key delim="=" field="2">InUseMemoryUsage</key>
+		<key delim="=" field="2">Thread Count</key>
+		<key delim="=" field="2">StageTaskWriterQueueManager.totalQueueCount
+		</key>
+		<key delim="=" field="2">processor.dispatcher_stage.totalQueueCount
+		</key>
+		<key delim="=" field="2">scheduled.notifications.queue_count</key>
 		<key name="Dummy" delim="=" field="2">XXXXXXX</key>
 	</keyList>
 </config>

@@ -48,10 +48,9 @@ public class KeyConfig extends AConfig {
 				String name = null;
 				String grep = e.getTextContent();
 
-				try {
-					name = e.getAttribute("name");
-				} catch (NullPointerException ex) {
-					ex.printStackTrace();
+				name = e.getAttribute("name");
+				if (name.equals("")) {
+					name = grep;
 				}
 
 				try {

@@ -24,7 +24,7 @@ public class MailConfig extends AConfig {
 			password = eElement.getElementsByTagName("password").item(0)
 					.getTextContent();
 			if (password.startsWith("ENC(")) {
-				password = ConfigManager.decrypt(password.substring(4,
+				password = XMLManager.decrypt(password.substring(4,
 						password.length() - 1));
 			}
 			sender = eElement.getElementsByTagName("sender").item(0)

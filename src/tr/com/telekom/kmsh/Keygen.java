@@ -1,6 +1,6 @@
 package tr.com.telekom.kmsh;
 
-import tr.com.telekom.kmsh.config.ConfigManager;
+import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.KeyConfig;
 import tr.com.telekom.kmsh.manager.KeyManager;
 import tr.com.telekom.kmsh.util.KmshUtil;
@@ -8,7 +8,7 @@ import tr.com.telekom.kmsh.util.KmshLogger;
 
 public class Keygen {
 
-	public Keygen(ConfigManager conf, String name) {
+	public Keygen(XMLManager conf, String name) {
 		boolean found = false;
 
 		for (KeyConfig keyConf : conf.keyList) {
