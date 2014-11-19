@@ -9,6 +9,7 @@ import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.ReportConfig;
 import tr.com.telekom.kmsh.util.H2Util;
+import tr.com.telekom.kmsh.util.KmshUtil;
 
 public class ReportManager {
 	private ReportConfig repConfig = null;
@@ -24,61 +25,75 @@ public class ReportManager {
 	}
 
 	public boolean process(XMLManager conf) {
-		String result = null;
 		boolean condition = true;
 
+		// TODO
+		// String preValue = H2Util.readDB(repConfig.name, "value");
+
 		for (String cmdName : repConfig.commands) {
-			CommandConfig command = conf.findCommand(cmdName);
-			if (command != null) {
-				String cmd = "";
-				if (command.cmd != null) {
-					// insert java methods
-					cmd = repConfig.insertFunctionValue(command.cmd);
+			// if (repConfig.preCondition != null) {
+			// Pattern r = Pattern.compile(repConfig.preCondition);
+			// Matcher m = r.matcher(preValue);
+			// if (!m.find()) {
+			// condition = false;
+			// }
+			// }
 
-					// execute all commands
-					ConnectionConfig connection = conf
-							.findConnection(command.connectBy);
-
-					String preValue = H2Util.readDB(command.name, "value");
-
-					if (repConfig.preCondition != null) {
-						Pattern r = Pattern.compile(repConfig.preCondition);
-						Matcher m = r.matcher(preValue);
-						if (!m.find()) {
-							condition = false;
-						}
-					}
-
-					if (connection != null) {
-						if (connection.type.equals("ssh")) {
-							// execute a ssh command
-							result = SSHManager.executeCommand(connection, cmd);
-							addContent(ContentType.TEXT, command.title, result);
-						} else if (connection.type.equals("sql")) {
-							// execute a db command
-							result = SQLManager.executeSQL(connection, cmd);
-							addContent(ContentType.TABLE, command.title, result);
-						}
-					} else {
-						// Java command
-						result = cmd;
-						addContent(ContentType.TEXT, command.title, result);
-					}
-
-					H2Util.writeDB(command.name, result);
-
-					if (repConfig.postCondition != null) {
-						Pattern r = Pattern.compile(repConfig.postCondition);
-						Matcher m = r.matcher(result);
-						if (!m.find()) {
-							condition = false;
-						}
-					}
-				}
+			String result = readFromDB(cmdName);
+			if (result.equals("")) {
+				execute(conf, cmdName);
+			} else {
+				addContent(ContentType.TEXT, cmdName, result);
 			}
+
+			// if (repConfig.postCondition != null) {
+			// Pattern r = Pattern.compile(repConfig.postCondition);
+			// Matcher m = r.matcher(result);
+			// if (!m.find()) {
+			// condition = false;
+			// }
+			// }
 		}
 
+		// TODO
+		// H2Util.writeDB(repConfig.title, result, repConfig.name);
+
 		return condition;
+	}
+
+	public void execute(XMLManager conf, String cmdName) {
+		String result = null;
+		CommandConfig command = conf.findCommand(cmdName);
+
+		if (command != null) {
+			// execute all commands
+			ConnectionConfig connection = conf
+					.findConnection(command.connectBy);
+
+			// insert java methods
+			String cmd = KmshUtil.insertFunctionValue(command.cmd);
+
+			if (connection != null) {
+				if (connection.type.equals("ssh")) {
+					// execute a ssh command
+					result = SSHManager.executeCommand(connection, cmd);
+					addContent(ContentType.TEXT, command.title, result);
+				} else if (connection.type.equals("sql")) {
+					// execute a db command
+					result = SQLManager.executeSQL(connection, cmd);
+					addContent(ContentType.TABLE, command.title, result);
+				}
+			} else {
+				// Java command
+				result = cmd;
+				addContent(ContentType.TEXT, command.title, result);
+			}
+		}
+	}
+
+	public String readFromDB(String cmdId) {
+		String value = H2Util.readDB(cmdId, "value");
+		return value;
 	}
 
 	public final void addContent(ContentType type, String title, String body) {
@@ -107,7 +122,7 @@ public class ReportManager {
 				output += p.title;
 				output += p.body;
 			} else {
-				output += "\n" + p.title + "\n";
+				output += "\n" + p.title + ":\n";
 				String lines[] = p.body.split("\n");
 
 				for (String str : lines) {

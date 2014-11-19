@@ -2,9 +2,10 @@ package tr.com.telekom.kmsh.manager;
 
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
-import tr.com.telekom.kmsh.config.Key;
+import tr.com.telekom.kmsh.config.Command;
 import tr.com.telekom.kmsh.config.GroupCommandConfig;
 import tr.com.telekom.kmsh.util.H2Util;
+import tr.com.telekom.kmsh.util.KmshUtil;
 
 public class KeyManager {
 	private GroupCommandConfig keyConf = null;
@@ -19,19 +20,20 @@ public class KeyManager {
 		// execute all commands in the specified group
 		ConnectionConfig connection = conf.findConnection(keyConf.connectBy);
 		if (connection != null) {
-			for (Key key : keyConf.keyList) {
+			for (Command cmd : keyConf.commandList) {
 				String command = "";
 
+				cmd.command = KmshUtil.insertFunctionValue(cmd.command);
 				if (keyConf.base == null) {
-					command = key.command;
+					command = cmd.command;
 				} else {
-					command = keyConf.base + " \"" + key.command
+					command = keyConf.base + " \"" + cmd.command
 							+ "\" | tail -1";
 				}
 
-				if (!key.delim.equals("")) {
-					command += "| cut -d\"" + key.delim + "\"" + " -f "
-							+ key.field;
+				if (!cmd.delim.equals("")) {
+					command += "| cut -d\"" + cmd.delim + "\"" + " -f "
+							+ cmd.field;
 				}
 
 				String result = null;
@@ -45,8 +47,8 @@ public class KeyManager {
 				}
 
 				if (!result.equals("")) {
-					H2Util.writeDB(key.name, result);
-					out += key.command + "=" + result + ";";
+					H2Util.writeDB(cmd.name, result, cmd.id);
+					out += cmd.command + "=" + result + ";";
 				}
 			}
 		}

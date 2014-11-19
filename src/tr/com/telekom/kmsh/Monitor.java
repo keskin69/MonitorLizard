@@ -19,8 +19,8 @@ public class Monitor {
 		BasicConfigurator.configure(new NullAppender());
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
-		String type = "-r";
-		String name = "Test";
+		String type = "-t";
+		String name = "";
 
 		if (args.length == 2) {
 			confFile = args[0];

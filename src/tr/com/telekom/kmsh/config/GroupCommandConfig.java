@@ -13,11 +13,11 @@ public class GroupCommandConfig extends AConfig {
 	public String name = null;
 	public String base = null;
 	public String connectBy = null;
-	public ArrayList<Key> keyList = null;
+	public ArrayList<Command> commandList = null;
 	public int period = 0;
 
 	public GroupCommandConfig() {
-		keyList = new ArrayList<Key>();
+		commandList = new ArrayList<Command>();
 	}
 
 	public void parseXML(Node nNode) {
@@ -51,7 +51,7 @@ public class GroupCommandConfig extends AConfig {
 				Node n = node.item(i);
 				Element e = (Element) n;
 
-				keyList.add(new Key(name, e));
+				commandList.add(new Command(name, e));
 			}
 		}
 	}

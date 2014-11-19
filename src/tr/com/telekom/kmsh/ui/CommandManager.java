@@ -8,17 +8,16 @@ import java.util.Map;
 
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
+import tr.com.telekom.kmsh.util.ConfigReader;
 
 public class CommandManager {
 	private ConnectionConfig conn = null;
 	private ArrayList<ConnectionConfig> connectionList = null;
-	private String commandClass = null;
 	private Map<String, String> variables = null;
 
 	public CommandManager(String configFile) {
 		XMLManager conf = new XMLManager();
 		conf.readConfig(configFile);
-		commandClass = conf.reportList.get(0).commandClass;
 		connectionList = conf.connectionList;
 
 		variables = new HashMap<String, String>();
@@ -161,6 +160,8 @@ public class CommandManager {
 	private String executeMethod(String funcName) {
 
 		try {
+			String commandClass = ConfigReader.getInstance().getProperty(
+					"commandClass");
 			for (Method method : Class.forName(commandClass)
 					.getDeclaredMethods()) {
 				if (method.getName().equals(funcName)) {

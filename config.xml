@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<connectionsFile>./connections.xml</connectionsFile>
-	<commandsFile>./commands.xml</commandsFile>s
-	<commandsFile>./periodic.xml</commandsFile>
+	<commandsFile>./commands.xml</commandsFile>
+	<commandsFile>./periodic_sql.xml</commandsFile>
+	<commandsFile>./periodic_ssh.xml</commandsFile>
 	<commandsFile>./reports.xml</commandsFile>
 </config>
 

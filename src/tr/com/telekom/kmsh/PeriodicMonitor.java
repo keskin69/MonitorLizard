@@ -25,7 +25,7 @@ public class PeriodicMonitor {
 					// write content to report log
 					KmshUtil.writeLog("log/" + name + ".log", content);
 
-					H2Util.writeDB("_" + keyConf.name, "");
+					H2Util.writeDB("", "", keyConf.name);
 				}
 			}
 		}

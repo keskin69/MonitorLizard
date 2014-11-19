@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,6 +25,57 @@ public class KmshUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public static String insertFunctionValue(String str) {
+
+		while (str.contains("#")) {
+			int i = str.indexOf("#");
+			int j = i + 1;
+
+			while (true) {
+				if (j == str.length()) {
+					break;
+				}
+
+				if (!str.substring(j, j + 1).matches("[a-zA-Z0-9_]")) {
+					break;
+				}
+
+				j++;
+			}
+
+			String func = str.substring(i + 1, j);
+
+			String value = null;
+			try {
+				String commandClass = ConfigReader.getInstance().getProperty(
+						"commandClass");
+				for (Method method : Class.forName(commandClass)
+						.getDeclaredMethods()) {
+					if (method.getName().equals(func)) {
+						value = (String) method.invoke(
+								ConfigReader.getInstance(), null);
+						str = str.replace("#" + func, value);
+						break;
+					}
+				}
+			} catch (ClassNotFoundException ex) {
+				ex.printStackTrace();
+				break;
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return str;
 	}
 
 	public static boolean isNumeric(String str) {

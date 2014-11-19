@@ -58,10 +58,11 @@
 		</note>
 	</report>
 
-	<report name="Test" mail="mex" sms="mex">
-		<title>Test Rapouru ıöşçğ</title>
+	<report name="Test" mail="me" sms="mex">
+		<title>Test Rapouru</title>
 		<executeList>
-			<cmd>QTest</cmd>
+			<cmd>sql2.1</cmd>
+			<cmd>C2</cmd>
 		</executeList>
 		<reportCondition>
 		</reportCondition>

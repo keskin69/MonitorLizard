@@ -28,7 +28,7 @@ public class CommandConfig extends AConfig {
 			}
 
 			try {
-				cmd = eElement.getElementsByTagName("sql").item(0)
+				cmd = eElement.getElementsByTagName("cmd").item(0)
 						.getTextContent();
 			} catch (NullPointerException ex) {
 			}

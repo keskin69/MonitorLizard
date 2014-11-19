@@ -5,11 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.concurrent.TimeUnit;
 
 import org.h2.Driver;
 
@@ -28,8 +25,8 @@ public class H2Util {
 		}
 	}
 
-	public static long getAge(String key) {
-		String date = readDB("_" + key, "date");
+	public static long getAge(String id) {
+		String date = readDB(id, "date");
 		if (!date.equals("")) {
 			Date dLast = KmshUtil.convertToDate(date);
 			Date dNow = new Date();
@@ -39,10 +36,10 @@ public class H2Util {
 			return minutes;
 		}
 
-		return 0;
+		return Long.MAX_VALUE;
 	}
 
-	public static String readDB(String key, String field) {
+	public static String readDB(String id, String field) {
 		ConfigReader conf = ConfigReader.getInstance();
 		Connection conn = null;
 		String out = "";
@@ -54,7 +51,7 @@ public class H2Util {
 					conf.getProperty("sqlConnection"),
 					conf.getProperty("dbUser"), conf.getProperty("dbPassword"));
 			Statement stat = conn.createStatement();
-			String sql = "select * from tblKey where key='" + key
+			String sql = "select * from tblKey where id='" + id
 					+ "' order by date desc";
 			ResultSet rs = stat.executeQuery(sql);
 
@@ -77,16 +74,20 @@ public class H2Util {
 		return out;
 	}
 
-	public static void writeDB(String key, String value) {
+	public static void writeDB(String key, String value, String id) {
 		Connection conn;
+		ConfigReader conf = ConfigReader.getInstance();
+
 		try {
-			Class.forName("org.h2.Driver");
+			Class.forName(conf.getProperty("driver"));
+
 			conn = DriverManager.getConnection(
-					"jdbc:h2:tcp://localhost/~/kmsh", "sa", "");
+					conf.getProperty("sqlConnection"),
+					conf.getProperty("dbUser"), conf.getProperty("dbPassword"));
 
 			String date = KmshUtil.getCurrentTimeStamp();
 			String sql = "insert into tblKey values ('" + date + "','" + key
-					+ "','" + value + "')";
+					+ "','" + value + "','" + id + "')";
 			Statement stat = conn.createStatement();
 			stat.execute(sql);
 
@@ -110,7 +111,7 @@ public class H2Util {
 	// // from the SQL script file 'init.sql'
 	// // stat.execute("runscript from 'init.sql'");
 	//
-	// stat.execute("create table tblKey (date varchar(255), key varchar(255), value varchar(255))");
+	// stat.execute("create table tblKey (date varchar(255), key varchar(255), value varchar(255), id varchar(255)");
 	//
 	// stat.close();
 	// conn.close();
