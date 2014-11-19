@@ -19,7 +19,7 @@ public class XMLManager extends AConfigManager {
 	public ArrayList<CommandConfig> commandList = null;
 	public ArrayList<ReportConfig> reportList = null;
 	public ArrayList<SMSConfig> smsList = null;
-	public ArrayList<KeyConfig> group = null;
+	public ArrayList<GroupCommandConfig> group = null;
 
 	public XMLManager() {
 		mailList = new ArrayList<MailConfig>();
@@ -27,7 +27,7 @@ public class XMLManager extends AConfigManager {
 		reportList = new ArrayList<ReportConfig>();
 		commandList = new ArrayList<CommandConfig>();
 		smsList = new ArrayList<SMSConfig>();
-		group = new ArrayList<KeyConfig>();
+		group = new ArrayList<GroupCommandConfig>();
 	}
 
 	public void readConfig(String file) {
@@ -136,10 +136,10 @@ public class XMLManager extends AConfigManager {
 				reportList.add(rep);
 			}
 
-			// ssh group list
+			// group command list
 			nList = doc.getElementsByTagName("group");
 			for (int i = 0; i < nList.getLength(); i++) {
-				KeyConfig key = new KeyConfig();
+				GroupCommandConfig key = new GroupCommandConfig();
 				key.parseXML(nList.item(i));
 				group.add(key);
 			}

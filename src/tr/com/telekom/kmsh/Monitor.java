@@ -19,8 +19,8 @@ public class Monitor {
 		BasicConfigurator.configure(new NullAppender());
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
-		String type = "-t";
-		String name = "";
+		String type = "-r";
+		String name = "Test";
 
 		if (args.length == 2) {
 			confFile = args[0];
@@ -38,7 +38,7 @@ public class Monitor {
 		xmlManager.readConfig(xmlFiles);
 
 		if (type.equals("-t")) {
-			new Keygen(xmlManager, name);
+			new PeriodicMonitor(xmlManager, name);
 		} else if (type.equals("-r")) {
 			new Repgen(xmlManager, name);
 		} else if (type.equals("-win")) {

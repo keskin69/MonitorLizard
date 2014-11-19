@@ -9,7 +9,7 @@ public class Key {
 	public String field = null;
 	public String id = null;
 
-	public Key(Element e) {
+	public Key(String grp, Element e) {
 		command = e.getTextContent();
 		command = command.replaceAll("\n", "");
 
@@ -20,6 +20,6 @@ public class Key {
 
 		delim = e.getAttribute("delim");
 		field = e.getAttribute("field");
-		id = e.getAttribute("id");
+		id = grp + "." + e.getAttribute("id");
 	}
 }

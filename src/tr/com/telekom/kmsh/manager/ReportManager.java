@@ -39,7 +39,7 @@ public class ReportManager {
 					ConnectionConfig connection = conf
 							.findConnection(command.connectBy);
 
-					String preValue = H2Util.readDB(command.name);
+					String preValue = H2Util.readDB(command.name, "value");
 
 					if (repConfig.preCondition != null) {
 						Pattern r = Pattern.compile(repConfig.preCondition);
@@ -120,10 +120,6 @@ public class ReportManager {
 					output += "\n";
 				}
 			}
-		}
-
-		if (repConfig.note != null) {
-			output += repConfig.note;
 		}
 
 		return output;

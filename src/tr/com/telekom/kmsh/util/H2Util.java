@@ -5,7 +5,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
+import java.util.concurrent.TimeUnit;
 
 import org.h2.Driver;
 
@@ -24,7 +28,21 @@ public class H2Util {
 		}
 	}
 
-	public static String readDB(String key) {
+	public static long getAge(String key) {
+		String date = readDB("_" + key, "date");
+		if (!date.equals("")) {
+			Date dLast = KmshUtil.convertToDate(date);
+			Date dNow = new Date();
+
+			long diff = dNow.getTime() - dLast.getTime();
+			long minutes = diff / (1000 * 60);
+			return minutes;
+		}
+
+		return 0;
+	}
+
+	public static String readDB(String key, String field) {
 		ConfigReader conf = ConfigReader.getInstance();
 		Connection conn = null;
 		String out = "";
@@ -42,7 +60,7 @@ public class H2Util {
 
 			// read only one line
 			if (rs.next()) {
-				out = rs.getString("date");
+				out = rs.getString(field);
 			}
 
 			conn.close();

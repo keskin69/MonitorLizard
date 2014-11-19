@@ -16,4 +16,9 @@
 			<cmd>tail -50 /girdi/ARECA_DEPLOYMENT/areca/log/areca.out</cmd>
 		</command>
 	</commands>
+	<command name="QTest" title="Test">
+		<connectBy>sinan</connectBy>
+		<sql>select COUNT(*) from TAH_DONEM
+		</sql>
+	</command>
 </config>

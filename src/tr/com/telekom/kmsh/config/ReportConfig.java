@@ -17,7 +17,6 @@ public class ReportConfig extends AConfig {
 	public String useSms = null;
 	public String preCondition = null;
 	public String postCondition = null;
-	public String note = null;
 
 	public ReportConfig() {
 		commands = new ArrayList<String>();
@@ -119,12 +118,6 @@ public class ReportConfig extends AConfig {
 			NodeList node = eElement.getElementsByTagName("cmd");
 			for (int i = 0; i < node.getLength(); i++) {
 				commands.add(node.item(i).getTextContent());
-			}
-
-			try {
-				note = eElement.getElementsByTagName("note").item(0)
-						.getTextContent();
-			} catch (NullPointerException ex) {
 			}
 		}
 	}

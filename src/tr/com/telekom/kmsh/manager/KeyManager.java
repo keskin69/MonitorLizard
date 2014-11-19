@@ -3,20 +3,20 @@ package tr.com.telekom.kmsh.manager;
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.Key;
-import tr.com.telekom.kmsh.config.KeyConfig;
+import tr.com.telekom.kmsh.config.GroupCommandConfig;
 import tr.com.telekom.kmsh.util.H2Util;
 
 public class KeyManager {
-	private KeyConfig keyConf = null;
+	private GroupCommandConfig keyConf = null;
 
-	public KeyManager(KeyConfig keyConf) {
+	public KeyManager(GroupCommandConfig keyConf) {
 		this.keyConf = keyConf;
 	}
 
 	public String process(XMLManager conf) {
 		String out = "";
 
-		// execute all commands
+		// execute all commands in the specified group
 		ConnectionConfig connection = conf.findConnection(keyConf.connectBy);
 		if (connection != null) {
 			for (Key key : keyConf.keyList) {
@@ -25,7 +25,8 @@ public class KeyManager {
 				if (keyConf.base == null) {
 					command = key.command;
 				} else {
-					command = keyConf.base + " \"" + key.command + "\" | tail -1";
+					command = keyConf.base + " \"" + key.command
+							+ "\" | tail -1";
 				}
 
 				if (!key.delim.equals("")) {
@@ -33,8 +34,15 @@ public class KeyManager {
 							+ key.field;
 				}
 
-				String result = SSHManager.executeCommand(connection, command);
-				result = result.trim();
+				String result = null;
+				if (connection.type.equals("ssh")) {
+					// execute an ssh command
+					result = SSHManager.executeCommand(connection, command);
+					result = result.trim();
+				} else if (connection.type.equals("sql")) {
+					// execute a db command
+					result = SQLManager.executeSQL(connection, command);
+				}
 
 				if (!result.equals("")) {
 					H2Util.writeDB(key.name, result);
