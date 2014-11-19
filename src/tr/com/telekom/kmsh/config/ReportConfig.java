@@ -14,6 +14,7 @@ public class ReportConfig extends AConfig {
 	public String useSms = null;
 	public String preCondition = null;
 	public String postCondition = null;
+	public String note = null;
 
 	public ReportConfig() {
 		commands = new ArrayList<String>();
@@ -53,6 +54,13 @@ public class ReportConfig extends AConfig {
 			try {
 				postCondition = eElement.getElementsByTagName("postcondition")
 						.item(0).getTextContent();
+			} catch (NullPointerException ex) {
+
+			}
+
+			try {
+				note = eElement.getElementsByTagName("note").item(0)
+						.getTextContent();
 			} catch (NullPointerException ex) {
 
 			}

@@ -19,8 +19,8 @@ public class Monitor {
 		BasicConfigurator.configure(new NullAppender());
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
-		String type = "-t";
-		String name = "";
+		String type = "-r";
+		String name = "KMSHStarted";
 
 		if (args.length == 2) {
 			confFile = args[0];
@@ -38,12 +38,13 @@ public class Monitor {
 		xmlManager.readConfig(xmlFiles);
 
 		if (type.equals("-t")) {
-			new PeriodicMonitor(xmlManager, name);
+			new PeriodicMonitor(xmlManager);
 		} else if (type.equals("-r")) {
 			new Repgen(xmlManager, name);
 		} else if (type.equals("-win")) {
 			new Terminal(confFile);
 		} else if (type.equals("-term")) {
+			// TODO terminal without a window
 			new Terminal(confFile);
 		}
 

@@ -9,29 +9,22 @@ import tr.com.telekom.kmsh.util.KmshLogger;
 
 public class PeriodicMonitor {
 
-	public PeriodicMonitor(XMLManager conf, String name) {
-		boolean found = false;
+	public PeriodicMonitor(XMLManager conf) {
+		for (GroupCommandConfig grpConf : conf.group) {
+			// check last execution time for periodic commands
+			if (H2Util.getAge(grpConf.name) >= grpConf.period) {
+				KmshLogger.log("Processing CommandList " + grpConf.name);
+				KeyManager keyMan = new KeyManager(grpConf);
 
-		for (GroupCommandConfig keyConf : conf.group) {
-			if (keyConf.name.equals(name) || (name.equals(""))) {
-				// check last execution time for periodic commands
-				if (H2Util.getAge(keyConf.name) >= keyConf.period) {
-					KmshLogger.log("Processing KeyList " + name);
-					KeyManager keyMan = new KeyManager(keyConf);
+				String content = keyMan.process(conf);
 
-					String content = keyMan.process(conf);
-					found = true;
+				// write content to report log
+				KmshUtil.writeLog("log/" + grpConf.name + ".log", content);
 
-					// write content to report log
-					KmshUtil.writeLog("log/" + name + ".log", content);
-
-					H2Util.writeDB("", "", keyConf.name);
-				}
+				H2Util.writeDB("", "", grpConf.name);
+			} else {
+				KmshLogger.log("Skipping group commands for " + grpConf.name);
 			}
-		}
-
-		if (!found) {
-			KmshLogger.log("Cannot find key list definition for " + name);
 		}
 	}
 

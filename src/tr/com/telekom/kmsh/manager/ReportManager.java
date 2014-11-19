@@ -26,42 +26,43 @@ public class ReportManager {
 
 	public boolean process(XMLManager conf) {
 		boolean condition = true;
-
-		// TODO
-		// String preValue = H2Util.readDB(repConfig.name, "value");
+		String result = null;
 
 		for (String cmdName : repConfig.commands) {
-			// if (repConfig.preCondition != null) {
-			// Pattern r = Pattern.compile(repConfig.preCondition);
-			// Matcher m = r.matcher(preValue);
-			// if (!m.find()) {
-			// condition = false;
-			// }
-			// }
-
-			String result = readFromDB(cmdName);
+			result = readFromDB(cmdName);
 			if (result.equals("")) {
-				execute(conf, cmdName);
+				result = execute(conf, cmdName);
 			} else {
-				addContent(ContentType.TEXT, cmdName, result);
+				String title = H2Util.readDB(cmdName, "key");
+				addContent(ContentType.TEXT, title, result);
 			}
-
-			// if (repConfig.postCondition != null) {
-			// Pattern r = Pattern.compile(repConfig.postCondition);
-			// Matcher m = r.matcher(result);
-			// if (!m.find()) {
-			// condition = false;
-			// }
-			// }
 		}
 
-		// TODO
-		// H2Util.writeDB(repConfig.title, result, repConfig.name);
+		String preValue = H2Util.readDB(repConfig.name, "value");
+		if (!preValue.equals("")) {
+			if (repConfig.preCondition != null) {
+				Pattern r = Pattern.compile(repConfig.preCondition);
+				Matcher m = r.matcher(preValue);
+				if (!m.find()) {
+					condition = false;
+				}
+			}
+		}
+
+		if (repConfig.postCondition != null) {
+			Pattern r = Pattern.compile(repConfig.postCondition);
+			Matcher m = r.matcher(result);
+			if (!m.find()) {
+				condition = false;
+			}
+		}
+
+		H2Util.writeDB(repConfig.title, result, repConfig.name);
 
 		return condition;
 	}
 
-	public void execute(XMLManager conf, String cmdName) {
+	public String execute(XMLManager conf, String cmdName) {
 		String result = null;
 		CommandConfig command = conf.findCommand(cmdName);
 
@@ -89,6 +90,12 @@ public class ReportManager {
 				addContent(ContentType.TEXT, command.title, result);
 			}
 		}
+
+		if (repConfig.note != null) {
+			addContent(ContentType.TEXT, "Not:", repConfig.note);
+		}
+
+		return result;
 	}
 
 	public String readFromDB(String cmdId) {
@@ -119,10 +126,10 @@ public class ReportManager {
 			}
 
 			if (p.type == ContentType.TEXT) {
-				output += p.title;
+				output += p.title + ":";
 				output += p.body;
 			} else {
-				output += "\n" + p.title + ":\n";
+				output += "\n" + p.title + "\n";
 				String lines[] = p.body.split("\n");
 
 				for (String str : lines) {

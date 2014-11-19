@@ -33,7 +33,7 @@ public class SQLManager {
 
 	public static String executeSQL(ConnectionConfig conf, String sql) {
 		String output = null;
-		KmshLogger.log("Executing SQL >" + sql);
+		KmshLogger.log("Executing SQL> " + sql);
 		// creating PreparedStatement object to execute query
 		Statement statement = null;
 		ResultSet result = null;

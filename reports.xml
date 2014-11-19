@@ -1,32 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <reports>
-	<report name="Monitor">
-		<executeList>
-			<cmd>C0</cmd>
-			<cmd>C2</cmd>
-			<cmd>C3</cmd>
-			<cmd>T8</cmd>
-		</executeList>
-	</report>
-
 	<report name="RptDaily" mail="areca">
 		<title>KMSH/FÜS Bildirim Raporu</title>
-		<executeList>
-			<cmd>Q1</cmd>
-			<cmd>Q2</cmd>
-			<cmd>Q3</cmd>
-			<cmd>C0</cmd>
-			<cmd>C1</cmd>
-			<cmd>C1a</cmd>
-			<cmd>C1b</cmd>
-			<cmd>T8</cmd>
+		<executeList>s
 		</executeList>
 	</report>
 
 	<report name="KMSHStopped" mail="areca" sms="acil">
 		<title>KMSH/FÜS Stopped</title>
 		<executeList>
-			<cmd>C0</cmd>
+			<cmd>cmd2.4</cmd>
 		</executeList>
 		<reportCondition>
 			<precondition>(.*)running(.*)</precondition>
@@ -34,10 +17,10 @@
 		</reportCondition>
 	</report>
 
-	<report name="KMSHStarted" mail="areca" sms="acil">
+	<report name="KMSHStarted" mail="me" sms="acilx">
 		<title>KMSH/FÜS Started</title>
 		<executeList>
-			<cmd>C0</cmd>
+			<cmd>cmd2.4</cmd>
 		</executeList>
 		<reportCondition>
 			<precondition>(.*)stopped(.*)</precondition>
@@ -64,8 +47,6 @@
 			<cmd>sql2.1</cmd>
 			<cmd>C2</cmd>
 		</executeList>
-		<reportCondition>
-		</reportCondition>
 		<note>Test note satırı</note>
 	</report>
 </reports>
