@@ -24,6 +24,11 @@ public class KmshUtil {
 		}
 	}
 
+	public static boolean isNumeric(String str) {
+		return str.matches("-?\\d+(\\.\\d+)?"); // match a number with optional
+												// '-' and decimal.
+	}
+
 	public static String getCurrentTimeStamp() {
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date now = new Date();

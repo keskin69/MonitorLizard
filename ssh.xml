@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssh>
+	<group name="key1" period="5">
+		<base>tail -500 /girdi/ARECA_DEPLOYMENT/areca/log/areca.out | grep
+		</base>
+		<connectBy>peste</connectBy>
+		<key id="S1" name="Toplam İşlenen CDR" delim=" " field="3">TimeMap
+		</key>
+		<key id="S2" name="Raw CDR Insert" delim=" " field="12">rawCDRInsert
+		</key>
+		<key id="S3" name="Fatura Insert" delim=" " field="12">faturaInsert
+		</key>
+		<key id="S4" delim="=" field="2">Total Memory</key>
+		<key id="S5" delim="=" field="2">Used Memory</key>
+		<key id="S6" delim="=" field="2">Thread Count</key>
+		<key id="S7" delim="=" field="2">DirtyMemoryUsage</key>
+		<key id="S8" delim="=" field="2">InUseMemoryUsage</key>
+		<key id="S9" delim="=" field="2">Thread Count</key>
+		<key id="S10" delim="=" field="2">StageTaskWriterQueueManager.totalQueueCount
+		</key>
+		<key id="S11" delim="=" field="2">processor.dispatcher_stage.totalQueueCount
+		</key>
+		<key id="S12" delim="=" field="2">scheduled.notifications.queue_count
+		</key>
+		<key id="S13" name="Partition Hatası">Partition</key>
+		<key id="S14" name="TimeMap" delim="[" field="2">TimeMap</key>
+	</group>
+
+	<group name="key2" period="30">
+		<connectBy>peste</connectBy>
+		<key id="A1" name="İşlenmeyı bekleyen CDR Dosyası">ls -l /girdi/realtime_archieve | wc -l</key>
+		<key id="A2" name="Taşınmayı bekleyen S12 CDR Dosyası">ls -l /girdi/realtime_cdr_s12 | wc -l</key>
+		<key id="A3" name="Taşınmayı Bekleyen CDR Dosyası">ls -l
+			/girdi/realtime_cdr | wc -l
+		</key>
+		<key id="A4" name="Status">cd
+			/girdi/ARECA_DEPLOYMENT/areca/bin/;./checkAreca.sh
+		</key>
+	</group>
+</ssh>

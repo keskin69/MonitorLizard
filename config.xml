@@ -2,6 +2,8 @@
 <config>
 	<connectionsFile>./connections.xml</connectionsFile>
 	<commandsFile>./commands.xml</commandsFile>
-	<commandsFile>./keyList.xml</commandsFile>
+	<commandsFile>./sql.xml</commandsFile>
+	<commandsFile>./ssh.xml</commandsFile>
+	<commandsFile>./reports.xml</commandsFile>
 </config>
 

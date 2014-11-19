@@ -20,7 +20,7 @@ public class Monitor {
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
 		String type = "-t";
-		String name = "key1";
+		String name = "";
 
 		if (args.length == 2) {
 			confFile = args[0];

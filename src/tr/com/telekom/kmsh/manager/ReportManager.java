@@ -8,7 +8,7 @@ import tr.com.telekom.kmsh.config.CommandConfig;
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.ReportConfig;
-import tr.com.telekom.kmsh.db.NoDB;
+import tr.com.telekom.kmsh.util.H2Util;
 
 public class ReportManager {
 	private ReportConfig repConfig = null;
@@ -32,17 +32,14 @@ public class ReportManager {
 			if (command != null) {
 				String cmd = "";
 				if (command.cmd != null) {
-					// insert aliases in to the command
-					cmd = conf.insertAliases(command.cmd);
-
 					// insert java methods
-					cmd = repConfig.insertFunctionValue(cmd);
+					cmd = repConfig.insertFunctionValue(command.cmd);
 
 					// execute all commands
 					ConnectionConfig connection = conf
 							.findConnection(command.connectBy);
 
-					String preValue = NoDB.get(command.name);
+					String preValue = H2Util.readDB(command.name);
 
 					if (repConfig.preCondition != null) {
 						Pattern r = Pattern.compile(repConfig.preCondition);
@@ -59,7 +56,7 @@ public class ReportManager {
 							addContent(ContentType.TEXT, command.title, result);
 						} else if (connection.type.equals("sql")) {
 							// execute a db command
-							result = DataManager.executeSQL(connection, cmd);
+							result = SQLManager.executeSQL(connection, cmd);
 							addContent(ContentType.TABLE, command.title, result);
 						}
 					} else {
@@ -68,7 +65,7 @@ public class ReportManager {
 						addContent(ContentType.TEXT, command.title, result);
 					}
 
-					NoDB.set(command.name, result);
+					H2Util.writeDB(command.name, result);
 
 					if (repConfig.postCondition != null) {
 						Pattern r = Pattern.compile(repConfig.postCondition);

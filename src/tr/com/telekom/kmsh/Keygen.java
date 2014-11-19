@@ -11,8 +11,8 @@ public class Keygen {
 	public Keygen(XMLManager conf, String name) {
 		boolean found = false;
 
-		for (KeyConfig keyConf : conf.keyList) {
-			if (keyConf.name.equals(name)) {
+		for (KeyConfig keyConf : conf.group) {
+			if (keyConf.name.equals(name) || (name.equals(""))) {
 				KmshLogger.log("Processing KeyList " + name);
 				KeyManager keyMan = new KeyManager(keyConf);
 

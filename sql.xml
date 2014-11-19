@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commands>
+	<command name="Q1" title="Dün itibariyle yapılan bildirim dağılımı">
+		<connectBy>sinan</connectBy>
+		<cmd>select /* + parallel(x,8) */ COUNT(*) as TOPLAM,
+			NOTIFICATION_TYPE,
+			EVENT_TYPE from ARC_ABONE_BILDIRIM x
+			where
+			NOTIFICATION_DATE LIKE
+			'#yesterday%'
+			GROUP BY
+			EVENT_TYPE,
+			NOTIFICATION_TYPE
+		</cmd>
+		<note>Not: Günlük ortalama %80 bildirim sayısı yaklaşık 15,000 ve
+			%100 bildirim sayısı yaklaşık 10,000 ve yukarısi olmalıdır.</note>
+	</command>
+
+	<command name="Q2" title="Bugün itibariyle yapılan bildirim dağılımı">
+		<connectBy>sinan</connectBy>
+		<cmd>select /* + parallel(x,8) */ COUNT(*) as TOPLAM,
+			NOTIFICATION_TYPE,
+			EVENT_TYPE from ARC_ABONE_BILDIRIM x
+			where
+			NOTIFICATION_DATE LIKE
+			'#today%'
+			GROUP BY EVENT_TYPE,
+			NOTIFICATION_TYPE
+		</cmd>
+	</command>
+
+	<command name="Q3" title="Okunmuş ama henüz işlenmemiş CDR">
+		<connectBy>sinan</connectBy>
+		<cmd>select /* + parallel(x,8) */ COUNT(*) as CDR from
+			ARC_CDR_RAW_DATA x
+			where STATUS=0 and DONEM=#donem
+		</cmd>
+	</command>
+
+	<command name="QTest" title="Test ışöğüÜİŞ">
+		<connectBy>sinan</connectBy>
+		<cmd>select COUNT(*) from TAH_DONEM
+		</cmd>
+	</command>
+</commands>

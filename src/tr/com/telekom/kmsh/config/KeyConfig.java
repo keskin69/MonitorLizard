@@ -6,12 +6,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import tr.com.telekom.kmsh.util.KmshUtil;
+
 public class KeyConfig extends AConfig {
 
 	public String name = null;
 	public String base = null;
 	public String connectBy = null;
 	public ArrayList<Key> keyList = null;
+	public int period = 0;
 
 	public KeyConfig() {
 		keyList = new ArrayList<Key>();
@@ -22,6 +25,10 @@ public class KeyConfig extends AConfig {
 
 			Element eElement = (Element) nNode;
 			name = eElement.getAttribute("name");
+			String p = eElement.getAttribute("period");
+			if (KmshUtil.isNumeric(p)) {
+				period = new Integer(p).intValue();
+			}
 
 			try {
 				connectBy = eElement.getElementsByTagName("connectBy").item(0)
@@ -36,38 +43,16 @@ public class KeyConfig extends AConfig {
 				base = base.replace("\t", "");
 				base = base.replace("\n", "");
 			} catch (NullPointerException ex) {
-				ex.printStackTrace();
+
 			}
 
 			NodeList node = eElement.getElementsByTagName("key");
 			for (int i = 0; i < node.getLength(); i++) {
 				Node n = node.item(i);
 				Element e = (Element) n;
-				String delim = null;
-				String field = null;
-				String name = null;
-				String grep = e.getTextContent();
 
-				name = e.getAttribute("name");
-				if (name.equals("")) {
-					name = grep;
-				}
-
-				try {
-					delim = e.getAttribute("delim");
-				} catch (NullPointerException ex) {
-
-				}
-
-				try {
-					field = e.getAttribute("field");
-				} catch (NullPointerException ex) {
-
-				}
-
-				keyList.add(new Key(name, grep, delim, field));
+				keyList.add(new Key(e));
 			}
 		}
 	}
-
 }

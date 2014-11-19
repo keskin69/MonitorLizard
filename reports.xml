@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reports>
+	<report name="Monitor">
+		<executeList>
+			<cmd>C0</cmd>
+			<cmd>C2</cmd>
+			<cmd>C3</cmd>
+			<cmd>T8</cmd>
+		</executeList>
+	</report>
+
+	<report name="RptDaily" mail="areca">
+		<title>KMSH/FÜS Bildirim Raporu</title>
+		<executeList>
+			<cmd>Q1</cmd>
+			<cmd>Q2</cmd>
+			<cmd>Q3</cmd>
+			<cmd>C0</cmd>
+			<cmd>C1</cmd>
+			<cmd>C1a</cmd>
+			<cmd>C1b</cmd>
+			<cmd>T8</cmd>
+		</executeList>
+	</report>
+
+	<report name="KMSHStopped" mail="areca" sms="acil">
+		<title>KMSH/FÜS Stopped</title>
+		<executeList>
+			<cmd>C0</cmd>
+		</executeList>
+		<reportCondition>
+			<precondition>(.*)running(.*)</precondition>
+			<postcondition>(.*)stopped(.*)</postcondition>
+		</reportCondition>
+	</report>
+
+	<report name="KMSHStarted" mail="areca" sms="acil">
+		<title>KMSH/FÜS Started</title>
+		<executeList>
+			<cmd>C0</cmd>
+		</executeList>
+		<reportCondition>
+			<precondition>(.*)stopped(.*)</precondition>
+			<postcondition>(.*)running(.*)</postcondition>
+		</reportCondition>
+	</report>
+
+	<report name="PartitionControl" mail="partition" sms="mex">
+		<title>KMSH Partition Hatası !!!</title>
+		<executeList>
+			<cmd>cmdPartition</cmd>
+		</executeList>
+		<reportCondition>
+			<postcondition>(.*)Partition error(.*)</postcondition>
+		</reportCondition>
+		<note>Not: Acil olarak mustafa.samatli@turktelekom.com.tr'ye e-mail
+			ile bildirimde bulunun.
+		</note>
+	</report>
+
+	<report name="Test" mail="mex" sms="mex">
+		<title>Test Rapouru ıöşçğ</title>
+		<executeList>
+			<cmd>QTest</cmd>
+		</executeList>
+		<reportCondition>
+		</reportCondition>
+		<note>Test note satırı</note>
+	</report>
+</reports>

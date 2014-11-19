@@ -3,7 +3,7 @@ package tr.com.telekom.kmsh.config;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import tr.com.telekom.kmsh.manager.DataManager;
+import tr.com.telekom.kmsh.manager.SQLManager;
 import tr.com.telekom.kmsh.manager.SSHManager;
 
 public class ConnectionConfig extends AConfig {
@@ -46,7 +46,7 @@ public class ConnectionConfig extends AConfig {
 			result = SSHManager.executeCommand(this, cmd);
 		} else if (type.equals("sql")) {
 			// execute an sql command
-			result = DataManager.executeSQL(this, cmd);
+			result = SQLManager.executeSQL(this, cmd);
 		}
 
 		return result;

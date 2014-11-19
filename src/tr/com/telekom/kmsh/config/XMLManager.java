@@ -3,7 +3,6 @@ package tr.com.telekom.kmsh.config;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,8 +19,7 @@ public class XMLManager extends AConfigManager {
 	public ArrayList<CommandConfig> commandList = null;
 	public ArrayList<ReportConfig> reportList = null;
 	public ArrayList<SMSConfig> smsList = null;
-	public HashMap<String, String> aliasList = null;
-	public ArrayList<KeyConfig> keyList = null;
+	public ArrayList<KeyConfig> group = null;
 
 	public XMLManager() {
 		mailList = new ArrayList<MailConfig>();
@@ -29,8 +27,7 @@ public class XMLManager extends AConfigManager {
 		reportList = new ArrayList<ReportConfig>();
 		commandList = new ArrayList<CommandConfig>();
 		smsList = new ArrayList<SMSConfig>();
-		aliasList = new HashMap<String, String>();
-		keyList = new ArrayList<KeyConfig>();
+		group = new ArrayList<KeyConfig>();
 	}
 
 	public void readConfig(String file) {
@@ -131,14 +128,6 @@ public class XMLManager extends AConfigManager {
 				commandList.add(new CommandConfig(nList.item(i)));
 			}
 
-			// alias
-			nList = doc.getElementsByTagName("alias");
-			for (int i = 0; i < nList.getLength(); i++) {
-				Element eElement = (Element) nList.item(i);
-				aliasList.put(eElement.getAttribute("name"), nList.item(i)
-						.getTextContent());
-			}
-
 			// reports
 			nList = doc.getElementsByTagName("report");
 			for (int i = 0; i < nList.getLength(); i++) {
@@ -147,12 +136,12 @@ public class XMLManager extends AConfigManager {
 				reportList.add(rep);
 			}
 
-			// keyList
-			nList = doc.getElementsByTagName("keyList");
+			// ssh group list
+			nList = doc.getElementsByTagName("group");
 			for (int i = 0; i < nList.getLength(); i++) {
 				KeyConfig key = new KeyConfig();
 				key.parseXML(nList.item(i));
-				keyList.add(key);
+				group.add(key);
 			}
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
@@ -165,15 +154,6 @@ public class XMLManager extends AConfigManager {
 			e.printStackTrace();
 		}
 
-	}
-
-	public String insertAliases(String cmd) {
-		for (String key : aliasList.keySet()) {
-			cmd = cmd.replaceAll(key, aliasList.get(key));
-		}
-
-		cmd = cmd.replaceAll("\n", "");
-		return cmd;
 	}
 
 	public ConnectionConfig findConnection(String conName) {

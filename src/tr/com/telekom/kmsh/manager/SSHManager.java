@@ -18,6 +18,7 @@ public class SSHManager {
 		SSHClient client = new SSHClient();
 		try {
 			client.loadKnownHosts();
+			//client.setConnectTimeout(10000);
 			client.connect(con.host);
 			client.authPassword(con.user, con.password);
 			final Session session = client.startSession();
@@ -25,7 +26,7 @@ public class SSHManager {
 				final Command cmd = session.exec(cmdStr);
 				output = IOUtils.readFully(cmd.getInputStream()).toString();
 
-				cmd.join(1, TimeUnit.SECONDS);
+				cmd.join(10, TimeUnit.SECONDS);
 			} finally {
 				session.close();
 			}
