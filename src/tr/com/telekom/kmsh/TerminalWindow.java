@@ -9,7 +9,7 @@ import javax.swing.ScrollPaneConstants;
 
 import tr.com.telekom.kmsh.ui.CommandArea;
 
-public class Terminal extends JFrame {
+public class TerminalWindow extends JFrame {
 
 	/**
 	 * 
@@ -18,7 +18,7 @@ public class Terminal extends JFrame {
 
 	private CommandArea txaEditor = null;
 
-	public Terminal(String configFile) {
+	public TerminalWindow(String configFile) {
 		super("M# Commander V0.1");
 
 		setSize(400, 600);

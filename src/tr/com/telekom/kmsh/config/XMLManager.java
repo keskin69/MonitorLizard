@@ -176,9 +176,9 @@ public class XMLManager extends AConfigManager {
 		return null;
 	}
 
-	public CommandConfig findCommand(String conName) {
+	public CommandConfig findCommand(String cmdId) {
 		for (CommandConfig cmd : commandList) {
-			if (cmd.name.equals(conName)) {
+			if (cmd.id.equals(cmdId)) {
 				return cmd;
 			}
 		}

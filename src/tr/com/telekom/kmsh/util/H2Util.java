@@ -10,6 +10,8 @@ import java.util.Enumeration;
 
 import org.h2.Driver;
 
+import tr.com.telekom.kmsh.config.PeriodicCommand;
+
 public class H2Util {
 	public static void unregisterDrivers() {
 		Enumeration<java.sql.Driver> drivers = DriverManager.getDrivers();
@@ -74,7 +76,16 @@ public class H2Util {
 		return out;
 	}
 
-	public static void writeDB(String key, String value, String id) {
+	public static void writeDB(PeriodicCommand cmd, String value) {
+		writeDB(cmd.id, cmd.name, cmd.command, value);
+	}
+
+	public static void writeTag(String id) {
+		writeDB(id, "", "", "");
+	}
+
+	public static void writeDB(String id, String name, String command,
+			String value) {
 		Connection conn;
 		ConfigReader conf = ConfigReader.getInstance();
 
@@ -86,8 +97,8 @@ public class H2Util {
 					conf.getProperty("dbUser"), conf.getProperty("dbPassword"));
 
 			String date = KmshUtil.getCurrentTimeStamp();
-			String sql = "insert into tblKey values ('" + date + "','" + key
-					+ "','" + value + "','" + id + "')";
+			String sql = "insert into tblKey values ('" + id + "','" + name
+					+ "','" + command + "','" + date + "','" + value + "')";
 			Statement stat = conn.createStatement();
 			stat.execute(sql);
 
@@ -101,6 +112,7 @@ public class H2Util {
 			e.printStackTrace();
 		}
 	}
+	
 
 	// public static void main(String... args) throws Exception {
 	// Class.forName("org.h2.Driver");
@@ -111,9 +123,11 @@ public class H2Util {
 	// // from the SQL script file 'init.sql'
 	// // stat.execute("runscript from 'init.sql'");
 	//
-	// stat.execute("create table tblKey (date varchar(255), key varchar(255), value varchar(255), id varchar(255)");
+	// stat.execute("create table tblKey (id varchar(255), name varchar(255), command varchar(255), date varchar(19), value varchar(255)");
 	//
 	// stat.close();
 	// conn.close();
 	// }
+	
+	// create table tblReport(date varchar(19), id varchar(255), content blob);
 }

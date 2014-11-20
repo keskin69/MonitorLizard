@@ -12,12 +12,13 @@ public class ReportConfig extends AConfig {
 	public String useMail = null;
 	public String title = null;
 	public String useSms = null;
-	public String preCondition = null;
-	public String postCondition = null;
+	public ArrayList<Condition> condition = null;
 	public String note = null;
 
 	public ReportConfig() {
 		commands = new ArrayList<String>();
+		condition = new ArrayList<Condition>();
+
 	}
 
 	public void parseXML(Node nNode) {
@@ -45,15 +46,12 @@ public class ReportConfig extends AConfig {
 			} catch (NullPointerException ex) {
 
 			}
-			try {
-				preCondition = eElement.getElementsByTagName("precondition")
-						.item(0).getTextContent();
-			} catch (NullPointerException ex) {
 
-			}
 			try {
-				postCondition = eElement.getElementsByTagName("postcondition")
-						.item(0).getTextContent();
+				NodeList node = eElement.getElementsByTagName("condition");
+				for (int i = 0; i < node.getLength(); i++) {
+					condition.add(new Condition(node.item(i)));
+				}
 			} catch (NullPointerException ex) {
 
 			}
@@ -70,5 +68,15 @@ public class ReportConfig extends AConfig {
 				commands.add(node.item(i).getTextContent());
 			}
 		}
+	}
+
+	public boolean checkCondition() {
+		for (Condition con : condition) {
+			if (con.checkRule()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

@@ -2,14 +2,14 @@ package tr.com.telekom.kmsh.config;
 
 import org.w3c.dom.Element;
 
-public class Command {
+public class PeriodicCommand {
 	public String name = null;
 	public String command = null;
 	public String delim = null;
 	public String field = null;
 	public String id = null;
 
-	public Command(String grp, Element e) {
+	public PeriodicCommand(String grp, Element e) {
 		command = e.getTextContent();
 		command = command.replaceAll("\n", "");
 

@@ -2,27 +2,35 @@
 <commands>
 	<group name="sql2" period="0">
 		<connectBy>sinan</connectBy>
-		<cmd id="1">select COUNT(*) from TAH_DONEM where donem=#donem</cmd>
+		<cmd name="TestSQL" id="1">select COUNT(*) from TAH_DONEM where
+			donem=#donem</cmd>
 	</group>
 
 	<group name="sql1" period="1440">
 		<connectBy>sinan</connectBy>
-		<cmd id="1">select /* + parallel(x,8) */ COUNT(*) as CDR from
+		<cmd name="Dönem içi çıkılan bildirim" id="1">select /* +
+			parallel(x,8) */ COUNT(*) as CDR from
 			ARC_CDR_RAW_DATA x
-			where STATUS=0 and DONEM=#donem
+			where STATUS=0
+			and DONEM=#donem
 		</cmd>
-		<cmd id="2">select /* + parallel(x,8) */ COUNT(*) as TOPLAM,
+		<cmd name="Bugün çıkılan bildirim" id="2">select /* + parallel(x,8) */
+			COUNT(*) as TOPLAM,
 			NOTIFICATION_TYPE,
-			EVENT_TYPE from ARC_ABONE_BILDIRIM x
+			EVENT_TYPE from
+			ARC_ABONE_BILDIRIM x
 			where
 			NOTIFICATION_DATE LIKE
 			'#today%'
-			GROUP BY EVENT_TYPE,
+			GROUP BY
+			EVENT_TYPE,
 			NOTIFICATION_TYPE
 		</cmd>
-		<cmd id="3">select /* + parallel(x,8) */ COUNT(*) as TOPLAM,
+		<cmd name="Dün çıkılan bildirim" id="3">select /* + parallel(x,8) */
+			COUNT(*) as TOPLAM,
 			NOTIFICATION_TYPE,
-			EVENT_TYPE from ARC_ABONE_BILDIRIM x
+			EVENT_TYPE from
+			ARC_ABONE_BILDIRIM x
 			where
 			NOTIFICATION_DATE LIKE
 			'#yesterday%'

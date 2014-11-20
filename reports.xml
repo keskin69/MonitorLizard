@@ -12,8 +12,7 @@
 			<cmd>cmd2.4</cmd>
 		</executeList>
 		<reportCondition>
-			<precondition>(.*)running(.*)</precondition>
-			<postcondition>(.*)stopped(.*)</postcondition>
+			<condition check="cmd2.4">(.*)stopped(.*)</condition>
 		</reportCondition>
 	</report>
 
@@ -23,18 +22,18 @@
 			<cmd>cmd2.4</cmd>
 		</executeList>
 		<reportCondition>
-			<precondition>(.*)stopped(.*)</precondition>
-			<postcondition>(.*)running(.*)</postcondition>
+			<condition check="cmd2.4">(.*)running(.*)</condition>
 		</reportCondition>
 	</report>
 
 	<report name="PartitionControl" mail="partition" sms="mex">
 		<title>KMSH Partition Hatası !!!</title>
 		<executeList>
-			<cmd>cmdPartition</cmd>
+			<cmd>cmd1.13</cmd>
 		</executeList>
 		<reportCondition>
-			<postcondition>(.*)Partition error(.*)</postcondition>
+			<postcondition check="cmdPartition">(.*)Partition error(.*)
+			</postcondition>
 		</reportCondition>
 		<note>Not: Acil olarak mustafa.samatli@turktelekom.com.tr'ye e-mail
 			ile bildirimde bulunun.

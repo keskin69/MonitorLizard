@@ -21,7 +21,7 @@ public class PeriodicMonitor {
 				// write content to report log
 				KmshUtil.writeLog("log/" + grpConf.name + ".log", content);
 
-				H2Util.writeDB("", "", grpConf.name);
+				H2Util.writeTag(grpConf.name);
 			} else {
 				KmshLogger.log("Skipping group commands for " + grpConf.name);
 			}

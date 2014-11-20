@@ -2,7 +2,7 @@ package tr.com.telekom.kmsh.manager;
 
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
-import tr.com.telekom.kmsh.config.Command;
+import tr.com.telekom.kmsh.config.PeriodicCommand;
 import tr.com.telekom.kmsh.config.GroupCommandConfig;
 import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.KmshUtil;
@@ -20,7 +20,7 @@ public class KeyManager {
 		// execute all commands in the specified group
 		ConnectionConfig connection = conf.findConnection(keyConf.connectBy);
 		if (connection != null) {
-			for (Command cmd : keyConf.commandList) {
+			for (PeriodicCommand cmd : keyConf.commandList) {
 				String command = "";
 
 				cmd.command = KmshUtil.insertFunctionValue(cmd.command);
@@ -47,7 +47,7 @@ public class KeyManager {
 				}
 
 				if (!result.equals("")) {
-					H2Util.writeDB(cmd.name, result, cmd.id);
+					H2Util.writeDB(cmd, result);
 					out += cmd.command + "=" + result + ";";
 				}
 			}

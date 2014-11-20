@@ -4,7 +4,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class CommandConfig extends AConfig {
-	public String title = null;
+	public String id = null;
 	public String connectBy = null;
 	public String cmd = null;
 	public String name = null;
@@ -18,7 +18,7 @@ public class CommandConfig extends AConfig {
 
 			Element eElement = (Element) nNode;
 
-			title = eElement.getAttribute("title");
+			id = eElement.getAttribute("id");
 			name = eElement.getAttribute("name");
 
 			try {

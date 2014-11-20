@@ -13,11 +13,11 @@ public class GroupCommandConfig extends AConfig {
 	public String name = null;
 	public String base = null;
 	public String connectBy = null;
-	public ArrayList<Command> commandList = null;
+	public ArrayList<PeriodicCommand> commandList = null;
 	public int period = 0;
 
 	public GroupCommandConfig() {
-		commandList = new ArrayList<Command>();
+		commandList = new ArrayList<PeriodicCommand>();
 	}
 
 	public void parseXML(Node nNode) {
@@ -51,7 +51,7 @@ public class GroupCommandConfig extends AConfig {
 				Node n = node.item(i);
 				Element e = (Element) n;
 
-				commandList.add(new Command(name, e));
+				commandList.add(new PeriodicCommand(name, e));
 			}
 		}
 	}

@@ -1,108 +1,14 @@
 package tr.com.telekom.kmsh.manager;
 
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import tr.com.telekom.kmsh.config.CommandConfig;
-import tr.com.telekom.kmsh.config.XMLManager;
-import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.ReportConfig;
-import tr.com.telekom.kmsh.util.H2Util;
-import tr.com.telekom.kmsh.util.KmshUtil;
+import tr.com.telekom.kmsh.config.XMLManager;
 
-public class ReportManager {
-	private ReportConfig repConfig = null;
-	private ArrayList<ContentPart> content = null;
-
-	public static enum ContentType {
-		TEXT, TABLE
-	};
-
+public class ReportManager extends AReportManager {
 	public ReportManager(ReportConfig repConfig) {
-		this.repConfig = repConfig;
-		content = new ArrayList<ContentPart>();
+		super(repConfig);
+		// TODO Auto-generated constructor stub
 	}
-
-	public boolean process(XMLManager conf) {
-		boolean condition = true;
-		String result = null;
-
-		for (String cmdName : repConfig.commands) {
-			result = readFromDB(cmdName);
-			if (result.equals("")) {
-				result = execute(conf, cmdName);
-			} else {
-				String title = H2Util.readDB(cmdName, "key");
-				addContent(ContentType.TEXT, title, result);
-			}
-		}
-
-		String preValue = H2Util.readDB(repConfig.name, "value");
-		if (!preValue.equals("")) {
-			if (repConfig.preCondition != null) {
-				Pattern r = Pattern.compile(repConfig.preCondition);
-				Matcher m = r.matcher(preValue);
-				if (!m.find()) {
-					condition = false;
-				}
-			}
-		}
-
-		if (repConfig.postCondition != null) {
-			Pattern r = Pattern.compile(repConfig.postCondition);
-			Matcher m = r.matcher(result);
-			if (!m.find()) {
-				condition = false;
-			}
-		}
-
-		H2Util.writeDB(repConfig.title, result, repConfig.name);
-
-		return condition;
-	}
-
-	public String execute(XMLManager conf, String cmdName) {
-		String result = null;
-		CommandConfig command = conf.findCommand(cmdName);
-
-		if (command != null) {
-			// execute all commands
-			ConnectionConfig connection = conf
-					.findConnection(command.connectBy);
-
-			// insert java methods
-			String cmd = KmshUtil.insertFunctionValue(command.cmd);
-
-			if (connection != null) {
-				if (connection.type.equals("ssh")) {
-					// execute a ssh command
-					result = SSHManager.executeCommand(connection, cmd);
-					addContent(ContentType.TEXT, command.title, result);
-				} else if (connection.type.equals("sql")) {
-					// execute a db command
-					result = SQLManager.executeSQL(connection, cmd);
-					addContent(ContentType.TABLE, command.title, result);
-				}
-			} else {
-				// Java command
-				result = cmd;
-				addContent(ContentType.TEXT, command.title, result);
-			}
-		}
-
-		if (repConfig.note != null) {
-			addContent(ContentType.TEXT, "Not:", repConfig.note);
-		}
-
-		return result;
-	}
-
-	public String readFromDB(String cmdId) {
-		String value = H2Util.readDB(cmdId, "value");
-		return value;
-	}
-
+	
 	public final void addContent(ContentType type, String title, String body) {
 		if (!body.endsWith("\n")) {
 			body += "\n";

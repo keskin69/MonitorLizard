@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<commands>
-		<command name="ExceptionCheck" title="Check for Exception">
+		<command id="ExceptionCheck" name="Check for Exception">
 			<connectBy>peste</connectBy>
 			<cmd>tail -500 /girdi/ARECA_DEPLOYMENT/areca/log/areca.out</cmd>
 		</command>
 
-		<command name="C2" title="Hata logu">
+		<command id="C2" name="Hata logu">
 			<connectBy>peste</connectBy>
 			<cmd>tail -50 /girdi/ARECA_DEPLOYMENT/areca/log/areca.err</cmd>
 		</command>
 
-		<command name="C3" title="Log">
+		<command id="C3" name="Log">
 			<connectBy>peste</connectBy>
 			<cmd>tail -50 /girdi/ARECA_DEPLOYMENT/areca/log/areca.out</cmd>
 		</command>
 	</commands>
-	<command name="QTest" title="Test">
-		<connectBy>sinan</connectBy>
-		<sql>select COUNT(*) from TAH_DONEM
-		</sql>
-	</command>
 </config>

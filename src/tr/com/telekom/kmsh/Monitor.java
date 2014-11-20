@@ -6,6 +6,7 @@ import org.apache.log4j.varia.NullAppender;
 
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
+import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.KmshLogger;
 
 public class Monitor {
@@ -33,19 +34,23 @@ public class Monitor {
 
 		ConfigReader.file = confFile;
 		ConfigReader conf = ConfigReader.getInstance();
-		String xmlFiles = conf.getProperty("xmlFiles");
+		String xmlFiles = conf.getProperty("base")
+				+ conf.getProperty("xmlFiles");
 		XMLManager xmlManager = new XMLManager();
 		xmlManager.readConfig(xmlFiles);
 
+		//TODO
+		H2Util.writeTag("sql1");
+		
 		if (type.equals("-t")) {
 			new PeriodicMonitor(xmlManager);
 		} else if (type.equals("-r")) {
 			new Repgen(xmlManager, name);
 		} else if (type.equals("-win")) {
-			new Terminal(confFile);
+			new TerminalWindow(confFile);
 		} else if (type.equals("-term")) {
 			// TODO terminal without a window
-			new Terminal(confFile);
+			new TerminalWindow(confFile);
 		}
 
 		KmshLogger.log("Operations completed");
