@@ -4,6 +4,7 @@
 		<title>KMSH/FÜS Bildirim Raporu</title>
 		<executeList>
 			<cmd>cmd2.4</cmd>
+			<cmd>Uptime</cmd>
 			<cmd>cmd2.1</cmd>
 			<cmd>cmd2.2</cmd>
 			<cmd>cmd2.3</cmd>
@@ -54,7 +55,7 @@
 		<title>Test Rapouru</title>
 		<executeList>
 			<cmd>sql2.1</cmd>
-			<cmd>C2</cmd>
+			<cmd>UpTime</cmd>
 		</executeList>
 		<note>Test note satırı</note>
 	</report>

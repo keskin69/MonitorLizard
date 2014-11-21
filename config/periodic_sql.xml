@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <commands>
-	<group name="sql2" period="0">
+	<group name="sql2" period="5">
 		<connectBy>sinan</connectBy>
 		<cmd name="TestSQL" id="1">select COUNT(*) from TAH_DONEM where
 			donem=#donem</cmd>

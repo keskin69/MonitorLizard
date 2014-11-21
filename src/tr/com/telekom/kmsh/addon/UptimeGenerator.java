@@ -29,9 +29,11 @@ public class UptimeGenerator implements IAddOn {
 
 			String val = col[1];
 			if (val.contains("running")) {
-				uptime += (curTime.getTime() - prevTime.getTime()) / 60;
+				uptime += (curTime.getTime() - prevTime.getTime())
+						/ (60 * 1000);
 			} else {
-				downtime += (curTime.getTime() - prevTime.getTime()) / 60;
+				downtime += (curTime.getTime() - prevTime.getTime())
+						/ (60 * 1000);
 			}
 
 			prevTime = curTime;
@@ -47,5 +49,11 @@ public class UptimeGenerator implements IAddOn {
 		double downRatio = (downtime * 100D) / (uptime + downtime + 0D);
 		H2Util.writeDB("DownTime", "DownTime%", "",
 				KmshUtil.DecimalFmt.format(downRatio));
+
+		H2Util.writeDB("TotalDownTime", "Total Down Time ", "",
+				KmshUtil.DecimalFmt.format(downtime));
+
+		H2Util.writeDB("TotalUpTime", "Total Up Time ", "",
+				KmshUtil.DecimalFmt.format(uptime));
 	}
 }
