@@ -13,6 +13,12 @@ import org.h2.Driver;
 import tr.com.telekom.kmsh.config.PeriodicCommand;
 
 public class H2Util {
+	public static final int ID = 0;
+	public static final int NAME = 1;
+	public static final int COMMAND = 2;
+	public static final int DATE = 3;
+	public static final int VALUE = 4;
+
 	public static void unregisterDrivers() {
 		Enumeration<java.sql.Driver> drivers = DriverManager.getDrivers();
 		while (drivers.hasMoreElements()) {
@@ -112,7 +118,6 @@ public class H2Util {
 			e.printStackTrace();
 		}
 	}
-	
 
 	// public static void main(String... args) throws Exception {
 	// Class.forName("org.h2.Driver");
@@ -128,6 +133,6 @@ public class H2Util {
 	// stat.close();
 	// conn.close();
 	// }
-	
+
 	// create table tblReport(date varchar(19), id varchar(255), content blob);
 }

@@ -34,7 +34,7 @@ public class GroupCommandConfig extends AConfig {
 				connectBy = eElement.getElementsByTagName("connectBy").item(0)
 						.getTextContent();
 			} catch (NullPointerException ex) {
-				ex.printStackTrace();
+				connectBy = "";
 			}
 
 			try {

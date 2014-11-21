@@ -6,11 +6,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class KmshUtil {
+	public static final DecimalFormat DecimalFmt = new DecimalFormat("#.##");
 	public static void writeLog(String logFile, String content) {
 		File file = new File(logFile);
 
@@ -21,6 +23,7 @@ public class KmshUtil {
 
 			bw.write(content);
 			bw.close();
+			fw.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -101,5 +104,9 @@ public class KmshUtil {
 		Date now = new Date();
 		String strDate = sdfDate.format(now);
 		return strDate;
+	}
+
+	public static Date getCurrentTime() {
+		return convertToDate(getCurrentTimeStamp());
 	}
 }

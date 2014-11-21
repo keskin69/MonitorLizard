@@ -13,7 +13,7 @@ import net.schmizz.sshj.connection.channel.direct.Session.Command;
 public class SSHManager {
 	public static String executeCommand(ConnectionConfig con, String cmdStr) {
 		String output = null;
-		KmshLogger.log("Executing ssh >" + cmdStr);
+		KmshLogger.log("Executing ssh> " + cmdStr);
 
 		SSHClient client = new SSHClient();
 		try {

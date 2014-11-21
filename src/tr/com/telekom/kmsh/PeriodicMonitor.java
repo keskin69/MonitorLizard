@@ -2,7 +2,7 @@ package tr.com.telekom.kmsh;
 
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.GroupCommandConfig;
-import tr.com.telekom.kmsh.manager.KeyManager;
+import tr.com.telekom.kmsh.manager.PeriodicManager;
 import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.KmshUtil;
 import tr.com.telekom.kmsh.util.KmshLogger;
@@ -14,7 +14,7 @@ public class PeriodicMonitor {
 			// check last execution time for periodic commands
 			if (H2Util.getAge(grpConf.name) >= grpConf.period) {
 				KmshLogger.log("Processing CommandList " + grpConf.name);
-				KeyManager keyMan = new KeyManager(grpConf);
+				PeriodicManager keyMan = new PeriodicManager(grpConf);
 
 				String content = keyMan.process(conf);
 

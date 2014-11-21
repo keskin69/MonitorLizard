@@ -11,7 +11,7 @@ public class PeriodicCommand {
 
 	public PeriodicCommand(String grp, Element e) {
 		command = e.getTextContent();
-		command = command.replaceAll("\n", "");
+		command = command.replaceAll("\n", " ");
 
 		name = e.getAttribute("name");
 		if (name.equals("")) {

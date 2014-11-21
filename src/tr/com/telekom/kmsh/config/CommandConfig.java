@@ -30,6 +30,7 @@ public class CommandConfig extends AConfig {
 			try {
 				cmd = eElement.getElementsByTagName("cmd").item(0)
 						.getTextContent();
+				cmd = cmd.replaceAll("\n", " ");
 			} catch (NullPointerException ex) {
 			}
 		}
