@@ -4,4 +4,9 @@
 		<connectBy>java</connectBy>
 		<cmd id="1" name="Up/Down Zamanı">tr.com.telekom.kmsh.addon.UptimeGenerator</cmd>
 	</group>
+
+	<group name="class2" period="0">
+		<connectBy>java</connectBy>
+		<cmd id="1" name="Bildirimdeki Gecikmeler">tr.com.telekom.kmsh.addon.DelayReport</cmd>
+	</group>
 </commands>

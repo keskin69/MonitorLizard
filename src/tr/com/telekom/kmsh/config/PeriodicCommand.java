@@ -11,10 +11,10 @@ public class PeriodicCommand {
 
 	public PeriodicCommand(String grp, Element e) {
 		command = e.getTextContent();
-		command = command.replaceAll("\n", "");
-		command = command.replaceAll("\t", "");
-		System.out.println(command);
-		name = e.getAttribute("name").replaceAll("\n", "");
+		command = command.replaceAll("\n", " ");
+		command = command.replaceAll("\t", " ");
+
+		name = e.getAttribute("name").replaceAll("\n", " ");
 		if (name.equals("")) {
 			name = command;
 		}

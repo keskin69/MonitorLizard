@@ -31,14 +31,22 @@ public abstract class AReportManager {
 
 		String before = H2Util.readDB(repConfig.name, "value");
 
-		for (String cmdName : repConfig.commands) {
-			result = H2Util.readDB(cmdName, "value");
+		for (String cmdId : repConfig.commands) {
+			result = H2Util.readDB(cmdId, "value");
 			if (result.equals("")) {
-				result = execute(conf, cmdName);
+				execute(conf, cmdId);
+
+				if (repConfig.note != null) {
+					addContent(ContentType.TEXT, "Not:", repConfig.note);
+				}
 			} else {
-				String title = H2Util.readDB(cmdName, "name");
+				String title = H2Util.readDB(cmdId, "name");
 				addContent(ContentType.TEXT, title, result);
 			}
+		}
+
+		if (repConfig.condition.size() == 0) {
+			return true;
 		}
 
 		condition = repConfig.checkCondition();
@@ -57,9 +65,9 @@ public abstract class AReportManager {
 		return condition;
 	}
 
-	public String execute(XMLManager conf, String cmdName) {
+	public void execute(XMLManager conf, String cmdId) {
 		String result = null;
-		CommandConfig command = conf.findCommand(cmdName);
+		CommandConfig command = conf.findCommand(cmdId);
 
 		if (command != null) {
 			// execute all commands
@@ -78,18 +86,12 @@ public abstract class AReportManager {
 					// execute a db command
 					result = SQLManager.executeSQL(connection, cmd);
 					addContent(ContentType.TABLE, command.name, result);
+				} else {
+					// Java command
+					result = cmd;
+					addContent(ContentType.TEXT, command.name, result);
 				}
-			} else {
-				// Java command
-				result = cmd;
-				addContent(ContentType.TEXT, command.name, result);
 			}
-		}
-
-		if (repConfig.note != null) {
-			addContent(ContentType.TEXT, "Not:", repConfig.note);
-		}
-
-		return result;
+		} 
 	}
 }

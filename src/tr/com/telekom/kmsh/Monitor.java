@@ -6,7 +6,7 @@ import org.apache.log4j.varia.NullAppender;
 
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
-//import tr.com.telekom.kmsh.util.H2Util;
+import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.KmshLogger;
 
 public class Monitor {
@@ -20,7 +20,7 @@ public class Monitor {
 		BasicConfigurator.configure(new NullAppender());
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
-		String type = "-t";
+		String type = "-r";
 		String name = "Test";
 
 		if (args.length == 2) {
@@ -39,9 +39,9 @@ public class Monitor {
 		XMLManager xmlManager = new XMLManager();
 		xmlManager.readConfig(xmlFiles);
 
-		//TODO
-		//H2Util.writeTag("sql1");
-		
+		// TODO
+		// H2Util.writeTag("sql1");
+
 		if (type.equals("-t")) {
 			new PeriodicMonitor(xmlManager);
 		} else if (type.equals("-r")) {

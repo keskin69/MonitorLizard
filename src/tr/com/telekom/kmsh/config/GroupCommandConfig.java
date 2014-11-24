@@ -19,7 +19,7 @@ public class GroupCommandConfig extends AConfig {
 	public GroupCommandConfig() {
 		commandList = new ArrayList<PeriodicCommand>();
 	}
-
+	
 	public void parseXML(Node nNode) {
 		if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 

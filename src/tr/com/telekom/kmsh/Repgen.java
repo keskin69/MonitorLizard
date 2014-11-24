@@ -19,12 +19,12 @@ public class Repgen {
 		for (ReportConfig repConf : conf.reportList) {
 			if (repConf.name.equals(repName)) {
 				ReportManager report = new ReportManager(repConf);
-
+				KmshLogger.log("Processing Report " + repName);
 				boolean condition = report.process(conf);
 				content = report.getContent();
-				KmshLogger.log("Processing Report " + repName);
 
 				if (condition) {
+					KmshLogger.log("Sending notifications ");
 					// send mail
 					sendMail(conf, repConf, content);
 
@@ -44,8 +44,7 @@ public class Repgen {
 		}
 	}
 
-	private void sendMail(XMLManager conf, ReportConfig repConf,
-			String content) {
+	private void sendMail(XMLManager conf, ReportConfig repConf, String content) {
 		// Send content to SMS
 		if (repConf.useMail != null) {
 			MailConfig mailConf = conf.findMailConfig(repConf.useMail);
@@ -59,8 +58,7 @@ public class Repgen {
 		}
 	}
 
-	private void sendSMS(XMLManager conf, ReportConfig repConf,
-			String content) {
+	private void sendSMS(XMLManager conf, ReportConfig repConf, String content) {
 		// Send content to SMS
 		if (repConf.useSms != null) {
 			SMSConfig sms = conf.findSMS(repConf.useSms);

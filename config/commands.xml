@@ -15,5 +15,11 @@
 			<connectBy>peste</connectBy>
 			<cmd>tail -50 /girdi/ARECA_DEPLOYMENT/areca/log/areca.out</cmd>
 		</command>
+
+		<command id="NotDelay" name="Bildirimdeki Gecikme">
+			<connectBy>sinan</connectBy>
+			<cmd>select notification_date, triggering_event_date from
+				arc_abone_bildirim where notification_date like '#today%'</cmd>
+		</command>
 	</commands>
 </config>

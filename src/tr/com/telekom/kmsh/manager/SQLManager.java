@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
+import tr.com.telekom.kmsh.util.ConfigReader;
 import tr.com.telekom.kmsh.util.KmshLogger;
 
 public class SQLManager {
@@ -43,7 +43,6 @@ public class SQLManager {
 			statement = conn.createStatement();
 			result = statement.executeQuery(sql);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			output = e.getMessage();
 
 			return output;
@@ -59,7 +58,9 @@ public class SQLManager {
 					colNumber = rsmd.getColumnCount();
 					String header = "";
 					for (int i = 1; i <= colNumber; i++) {
-						header += rsmd.getColumnName(i) + XMLManager.DELIM;
+						header += rsmd.getColumnName(i)
+								+ ConfigReader.getInstance().getProperty(
+										"DELIM");
 					}
 
 					output = header;
@@ -67,7 +68,8 @@ public class SQLManager {
 
 				String row = "";
 				for (int i = 1; i <= colNumber; i++) {
-					row += result.getString(i) + XMLManager.DELIM;
+					row += result.getString(i)
+							+ ConfigReader.getInstance().getProperty("DELIM");
 				}
 
 				output += "\n" + row;

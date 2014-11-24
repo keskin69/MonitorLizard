@@ -6,6 +6,8 @@ import org.w3c.dom.Node;
 import tr.com.telekom.kmsh.addon.IAddOn;
 import tr.com.telekom.kmsh.manager.SQLManager;
 import tr.com.telekom.kmsh.manager.SSHManager;
+import tr.com.telekom.kmsh.util.KmshLogger;
+import tr.com.telekom.kmsh.util.KmshUtil;
 
 public class ConnectionConfig extends AConfig {
 	public String name = null;
@@ -55,6 +57,7 @@ public class ConnectionConfig extends AConfig {
 			result = SQLManager.executeSQL(this, cmd);
 		} else if (type.equals("java")) {
 			// execute a java class
+			KmshLogger.log("Executing Java Class> " + cmd);
 			try {
 				IAddOn addOn = (IAddOn) Class.forName(cmd).newInstance();
 				addOn.process();

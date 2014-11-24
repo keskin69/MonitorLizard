@@ -14,25 +14,23 @@ public class CommandConfig extends AConfig {
 	}
 
 	public void parseXML(Node nNode) {
-		if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
-			Element eElement = (Element) nNode;
+		Element eElement = (Element) nNode;
 
-			id = eElement.getAttribute("id");
-			name = eElement.getAttribute("name");
+		id = eElement.getAttribute("id");
+		name = eElement.getAttribute("name");
 
-			try {
-				connectBy = eElement.getElementsByTagName("connectBy").item(0)
-						.getTextContent();
-			} catch (NullPointerException ex) {
-			}
-
-			try {
-				cmd = eElement.getElementsByTagName("cmd").item(0)
-						.getTextContent();
-				cmd = cmd.replaceAll("\n", " ");
-			} catch (NullPointerException ex) {
-			}
+		try {
+			connectBy = eElement.getElementsByTagName("connectBy").item(0)
+					.getTextContent();
+		} catch (NullPointerException ex) {
 		}
+
+		try {
+			cmd = eElement.getElementsByTagName("cmd").item(0).getTextContent();
+			cmd = cmd.replaceAll("\n", " ");
+		} catch (NullPointerException ex) {
+		}
+
 	}
 }

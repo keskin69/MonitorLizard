@@ -1,14 +1,13 @@
 package tr.com.telekom.kmsh.manager;
 
 import tr.com.telekom.kmsh.config.ReportConfig;
-import tr.com.telekom.kmsh.config.XMLManager;
+import tr.com.telekom.kmsh.util.ConfigReader;
 
 public class ReportManager extends AReportManager {
 	public ReportManager(ReportConfig repConfig) {
 		super(repConfig);
-		// TODO Auto-generated constructor stub
 	}
-	
+
 	public final void addContent(ContentType type, String title, String body) {
 		if (!body.endsWith("\n")) {
 			body += "\n";
@@ -32,14 +31,15 @@ public class ReportManager extends AReportManager {
 			}
 
 			if (p.type == ContentType.TEXT) {
-				output += p.title + ":";
+				output += p.title;
 				output += p.body;
 			} else {
 				output += "\n" + p.title + "\n";
 				String lines[] = p.body.split("\n");
 
 				for (String str : lines) {
-					String col[] = str.split(XMLManager.DELIM);
+					String col[] = str.split(ConfigReader.getInstance()
+							.getProperty("DELIM"));
 
 					for (String c : col) {
 						output += c + ";";
@@ -64,7 +64,8 @@ public class ReportManager extends AReportManager {
 				output += p.title + "<BR><TABLE>\n";
 
 				for (String str : lines) {
-					String col[] = str.split(XMLManager.DELIM);
+					String col[] = str.split(ConfigReader.getInstance()
+							.getProperty("DELIM"));
 
 					output += "<TR>";
 					for (String c : col) {

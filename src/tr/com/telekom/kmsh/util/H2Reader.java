@@ -27,8 +27,8 @@ public class H2Reader {
 			Statement stat = conn.createStatement();
 
 			for (PeriodicCommand cmd : commandList) {
-				String sql = "select * from tblKey where id='" + cmd.id
-						+ "' order by date desc";
+				String sql = "select date,value from tblKey where id='"
+						+ cmd.id + "' order by date desc";
 
 				ResultSet rs = stat.executeQuery(sql);
 
@@ -61,11 +61,11 @@ public class H2Reader {
 		return out;
 	}
 
-	public static String readAll(String cmdId) {
+	public static Table readAsTable(String sql) {
 		Connection conn = null;
-		String out = "";
+		Table result = null;
+
 		ConfigReader conf = ConfigReader.getInstance();
-		String DELIM = conf.getProperty("DELIM");
 
 		try {
 			Class.forName(conf.getProperty("driver"));
@@ -75,18 +75,8 @@ public class H2Reader {
 					conf.getProperty("dbUser"), conf.getProperty("dbPassword"));
 			Statement stat = conn.createStatement();
 
-			String sql = "select * from tblKey where id='" + cmdId
-					+ "' order by date desc";
-
 			ResultSet rs = stat.executeQuery(sql);
-			int cnt = 0;
-			while (rs.next() && cnt < conf.getInt("MAX_VALUE")) {
-				cnt++;
-				String d = rs.getString("date");
-				String v = rs.getString("value");
-
-				out += d.trim() + DELIM + v.replace("\n", "").trim() + "\n";
-			}
+			result = new Table(rs);
 
 			conn.close();
 			stat.close();
@@ -99,6 +89,6 @@ public class H2Reader {
 			e.printStackTrace();
 		}
 
-		return out;
+		return result;
 	}
 }

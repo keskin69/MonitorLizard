@@ -92,6 +92,14 @@ public class H2Util {
 
 	public static void writeDB(String id, String name, String command,
 			String value) {
+		String date = KmshUtil.getCurrentTimeStamp();
+		String sql = "insert into tblKey values ('" + id + "','" + name + "','"
+				+ command + "','" + date + "','" + value + "')";
+
+		write(sql);
+	}
+
+	public static void write(String sql) {
 		Connection conn;
 		ConfigReader conf = ConfigReader.getInstance();
 
@@ -101,10 +109,6 @@ public class H2Util {
 			conn = DriverManager.getConnection(
 					conf.getProperty("sqlConnection"),
 					conf.getProperty("dbUser"), conf.getProperty("dbPassword"));
-
-			String date = KmshUtil.getCurrentTimeStamp();
-			String sql = "insert into tblKey values ('" + id + "','" + name
-					+ "','" + command + "','" + date + "','" + value + "')";
 			Statement stat = conn.createStatement();
 			stat.execute(sql);
 
@@ -119,6 +123,13 @@ public class H2Util {
 		}
 	}
 
+	public static void writeSummary(String id, String value) {
+		String date = KmshUtil.getCurrentTimeStamp();
+		String sql = "insert into tblSummary values('" + id + "','" + value
+				+ "','" + date + "')";
+		write(sql);
+	}
+	
 	// public static void main(String... args) throws Exception {
 	// Class.forName("org.h2.Driver");
 	// Connection conn = DriverManager.getConnection("jdbc:h2:~/kmsh");
@@ -134,5 +145,7 @@ public class H2Util {
 	// conn.close();
 	// }
 
-	// create table tblReport(date varchar(19), id varchar(255), content blob);
+	// insert into tblreport values('sql1','','','2014-11-25 01:00:00', '');
+	// create table tblSummary (id varchar(255), date varchar(19), value
+	// varchar(255));
 }

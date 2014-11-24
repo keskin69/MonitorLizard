@@ -8,26 +8,26 @@ import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.KmshUtil;
 
 public class PeriodicManager {
-	private GroupCommandConfig keyConf = null;
+	private GroupCommandConfig groupConf = null;
 
 	public PeriodicManager(GroupCommandConfig keyConf) {
-		this.keyConf = keyConf;
+		this.groupConf = keyConf;
 	}
 
 	public String process(XMLManager conf) {
 		String out = "";
 
 		// execute all commands in the specified group
-		ConnectionConfig connection = conf.findConnection(keyConf.connectBy);
+		ConnectionConfig connection = conf.findConnection(groupConf.connectBy);
 		if (connection != null) {
-			for (PeriodicCommand cmd : keyConf.commandList) {
+			for (PeriodicCommand cmd : groupConf.commandList) {
 				String command = "";
 
 				cmd.command = KmshUtil.insertFunctionValue(cmd.command);
-				if (keyConf.base == null) {
+				if (groupConf.base == null) {
 					command = cmd.command;
 				} else {
-					command = keyConf.base + " \"" + cmd.command
+					command = groupConf.base + " \"" + cmd.command
 							+ "\" | tail -1";
 				}
 

@@ -3,7 +3,6 @@ package tr.com.telekom.kmsh.config;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 
 public abstract class AConfigManager {
-	public final static String DELIM = ";";
 	private static final String PASSWORD = "ARECA";
 
 	protected final static String decrypt(String str) {

@@ -13,6 +13,7 @@ import java.util.Date;
 
 public class KmshUtil {
 	public static final DecimalFormat DecimalFmt = new DecimalFormat("#.##");
+
 	public static void writeLog(String logFile, String content) {
 		File file = new File(logFile);
 
@@ -88,6 +89,21 @@ public class KmshUtil {
 
 	public static Date convertToDate(String str) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = null;
+		try {
+			date = formatter.parse(str);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return date;
+	}
+
+	public static Date convertFullDate(String str) {
+		str = str.substring(0, 18) + str.substring(30, 33);
+		SimpleDateFormat formatter = new SimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss a");
 		Date date = null;
 		try {
 			date = formatter.parse(str);
