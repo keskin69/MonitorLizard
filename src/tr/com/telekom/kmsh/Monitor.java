@@ -20,7 +20,7 @@ public class Monitor {
 		BasicConfigurator.configure(new NullAppender());
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
-		String type = "-r";
+		String type = "-t";
 		String name = "Test";
 
 		if (args.length == 2) {
