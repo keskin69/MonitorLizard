@@ -11,8 +11,8 @@ import tr.com.telekom.kmsh.util.KmshUtil;
 public class UptimeGenerator extends AAddOn {
 	private long uptime = 0;
 	private long downtime = 0;
-	Date prevTime = null;
-	Date curTime = null;
+	private Date prevTime = null;
+	private Date curTime = null;
 
 	public UptimeGenerator() {
 		ConfigReader conf = ConfigReader.getInstance();
@@ -53,11 +53,11 @@ public class UptimeGenerator extends AAddOn {
 		H2Util.writeSummary("DownTime", value);
 
 		value = KmshUtil.DecimalFmt.format(downtime);
-		H2Util.writeDB("TotalDownTime", "Total Down Time ", "", value);
+		H2Util.writeDB("TotalDownTime", "Total Down Time", "", value);
 		H2Util.writeSummary("TotalDownTime", value);
 
 		value = KmshUtil.DecimalFmt.format(uptime);
-		H2Util.writeDB("TotalUpTime", "Total Up Time ", "", value);
+		H2Util.writeDB("TotalUpTime", "Total Up Time", "", value);
 		H2Util.writeSummary("TotalUpTime", value);
 	}
 }

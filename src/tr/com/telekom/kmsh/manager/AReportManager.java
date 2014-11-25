@@ -71,21 +71,18 @@ public abstract class AReportManager {
 			ConnectionConfig connection = conf
 					.findConnection(command.connectBy);
 
-			// insert java methods
-			String cmd = KmshUtil.insertFunctionValue(command.cmd);
-
 			if (connection != null) {
 				if (connection.type.equals("ssh")) {
 					// execute a ssh command
-					result = SSHManager.executeCommand(connection, cmd);
+					result = SSHManager.executeCommand(connection, command.cmd);
 					addContent(command.name, result);
 				} else if (connection.type.equals("sql")) {
 					// execute a db command
-					Table tbl = SQLManager.executeSQL(connection, cmd);
+					Table tbl = SQLManager.executeSQL(connection, command.cmd);
 					addContent(command.name, tbl);
 				} else {
 					// Java command
-					result = cmd;
+					result = command.cmd;
 					addContent(command.name, result);
 				}
 			}

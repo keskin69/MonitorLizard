@@ -3,11 +3,6 @@ package tr.com.telekom.kmsh.config;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import tr.com.telekom.kmsh.addon.IAddOn;
-import tr.com.telekom.kmsh.manager.SQLManager;
-import tr.com.telekom.kmsh.manager.SSHManager;
-import tr.com.telekom.kmsh.util.KmshLogger;
-
 public class ConnectionConfig extends AConfig {
 	public String name = null;
 	public String type = null;
@@ -42,36 +37,5 @@ public class ConnectionConfig extends AConfig {
 
 			}
 		}
-	}
-
-	public String execute(String cmd) {
-		String result = "";
-
-		if (type.equals("ssh")) {
-			// execute an ssh command
-			result = SSHManager.executeCommand(this, cmd);
-			result = result.trim();
-		} else if (type.equals("sql")) {
-			// execute an sql command
-			result = SQLManager.executeSQL(this, cmd).getString();
-		} else if (type.equals("java")) {
-			// execute a java class
-			KmshLogger.log("Executing Java Class> " + cmd);
-			try {
-				IAddOn addOn = (IAddOn) Class.forName(cmd).newInstance();
-				addOn.process();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		return result;
 	}
 }

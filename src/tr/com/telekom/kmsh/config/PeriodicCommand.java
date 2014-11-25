@@ -2,6 +2,8 @@ package tr.com.telekom.kmsh.config;
 
 import org.w3c.dom.Element;
 
+import tr.com.telekom.kmsh.util.KmshUtil;
+
 public class PeriodicCommand {
 	public String name = null;
 	public String command = null;
@@ -11,6 +13,7 @@ public class PeriodicCommand {
 
 	public PeriodicCommand(String grp, Element e) {
 		command = e.getTextContent();
+		command = KmshUtil.insertFunctionValue(command);
 		command = command.replaceAll("\n", " ");
 		command = command.replaceAll("\t", " ");
 

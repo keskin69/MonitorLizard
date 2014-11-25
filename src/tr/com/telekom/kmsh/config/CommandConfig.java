@@ -3,6 +3,8 @@ package tr.com.telekom.kmsh.config;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import tr.com.telekom.kmsh.util.KmshUtil;
+
 public class CommandConfig extends AConfig {
 	public String id = null;
 	public String connectBy = null;
@@ -28,6 +30,7 @@ public class CommandConfig extends AConfig {
 
 		try {
 			cmd = eElement.getElementsByTagName("cmd").item(0).getTextContent();
+			cmd = KmshUtil.insertFunctionValue(cmd);
 			cmd = cmd.replaceAll("\n", " ");
 		} catch (NullPointerException ex) {
 		}

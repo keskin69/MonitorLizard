@@ -34,7 +34,6 @@ public class Repgen {
 
 				// write content to report log
 				KmshUtil.writeLog("log/" + repConf.name + ".log", content);
-
 				KmshLogger.log(content);
 			}
 		}

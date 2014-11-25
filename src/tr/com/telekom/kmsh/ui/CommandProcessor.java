@@ -8,14 +8,15 @@ import java.util.Map;
 
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
+import tr.com.telekom.kmsh.manager.CommandManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
 
-public class CommandManager {
+public class CommandProcessor {
 	private ConnectionConfig conn = null;
 	private ArrayList<ConnectionConfig> connectionList = null;
 	private Map<String, String> variables = null;
 
-	public CommandManager(String configFile) {
+	public CommandProcessor(String configFile) {
 		XMLManager conf = new XMLManager();
 		conf.readConfig(configFile);
 		connectionList = conf.connectionList;
@@ -109,7 +110,7 @@ public class CommandManager {
 				result = "No active connection";
 			} else {
 				arg = insertVariables(arg);
-				result = conn.execute(arg);
+				result = CommandManager.execute(conn, arg);
 			}
 		} else {
 			result = "Wrong command";

@@ -10,7 +10,7 @@ public class TextArea extends JTextArea {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	protected CommandManager commander = null;
+	protected CommandProcessor commander = null;
 	protected int pos = 1;
 	protected static final int HIST_SIZE = 100;
 	protected int curHistory = 0;
@@ -30,7 +30,7 @@ public class TextArea extends JTextArea {
 	}
 
 	public void setCommander(String file) {
-		commander = new CommandManager(file);
+		commander = new CommandProcessor(file);
 	}
 
 	public String getLastCommand() {

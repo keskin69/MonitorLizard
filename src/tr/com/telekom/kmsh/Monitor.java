@@ -51,6 +51,8 @@ public class Monitor {
 		} else if (type.equals("-term")) {
 			// TODO terminal without a window
 			new TerminalWindow(confFile);
+		} else if (type.equals("-c")) {
+
 		}
 
 		KmshLogger.log("Operations completed");
