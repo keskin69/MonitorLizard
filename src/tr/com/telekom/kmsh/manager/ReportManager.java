@@ -1,19 +1,17 @@
 package tr.com.telekom.kmsh.manager;
 
+import java.util.ArrayList;
+
 import tr.com.telekom.kmsh.config.ReportConfig;
-import tr.com.telekom.kmsh.util.ConfigReader;
+import tr.com.telekom.kmsh.util.Table;
 
 public class ReportManager extends AReportManager {
 	public ReportManager(ReportConfig repConfig) {
 		super(repConfig);
 	}
 
-	public final void addContent(ContentType type, String title, String body) {
-		if (!body.endsWith("\n")) {
-			body += "\n";
-		}
-
-		content.add(new ContentPart(type, title, body));
+	public final void addContent(String title, Object body) {
+		content.add(new ContentPart(title, body));
 	}
 
 	public String getContent() {
@@ -30,23 +28,13 @@ public class ReportManager extends AReportManager {
 				continue;
 			}
 
-			if (p.type == ContentType.TEXT) {
-				output += p.title;
-				output += p.body;
+			if (p.body instanceof String) {
+				output += p.title + ":";
+				output += p.body + "\n";
 			} else {
 				output += "\n" + p.title + "\n";
-				String lines[] = p.body.split("\n");
-
-				for (String str : lines) {
-					String col[] = str.split(ConfigReader.getInstance()
-							.getProperty("DELIM"));
-
-					for (String c : col) {
-						output += c + ";";
-					}
-
-					output += "\n";
-				}
+				Table tbl = (Table) p.body;
+				output += tbl.getString();
 			}
 		}
 
@@ -57,24 +45,23 @@ public class ReportManager extends AReportManager {
 		String output = repConfig.title + "<BR>";
 
 		for (ContentPart p : content) {
-			if (p.type == ContentType.TEXT) {
+			if (p.body instanceof String) {
 				output += p.title + "<BR>" + p.body + "<BR>";
 			} else {
-				String lines[] = p.body.split("\n");
 				output += p.title + "<BR><TABLE>\n";
 
-				for (String str : lines) {
-					String col[] = str.split(ConfigReader.getInstance()
-							.getProperty("DELIM"));
-
+				Table tbl = (Table) p.body;
+				for (int i = 0; i < tbl.size(); i++) {
+					@SuppressWarnings("unchecked")
+					ArrayList<String> row = tbl.get(i);
 					output += "<TR>";
-					for (String c : col) {
-						output += "<TD>" + c + "</TD>";
+					for (int j = 0; j < row.size(); j++) {
+						output += "<TD>" + row.get(i) + "</TD>\n";
 					}
 					output += "</TR>\n";
 				}
 
-				output += "</TABLE>";
+				output += "</TABLE><BR>";
 			}
 		}
 
@@ -82,12 +69,10 @@ public class ReportManager extends AReportManager {
 	}
 
 	public class ContentPart {
-		ContentType type;
 		String title;
-		String body;
+		Object body;
 
-		public ContentPart(ContentType type, String title, String body) {
-			this.type = type;
+		public ContentPart(String title, Object body) {
 			this.title = title;
 			this.body = body;
 		}

@@ -9,21 +9,18 @@ import tr.com.telekom.kmsh.config.ReportConfig;
 import tr.com.telekom.kmsh.manager.ReportManager.ContentPart;
 import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.KmshUtil;
+import tr.com.telekom.kmsh.util.Table;
 
 public abstract class AReportManager {
 	protected ReportConfig repConfig = null;
 	protected ArrayList<ContentPart> content = null;
-
-	public static enum ContentType {
-		TEXT, TABLE
-	};
 
 	public AReportManager(ReportConfig repConfig) {
 		this.repConfig = repConfig;
 		content = new ArrayList<ContentPart>();
 	}
 
-	abstract public void addContent(ContentType type, String title, String body);
+	abstract public void addContent(String title, Object body);
 
 	public boolean process(XMLManager conf) {
 		boolean condition = true;
@@ -37,11 +34,11 @@ public abstract class AReportManager {
 				execute(conf, cmdId);
 
 				if (repConfig.note != null) {
-					addContent(ContentType.TEXT, "Not:", repConfig.note);
+					addContent("Not", repConfig.note);
 				}
 			} else {
 				String title = H2Util.readDB(cmdId, "name");
-				addContent(ContentType.TEXT, title, result);
+				addContent(title, result);
 			}
 		}
 
@@ -81,17 +78,17 @@ public abstract class AReportManager {
 				if (connection.type.equals("ssh")) {
 					// execute a ssh command
 					result = SSHManager.executeCommand(connection, cmd);
-					addContent(ContentType.TEXT, command.name, result);
+					addContent(command.name, result);
 				} else if (connection.type.equals("sql")) {
 					// execute a db command
-					result = SQLManager.executeSQL(connection, cmd);
-					addContent(ContentType.TABLE, command.name, result);
+					Table tbl = SQLManager.executeSQL(connection, cmd);
+					addContent(command.name, tbl);
 				} else {
 					// Java command
 					result = cmd;
-					addContent(ContentType.TEXT, command.name, result);
+					addContent(command.name, result);
 				}
 			}
-		} 
+		}
 	}
 }

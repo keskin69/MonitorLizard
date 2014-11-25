@@ -7,7 +7,6 @@ import tr.com.telekom.kmsh.addon.IAddOn;
 import tr.com.telekom.kmsh.manager.SQLManager;
 import tr.com.telekom.kmsh.manager.SSHManager;
 import tr.com.telekom.kmsh.util.KmshLogger;
-import tr.com.telekom.kmsh.util.KmshUtil;
 
 public class ConnectionConfig extends AConfig {
 	public String name = null;
@@ -54,7 +53,7 @@ public class ConnectionConfig extends AConfig {
 			result = result.trim();
 		} else if (type.equals("sql")) {
 			// execute an sql command
-			result = SQLManager.executeSQL(this, cmd);
+			result = SQLManager.executeSQL(this, cmd).getString();
 		} else if (type.equals("java")) {
 			// execute a java class
 			KmshLogger.log("Executing Java Class> " + cmd);

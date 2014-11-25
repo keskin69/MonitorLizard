@@ -42,4 +42,21 @@ public class Table extends ArrayList<ArrayList> {
 			e.printStackTrace();
 		}
 	}
+
+	public String getString() {
+		String output = "";
+
+		for (int i = 0; i < size(); i++) {
+			@SuppressWarnings("unchecked")
+			ArrayList<String> row = get(i);
+
+			for (int j = 0; j < row.size(); j++) {
+				output += row.get(j) + ";";
+			}
+
+			output += "\n";
+		}
+
+		return output;
+	}
 }
