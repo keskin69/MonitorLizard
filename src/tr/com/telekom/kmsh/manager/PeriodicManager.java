@@ -5,6 +5,7 @@ import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.PeriodicCommand;
 import tr.com.telekom.kmsh.config.GroupCommandConfig;
 import tr.com.telekom.kmsh.util.H2Util;
+import tr.com.telekom.kmsh.util.Table;
 
 public class PeriodicManager {
 	private GroupCommandConfig groupConf = null;
@@ -34,7 +35,14 @@ public class PeriodicManager {
 							+ cmd.field;
 				}
 
-				String result = CommandManager.execute(connection, command);
+				Object obj = CommandManager
+						.execute(connection, command, cmd.id);
+				String result = null;
+				if (obj instanceof String) {
+					result = (String) obj;
+				} else {
+					result = ((Table) obj).getString();
+				}
 
 				if (!result.equals("")) {
 					H2Util.writeDB(cmd, result);

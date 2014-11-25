@@ -11,19 +11,18 @@ public class PeriodicCommand {
 	public String field = null;
 	public String id = null;
 
-	public PeriodicCommand(String grp, Element e) {
+	public PeriodicCommand(String grpId, Element e) {
 		command = e.getTextContent();
 		command = KmshUtil.insertFunctionValue(command);
-		command = command.replaceAll("\n", " ");
-		command = command.replaceAll("\t", " ");
+		command = KmshUtil.strCheck(command);
 
-		name = e.getAttribute("name").replaceAll("\n", " ");
+		name = e.getAttribute("name");
 		if (name.equals("")) {
 			name = command;
 		}
 
 		delim = e.getAttribute("delim");
 		field = e.getAttribute("field");
-		id = grp + "." + e.getAttribute("id");
+		id = grpId + "." + e.getAttribute("id");
 	}
 }

@@ -10,6 +10,7 @@ import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.manager.CommandManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
+import tr.com.telekom.kmsh.util.Table;
 
 public class CommandProcessor {
 	private ConnectionConfig conn = null;
@@ -110,7 +111,12 @@ public class CommandProcessor {
 				result = "No active connection";
 			} else {
 				arg = insertVariables(arg);
-				result = CommandManager.execute(conn, arg);
+				Object obj = CommandManager.execute(conn, arg, "");
+				if (obj instanceof String) {
+					result = (String) obj;
+				} else {
+					result = ((Table) obj).getString();
+				}
 			}
 		} else {
 			result = "Wrong command";

@@ -4,24 +4,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-import tr.com.telekom.kmsh.util.ConfigReader;
 import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.KmshUtil;
 
 public class UptimeGenerator extends AAddOn {
-	private long uptime = 0;
-	private long downtime = 0;
+	private long uptime = 0L;
+	private long downtime = 0L;
 	private Date prevTime = null;
 	private Date curTime = null;
-
-	public UptimeGenerator() {
-		ConfigReader conf = ConfigReader.getInstance();
-		String cmd = conf.getProperty("statusCmdId");
-
-		String sql = "select date, value from tblKey where id='" + cmd
-				+ "' order by date desc";
-		readAll(sql);
-	}
 
 	public void processRow(ResultSet rs) throws SQLException {
 		String d = rs.getString(1);
@@ -40,7 +30,12 @@ public class UptimeGenerator extends AAddOn {
 		prevTime = curTime;
 	}
 
-	public void process() {
+	public void process(String cmdId) {
+		cmdId = conf.getProperty("statusCmdId");
+		String sql = "select date, value from tblKey where id='" + cmdId
+				+ "' order by date desc";
+		readAll(sql);
+
 		// write results to db
 		double upRatio = (uptime * 100D) / (uptime + downtime + 0D);
 		String value = KmshUtil.DecimalFmt.format(upRatio);

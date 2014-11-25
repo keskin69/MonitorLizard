@@ -18,7 +18,7 @@ public class SSHManager {
 		SSHClient client = new SSHClient();
 		try {
 			client.loadKnownHosts();
-			//client.setConnectTimeout(10000);
+			// client.setConnectTimeout(10000);
 			client.connect(con.host);
 			client.authPassword(con.user, con.password);
 			final Session session = client.startSession();

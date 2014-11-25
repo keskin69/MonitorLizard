@@ -9,10 +9,10 @@ import java.sql.Statement;
 import tr.com.telekom.kmsh.util.ConfigReader;
 
 public abstract class AAddOn implements IAddOn {
+	protected ConfigReader conf = ConfigReader.getInstance();
+
 	public void readAll(String sql) {
 		Connection conn = null;
-
-		ConfigReader conf = ConfigReader.getInstance();
 
 		try {
 			Class.forName(conf.getProperty("driver"));

@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface IAddOn {
-	public void process();
+	void process(String cmdId);
 
-	public void processRow(ResultSet rs) throws SQLException;
+	void processRow(ResultSet rs) throws SQLException;
 }

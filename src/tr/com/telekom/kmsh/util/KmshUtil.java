@@ -31,6 +31,15 @@ public class KmshUtil {
 		}
 	}
 
+	public static String strCheck(String str) {
+		String out = str.replaceAll("\n", " ");
+		out = out.replaceAll("\t", " ");
+
+		out = out.replaceAll("([ ]+)$", "");
+
+		return out;
+	}
+
 	public static String insertFunctionValue(String str) {
 
 		while (str.contains("#")) {

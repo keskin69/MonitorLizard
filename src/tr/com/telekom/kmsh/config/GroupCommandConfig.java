@@ -19,7 +19,7 @@ public class GroupCommandConfig extends AConfig {
 	public GroupCommandConfig() {
 		commandList = new ArrayList<PeriodicCommand>();
 	}
-	
+
 	public void parseXML(Node nNode) {
 		if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
@@ -40,8 +40,7 @@ public class GroupCommandConfig extends AConfig {
 			try {
 				base = eElement.getElementsByTagName("base").item(0)
 						.getTextContent();
-				base = base.replace("\t", "");
-				base = base.replace("\n", "");
+				base = KmshUtil.strCheck(base);
 			} catch (NullPointerException ex) {
 
 			}

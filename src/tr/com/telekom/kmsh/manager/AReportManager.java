@@ -8,8 +8,6 @@ import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.ReportConfig;
 import tr.com.telekom.kmsh.manager.ReportManager.ContentPart;
 import tr.com.telekom.kmsh.util.H2Util;
-import tr.com.telekom.kmsh.util.KmshUtil;
-import tr.com.telekom.kmsh.util.Table;
 
 public abstract class AReportManager {
 	protected ReportConfig repConfig = null;
@@ -63,29 +61,17 @@ public abstract class AReportManager {
 	}
 
 	public void execute(XMLManager conf, String cmdId) {
-		String result = null;
+
 		CommandConfig command = conf.findCommand(cmdId);
 
 		if (command != null) {
 			// execute all commands
 			ConnectionConfig connection = conf
 					.findConnection(command.connectBy);
+			Object result = CommandManager.execute(connection, command.cmd,
+					cmdId);
 
-			if (connection != null) {
-				if (connection.type.equals("ssh")) {
-					// execute a ssh command
-					result = SSHManager.executeCommand(connection, command.cmd);
-					addContent(command.name, result);
-				} else if (connection.type.equals("sql")) {
-					// execute a db command
-					Table tbl = SQLManager.executeSQL(connection, command.cmd);
-					addContent(command.name, tbl);
-				} else {
-					// Java command
-					result = command.cmd;
-					addContent(command.name, result);
-				}
-			}
+			addContent(command.name, result);
 		}
 	}
 }

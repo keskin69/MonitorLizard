@@ -40,7 +40,7 @@ public class Monitor {
 		xmlManager.readConfig(xmlFiles);
 
 		// TODO
-		// H2Util.writeTag("sql1");
+		H2Util.writeTag("sql1");
 
 		if (type.equals("-t")) {
 			new PeriodicMonitor(xmlManager);

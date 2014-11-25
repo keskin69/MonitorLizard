@@ -31,7 +31,7 @@ public class CommandConfig extends AConfig {
 		try {
 			cmd = eElement.getElementsByTagName("cmd").item(0).getTextContent();
 			cmd = KmshUtil.insertFunctionValue(cmd);
-			cmd = cmd.replaceAll("\n", " ");
+			cmd = KmshUtil.strCheck(cmd);
 		} catch (NullPointerException ex) {
 		}
 
