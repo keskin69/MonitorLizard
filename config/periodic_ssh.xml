@@ -37,4 +37,11 @@
 			/girdi/ARECA_DEPLOYMENT/areca/bin/;./checkAreca.sh
 		</cmd>
 	</group>
+
+	<group name="cmd3" period="1">
+		<connectBy>peste</connectBy>
+		<cmd id="1" name="Status">cd
+			/girdi/ARECA_DEPLOYMENT/areca/bin/;./checkAreca.sh
+		</cmd>
+	</group>
 </commands>

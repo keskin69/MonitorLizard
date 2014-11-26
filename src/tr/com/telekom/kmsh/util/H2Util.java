@@ -123,12 +123,12 @@ public class H2Util {
 		}
 	}
 
-	public static void writeSummary(String id, String value) {
-		String date = KmshUtil.getCurrentTimeStamp();
-		String sql = "insert into tblSummary values('" + id + "','" + value
-				+ "','" + date + "')";
-		write(sql);
-	}
+	// public static void writeSummary(String id, String value) {
+	// String date = KmshUtil.getCurrentTimeStamp();
+	// String sql = "insert into tblSummary values('" + id + "','" + value
+	// + "','" + date + "')";
+	// write(sql);
+	// }
 	
 	// public static void main(String... args) throws Exception {
 	// Class.forName("org.h2.Driver");

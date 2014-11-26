@@ -1,12 +1,13 @@
 package tr.com.telekom.kmsh.util;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 @SuppressWarnings("rawtypes")
-public class Table extends ArrayList<ArrayList> {
+public class Table extends ArrayList<ArrayList>  implements Serializable {
 	/**
 	 * 
 	 */

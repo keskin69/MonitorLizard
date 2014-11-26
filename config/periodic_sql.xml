@@ -8,11 +8,10 @@
 
 	<group name="sql1" period="1440">
 		<connectBy>sinan</connectBy>
-		<cmd name="Dönem içi çıkılan bildirim" id="1">select /* +
+		<cmd name="İşlenen CDR" id="1">select /* +
 			parallel(x,8) */ COUNT(*) as CDR from
 			ARC_CDR_RAW_DATA x
-			where STATUS=0
-			and DONEM=#donem
+			where process_date='#today'
 		</cmd>
 		<cmd name="Bugün çıkılan bildirim" id="2">select /* + parallel(x,8) */
 			COUNT(*) as TOPLAM,
@@ -22,18 +21,6 @@
 			where
 			NOTIFICATION_DATE LIKE
 			'#today%'
-			GROUP BY
-			EVENT_TYPE,
-			NOTIFICATION_TYPE
-		</cmd>
-		<cmd name="Dün çıkılan bildirim" id="3">select /* + parallel(x,8) */
-			COUNT(*) as TOPLAM,
-			NOTIFICATION_TYPE,
-			EVENT_TYPE from
-			ARC_ABONE_BILDIRIM x
-			where
-			NOTIFICATION_DATE LIKE
-			'#yesterday%'
 			GROUP BY
 			EVENT_TYPE,
 			NOTIFICATION_TYPE

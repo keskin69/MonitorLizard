@@ -1,11 +1,27 @@
 package tr.com.telekom.kmsh.manager;
 
 import tr.com.telekom.kmsh.addon.IAddOn;
+import tr.com.telekom.kmsh.config.CommandConfig;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
+import tr.com.telekom.kmsh.config.XMLManager;
+import tr.com.telekom.kmsh.util.ConfigReader;
 import tr.com.telekom.kmsh.util.KmshLogger;
 import tr.com.telekom.kmsh.util.Table;
 
 public class CommandManager {
+	public static Object execute(String id) {
+		ConfigReader conf = ConfigReader.getInstance();
+		String xmlFiles = conf.getProperty("base")
+				+ conf.getProperty("xmlFiles");
+		XMLManager xmlManager = new XMLManager();
+		xmlManager.readConfig(xmlFiles);
+		CommandConfig cmdConfig = xmlManager.findCommand(id);
+		ConnectionConfig conn = xmlManager.findConnection(cmdConfig.connectBy);
+		Object obj = execute(conn, cmdConfig.cmd, cmdConfig.id);
+
+		return obj;
+	}
+
 	public static Object execute(ConnectionConfig config, String cmd, String id) {
 		if (config.type.equals("ssh")) {
 			// execute an ssh command

@@ -33,26 +33,22 @@ public class UptimeGenerator extends AAddOn {
 	public void process(String cmdId) {
 		cmdId = conf.getProperty("statusCmdId");
 		String sql = "select date, value from tblKey where id='" + cmdId
-				+ "' order by date desc";
+				+ "' order by date asc";
 		readAll(sql);
 
 		// write results to db
 		double upRatio = (uptime * 100D) / (uptime + downtime + 0D);
 		String value = KmshUtil.DecimalFmt.format(upRatio);
 		H2Util.writeDB("UpTime", "UpTime%", "", value);
-		H2Util.writeSummary("upTime", value);
 
 		double downRatio = (downtime * 100D) / (uptime + downtime + 0D);
 		value = KmshUtil.DecimalFmt.format(downRatio);
 		H2Util.writeDB("DownTime", "DownTime%", "", value);
-		H2Util.writeSummary("DownTime", value);
 
 		value = KmshUtil.DecimalFmt.format(downtime);
 		H2Util.writeDB("TotalDownTime", "Total Down Time", "", value);
-		H2Util.writeSummary("TotalDownTime", value);
 
 		value = KmshUtil.DecimalFmt.format(uptime);
 		H2Util.writeDB("TotalUpTime", "Total Up Time", "", value);
-		H2Util.writeSummary("TotalUpTime", value);
 	}
 }

@@ -5,9 +5,11 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.varia.NullAppender;
 
 import tr.com.telekom.kmsh.config.XMLManager;
+import tr.com.telekom.kmsh.manager.CommandManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
 import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.KmshLogger;
+import tr.com.telekom.kmsh.util.Table;
 
 public class Monitor {
 	static Logger logger = Logger.getLogger(Monitor.class);
@@ -21,7 +23,7 @@ public class Monitor {
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
 		String type = "-t";
-		String name = "Test";
+		String name = "KMSHStopped";
 
 		if (args.length == 2) {
 			confFile = args[0];
@@ -40,7 +42,7 @@ public class Monitor {
 		xmlManager.readConfig(xmlFiles);
 
 		// TODO
-		H2Util.writeTag("sql1");
+		//H2Util.writeTag("sql1");
 
 		if (type.equals("-t")) {
 			new PeriodicMonitor(xmlManager);
@@ -52,7 +54,12 @@ public class Monitor {
 			// TODO terminal without a window
 			new TerminalWindow(confFile);
 		} else if (type.equals("-c")) {
-
+			Object result = CommandManager.execute(name);
+			if (result instanceof String) {
+				KmshLogger.log((String) result);
+			} else {
+				KmshLogger.log(((Table) result).getString());
+			}
 		}
 
 		KmshLogger.log("Operations completed");

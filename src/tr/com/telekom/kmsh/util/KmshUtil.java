@@ -1,9 +1,19 @@
 package tr.com.telekom.kmsh.util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
@@ -14,6 +24,37 @@ import java.util.Date;
 public class KmshUtil {
 	public static final DecimalFormat DecimalFmt = new DecimalFormat("#.##");
 
+	public static void serialize(String fileName, Object obj) {
+		// serialize the List
+		try {
+			OutputStream file = new FileOutputStream(fileName);
+			OutputStream buffer = new BufferedOutputStream(file);
+			ObjectOutput output = new ObjectOutputStream(buffer);
+
+			output.writeObject(obj);
+			output.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public static Object deserialize(String fileName) {
+		Object obj = null;
+
+		try {
+			InputStream file = new FileInputStream(fileName);
+			InputStream buffer = new BufferedInputStream(file);
+			ObjectInput input = new ObjectInputStream(buffer);
+
+			obj = input.readObject();
+			input.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return obj;
+	}
+
 	public static void writeLog(String logFile, String content) {
 		File file = new File(logFile);
 
@@ -22,6 +63,7 @@ public class KmshUtil {
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
 
+			KmshLogger.log("Writing log file " + file.getAbsolutePath());
 			bw.write(content);
 			bw.close();
 			fw.close();
@@ -36,6 +78,8 @@ public class KmshUtil {
 		out = out.replaceAll("\t", " ");
 
 		out = out.replaceAll("([ ]+)$", "");
+
+		out = out.replaceAll("[ ]+", " ");
 
 		return out;
 	}
@@ -110,9 +154,8 @@ public class KmshUtil {
 	}
 
 	public static Date convertFullDate(String str) {
-		str = str.substring(0, 18) + str.substring(30, 33);
-		SimpleDateFormat formatter = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss a");
+		str = str.substring(0, 19);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = null;
 		try {
 			date = formatter.parse(str);
