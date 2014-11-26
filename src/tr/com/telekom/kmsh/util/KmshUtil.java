@@ -23,6 +23,8 @@ import java.util.Date;
 
 public class KmshUtil {
 	public static final DecimalFormat DecimalFmt = new DecimalFormat("#.##");
+	public static SimpleDateFormat formatter = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
 
 	public static void serialize(String fileName, Object obj) {
 		// serialize the List
@@ -56,14 +58,21 @@ public class KmshUtil {
 	}
 
 	public static void writeLog(String logFile, String content) {
-		File file = new File(logFile);
+		ConfigReader conf = ConfigReader.getInstance();
+		String base = conf.getProperty("base");
+		File f = new File(base + "/log");
+		if (!f.exists()) {
+			f.mkdir();
+		}
+
+		File file = new File(base + "/log/" + logFile);
 
 		try {
 			file.createNewFile();
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
 
-			KmshLogger.log("Writing log file " + file.getAbsolutePath());
+			KmshLogger.log(0, "Writing log file " + file.getAbsolutePath());
 			bw.write(content);
 			bw.close();
 			fw.close();
@@ -141,7 +150,7 @@ public class KmshUtil {
 	}
 
 	public static Date convertToDate(String str) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 		Date date = null;
 		try {
 			date = formatter.parse(str);
@@ -155,7 +164,6 @@ public class KmshUtil {
 
 	public static Date convertFullDate(String str) {
 		str = str.substring(0, 19);
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = null;
 		try {
 			date = formatter.parse(str);

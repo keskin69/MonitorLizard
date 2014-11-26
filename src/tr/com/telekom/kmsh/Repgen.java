@@ -19,12 +19,12 @@ public class Repgen {
 		for (ReportConfig repConf : conf.reportList) {
 			if (repConf.name.equals(repName)) {
 				ReportManager report = new ReportManager(repConf);
-				KmshLogger.log("Processing Report " + repName);
+				KmshLogger.log(1, "Processing Report " + repName);
 				boolean condition = report.process(conf);
 				content = report.getContent();
 
 				if (condition) {
-					KmshLogger.log("Sending notifications ");
+					KmshLogger.log(1, "Sending notifications ");
 					// send mail
 					sendMail(conf, repConf, content);
 
@@ -33,13 +33,13 @@ public class Repgen {
 				}
 
 				// write content to report log
-				KmshUtil.writeLog("log/" + repConf.name + ".log", content);
-				KmshLogger.log(content);
+				KmshUtil.writeLog(repConf.name + ".log", content);
+				KmshLogger.log(0, content);
 			}
 		}
 
 		if (content == null) {
-			KmshLogger.log("Cannot find report definition for " + repName);
+			KmshLogger.log(0, "Cannot find report definition for " + repName);
 		}
 	}
 
@@ -52,7 +52,7 @@ public class Repgen {
 				String response = SMTPManager.sendMail(mailConf, repConf.title,
 						content);
 
-				KmshLogger.log("SMTP Response: " + response);
+				KmshLogger.log(0, "SMTP Response: " + response);
 			}
 		}
 	}

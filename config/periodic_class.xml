@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <commands>
-	<group name="class1" period="0">
+	<group name="class1" period="10">
 		<connectBy>java</connectBy>
 		<cmd id="1" name="Up/Down Zamanı">tr.com.telekom.kmsh.addon.UptimeGenerator</cmd>
 	</group>
 
-	<group name="class2" period="0">
+	<group name="class2" period="1440">
 		<connectBy>java</connectBy>
 		<cmd id="1" name="Bildirimdeki Gecikmeler">tr.com.telekom.kmsh.addon.DelayReport</cmd>
 	</group>

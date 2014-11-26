@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import tr.com.telekom.kmsh.manager.CommandManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
 import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.KmshUtil;
@@ -21,9 +22,9 @@ public class DelayReport extends AAddOn {
 	}
 
 	public void process(String cmdId) {
-		// Object obj = CommandManager.execute(cmdId);
+		Object obj = CommandManager.execute(cmdId);
 		// KmshUtil.serialize("out.srl", obj);
-		Object obj = KmshUtil.deserialize("out.srl");
+		// Object obj = KmshUtil.deserialize("out.srl");
 		long totalDelay = 0;
 		int total = 0;
 		long min = Long.MAX_VALUE;

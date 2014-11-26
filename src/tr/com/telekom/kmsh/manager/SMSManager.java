@@ -20,7 +20,7 @@ public class SMSManager {
 
 	public static void sendSMS(String content, String smsNo)
 			throws TwilioRestException {
-		KmshLogger.log("Sendig SMS");
+		KmshLogger.log(1, "Sendig SMS");
 		TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
 
 		// Build a filter for the MessageList
@@ -31,6 +31,6 @@ public class SMSManager {
 
 		MessageFactory messageFactory = client.getAccount().getMessageFactory();
 		Message message = messageFactory.create(params);
-		KmshLogger.log(message.getSid());
+		KmshLogger.log(0, message.getSid());
 	}
 }

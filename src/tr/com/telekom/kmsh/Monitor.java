@@ -23,7 +23,7 @@ public class Monitor {
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
 		String type = "-t";
-		String name = "KMSHStopped";
+		String name = "ExceptionCheck";
 
 		if (args.length == 2) {
 			confFile = args[0];
@@ -34,6 +34,8 @@ public class Monitor {
 			name = args[2];
 		}
 
+		KmshLogger.log(1, "Executing " + type + " " + name);
+
 		ConfigReader.file = confFile;
 		ConfigReader conf = ConfigReader.getInstance();
 		String xmlFiles = conf.getProperty("base")
@@ -42,7 +44,7 @@ public class Monitor {
 		xmlManager.readConfig(xmlFiles);
 
 		// TODO
-		//H2Util.writeTag("sql1");
+		// H2Util.writeDB("sql1", "", "", "2014-11-25 23:00:00", "");
 
 		if (type.equals("-t")) {
 			new PeriodicMonitor(xmlManager);
@@ -56,12 +58,16 @@ public class Monitor {
 		} else if (type.equals("-c")) {
 			Object result = CommandManager.execute(name);
 			if (result instanceof String) {
-				KmshLogger.log((String) result);
+				KmshLogger.log(1, (String) result);
 			} else {
-				KmshLogger.log(((Table) result).getString());
+				KmshLogger.log(1, ((Table) result).getString());
 			}
+		} else if (type.equals("-init")) {
+			H2Util.init();
+		} else {
+			KmshLogger.log(4, "Unknown operation type" + type);
 		}
 
-		KmshLogger.log("Operations completed");
+		KmshLogger.log(1, "Operations completed");
 	}
 }

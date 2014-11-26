@@ -33,7 +33,7 @@ public class CommandManager {
 			return result;
 		} else if (config.type.equals("java")) {
 			// execute a java class
-			KmshLogger.log("Executing Java Class> " + cmd);
+			KmshLogger.log(1, "Executing Java Class> " + cmd);
 			try {
 				IAddOn addOn = (IAddOn) Class.forName(cmd).newInstance();
 				addOn.process(id);

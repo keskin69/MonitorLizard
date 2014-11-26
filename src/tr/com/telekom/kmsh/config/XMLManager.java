@@ -13,6 +13,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import tr.com.telekom.kmsh.util.ConfigReader;
+import tr.com.telekom.kmsh.util.KmshLogger;
+
 public class XMLManager extends AConfigManager {
 	public ArrayList<MailConfig> mailList = null;
 	public ArrayList<ConnectionConfig> connectionList = null;
@@ -20,6 +23,7 @@ public class XMLManager extends AConfigManager {
 	public ArrayList<ReportConfig> reportList = null;
 	public ArrayList<SMSConfig> smsList = null;
 	public ArrayList<GroupCommandConfig> group = null;
+	private ConfigReader conf = ConfigReader.getInstance();
 
 	public XMLManager() {
 		mailList = new ArrayList<MailConfig>();
@@ -44,15 +48,21 @@ public class XMLManager extends AConfigManager {
 			String connectionsFile = eElement
 					.getElementsByTagName("connectionsFile").item(0)
 					.getTextContent();
-			readConnections(connectionsFile);
+			readConnections(conf.getProperty("base") + connectionsFile);
 
 			for (int i = 0; i < eElement.getElementsByTagName("commandsFile")
 					.getLength(); i++) {
 				String commandsFile = eElement
 						.getElementsByTagName("commandsFile").item(i)
 						.getTextContent();
-				readCommands(commandsFile);
+
+				readCommands(conf.getProperty("base") + commandsFile);
 			}
+
+			KmshLogger.log(0, group.size() + " group detected");
+			KmshLogger.log(0, commandList.size() + " command detected");
+			KmshLogger.log(0, reportList.size() + " report detected");
+			KmshLogger.log(0, connectionList.size() + " connection detected");
 
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
@@ -67,7 +77,9 @@ public class XMLManager extends AConfigManager {
 
 	}
 
-	public void readConnections(String file) {
+	void readConnections(String file) {
+		KmshLogger.log(2, "Reading Connection File " + file);
+
 		File fXmlFile = new File(file);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
@@ -113,7 +125,9 @@ public class XMLManager extends AConfigManager {
 
 	}
 
-	public void readCommands(String file) {
+	void readCommands(String file) {
+		KmshLogger.log(2, "Reading Command File " + file);
+
 		File fXmlFile = new File(file);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
@@ -153,7 +167,6 @@ public class XMLManager extends AConfigManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	public ConnectionConfig findConnection(String conName) {

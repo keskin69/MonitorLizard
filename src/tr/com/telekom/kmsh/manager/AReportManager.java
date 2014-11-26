@@ -30,10 +30,6 @@ public abstract class AReportManager {
 			result = H2Util.readDB(cmdId, "value");
 			if (result.equals("")) {
 				execute(conf, cmdId);
-
-				if (repConfig.note != null) {
-					addContent("Not", repConfig.note);
-				}
 			} else {
 				String title = H2Util.readDB(cmdId, "name");
 				addContent(title, result);
@@ -55,6 +51,10 @@ public abstract class AReportManager {
 			H2Util.writeDB(repConfig.name, "", "", "REP");
 		} else {
 			H2Util.writeDB(repConfig.name, "", "", "");
+		}
+
+		if (condition && repConfig.note != null) {
+			addContent("Not", repConfig.note);
 		}
 
 		return condition;

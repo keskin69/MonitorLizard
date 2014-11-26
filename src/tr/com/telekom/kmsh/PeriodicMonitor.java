@@ -13,19 +13,19 @@ public class PeriodicMonitor {
 		for (GroupCommandConfig grpConf : conf.group) {
 			// check last execution time for periodic commands
 			if (H2Util.getAge(grpConf.name) >= grpConf.period) {
-				KmshLogger.log("Processing CommandList " + grpConf.name);
+				KmshLogger.log(1, "Processing CommandList " + grpConf.name);
 				PeriodicManager keyMan = new PeriodicManager(grpConf);
 
 				String content = keyMan.process(conf);
 
 				// write content to report log
-				KmshUtil.writeLog("log/" + grpConf.name + ".log", content);
+				KmshUtil.writeLog(grpConf.name + ".log", content);
 
 				H2Util.writeTag(grpConf.name);
 			} else {
-				KmshLogger.log("Skipping group commands for " + grpConf.name);
+				KmshLogger
+						.log(1, "Skipping group commands for " + grpConf.name);
 			}
 		}
 	}
-
 }

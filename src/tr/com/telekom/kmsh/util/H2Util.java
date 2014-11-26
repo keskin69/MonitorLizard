@@ -33,6 +33,14 @@ public class H2Util {
 		}
 	}
 
+	public static void init() {
+		KmshLogger.log(0, "Initializing H2");
+		execute("drop table tblKey;");
+		execute("create table tblKey (id varchar(255), name varchar(255), command varchar(255), date varchar(19), value varchar(255));");
+		execute("insert into tblKey values('sql1','','','2014-11-25 23:00:00', '');");
+		execute("insert into tblKey values('class2.1','','','2014-11-25 23:00:00', '');");
+	}
+
 	public static long getAge(String id) {
 		String date = readDB(id, "date");
 		if (!date.equals("")) {
@@ -93,13 +101,18 @@ public class H2Util {
 	public static void writeDB(String id, String name, String command,
 			String value) {
 		String date = KmshUtil.getCurrentTimeStamp();
+		writeDB(id, name, command, value, date);
+	}
+
+	public static void writeDB(String id, String name, String command,
+			String value, String date) {
 		String sql = "insert into tblKey values ('" + id + "','" + name + "','"
 				+ command + "','" + date + "','" + value + "')";
 
-		write(sql);
+		execute(sql);
 	}
 
-	public static void write(String sql) {
+	public static void execute(String sql) {
 		Connection conn;
 		ConfigReader conf = ConfigReader.getInstance();
 
@@ -129,7 +142,7 @@ public class H2Util {
 	// + "','" + date + "')";
 	// write(sql);
 	// }
-	
+
 	// public static void main(String... args) throws Exception {
 	// Class.forName("org.h2.Driver");
 	// Connection conn = DriverManager.getConnection("jdbc:h2:~/kmsh");

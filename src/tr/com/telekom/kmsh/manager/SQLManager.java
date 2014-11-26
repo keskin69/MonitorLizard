@@ -33,7 +33,7 @@ public class SQLManager {
 	public static Table executeSQL(ConnectionConfig conf, String sql) {
 		Table result = null;
 
-		KmshLogger.log("Executing SQL> " + sql);
+		KmshLogger.log(1, "Executing SQL> " + sql);
 
 		Connection conn = connect(conf);
 		try {
@@ -44,7 +44,7 @@ public class SQLManager {
 			e.printStackTrace();
 		}
 
-		KmshLogger.log("Executing sql completed");
+		KmshLogger.log(1, "Executing sql completed");
 
 		return result;
 	}

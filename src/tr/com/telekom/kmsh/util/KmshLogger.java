@@ -1,9 +1,11 @@
 package tr.com.telekom.kmsh.util;
 
 public class KmshLogger {
+	private static final int LEVEL = 0;
 
-	public static void log(String str) {
-
-		System.out.println(KmshUtil.getCurrentTimeStamp() + ": " + str);
+	public static void log(int level, String str) {
+		if (level >= LEVEL) {
+			System.out.println(KmshUtil.getCurrentTimeStamp() + ": " + str);
+		}
 	}
 }
