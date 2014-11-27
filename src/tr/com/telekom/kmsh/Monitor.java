@@ -23,7 +23,7 @@ public class Monitor {
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
 		String type = "-t";
-		String name = "ExceptionCheck";
+		String name = "RptDaily";
 
 		if (args.length == 2) {
 			confFile = args[0];

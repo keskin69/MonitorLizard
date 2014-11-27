@@ -72,6 +72,8 @@ public abstract class AReportManager {
 					cmdId);
 
 			addContent(command.name, result);
+		} else {
+			addContent(cmdId, "N/A");
 		}
 	}
 }

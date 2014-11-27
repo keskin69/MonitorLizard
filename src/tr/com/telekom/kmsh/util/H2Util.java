@@ -10,7 +10,7 @@ import java.util.Enumeration;
 
 import org.h2.Driver;
 
-import tr.com.telekom.kmsh.config.PeriodicCommand;
+import tr.com.telekom.kmsh.config.PeriodicCommandConfig;
 
 public class H2Util {
 	public static final int ID = 0;
@@ -90,7 +90,7 @@ public class H2Util {
 		return out;
 	}
 
-	public static void writeDB(PeriodicCommand cmd, String value) {
+	public static void writeDB(PeriodicCommandConfig cmd, String value) {
 		writeDB(cmd.id, cmd.name, cmd.command, value);
 	}
 

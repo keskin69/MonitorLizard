@@ -2,7 +2,7 @@ package tr.com.telekom.kmsh.manager;
 
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
-import tr.com.telekom.kmsh.config.PeriodicCommand;
+import tr.com.telekom.kmsh.config.PeriodicCommandConfig;
 import tr.com.telekom.kmsh.config.GroupCommandConfig;
 import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.Table;
@@ -20,7 +20,7 @@ public class PeriodicManager {
 		// execute all commands in the specified group
 		ConnectionConfig connection = conf.findConnection(groupConf.connectBy);
 		if (connection != null) {
-			for (PeriodicCommand cmd : groupConf.commandList) {
+			for (PeriodicCommandConfig cmd : groupConf.commandList) {
 				String command = "";
 
 				if (groupConf.base == null) {

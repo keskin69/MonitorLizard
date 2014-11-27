@@ -15,6 +15,9 @@ public class CommandConfig extends AConfig {
 		parseXML(node);
 	}
 
+	public CommandConfig() {
+	}
+
 	public void parseXML(Node nNode) {
 
 		Element eElement = (Element) nNode;

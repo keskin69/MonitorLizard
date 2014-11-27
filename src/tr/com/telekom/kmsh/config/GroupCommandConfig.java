@@ -13,11 +13,26 @@ public class GroupCommandConfig extends AConfig {
 	public String name = null;
 	public String base = null;
 	public String connectBy = null;
-	public ArrayList<PeriodicCommand> commandList = null;
+	public ArrayList<PeriodicCommandConfig> commandList = null;
 	public int period = 0;
 
 	public GroupCommandConfig() {
-		commandList = new ArrayList<PeriodicCommand>();
+		commandList = new ArrayList<PeriodicCommandConfig>();
+	}
+
+	public CommandConfig findCommand(String id) {
+		CommandConfig cf = null;
+		for (PeriodicCommandConfig cmd : commandList) {
+			if (cmd.id.equals(id)) {
+				cf = new CommandConfig();
+				cf.cmd = cmd.command;
+				cf.id = cmd.id;
+				cf.connectBy = connectBy;
+				cf.name = cmd.name;
+			}
+		}
+
+		return cf;
 	}
 
 	public void parseXML(Node nNode) {
@@ -50,7 +65,7 @@ public class GroupCommandConfig extends AConfig {
 				Node n = node.item(i);
 				Element e = (Element) n;
 
-				commandList.add(new PeriodicCommand(name, e));
+				commandList.add(new PeriodicCommandConfig(name, e));
 			}
 		}
 	}

@@ -7,6 +7,7 @@
 
 	<group name="class2" period="1440">
 		<connectBy>java</connectBy>
-		<cmd id="1" name="Bildirimdeki Gecikmeler">tr.com.telekom.kmsh.addon.DelayReport</cmd>
+		<cmd id="1" name="Bildirimdeki Gecikmeler">tr.com.telekom.kmsh.addon.NotifDelayReport</cmd>
+		<cmd id="2" name="CDR İşlemedeki Gecikmeler">tr.com.telekom.kmsh.addon.CDRDelayReport</cmd>
 	</group>
 </commands>

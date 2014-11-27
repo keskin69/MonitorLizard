@@ -5,6 +5,7 @@ import tr.com.telekom.kmsh.config.CommandConfig;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
+import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.KmshLogger;
 import tr.com.telekom.kmsh.util.Table;
 
@@ -16,28 +17,30 @@ public class CommandManager {
 		XMLManager xmlManager = new XMLManager();
 		xmlManager.readConfig(xmlFiles);
 		CommandConfig cmdConfig = xmlManager.findCommand(id);
+
 		ConnectionConfig conn = xmlManager.findConnection(cmdConfig.connectBy);
 		Object obj = execute(conn, cmdConfig.cmd, cmdConfig.id);
 
 		return obj;
 	}
 
-	public static Object execute(ConnectionConfig config, String cmd, String id) {
-		if (config.type.equals("ssh")) {
+	public static Object execute(ConnectionConfig conStr, String cmd, String id) {
+		KmshLogger.log(1, "Processing command " + id);
+
+		if (conStr.type.equals("ssh")) {
 			// execute an ssh command
-			String result = SSHManager.executeCommand(config, cmd);
+			String result = SSHManager.executeCommand(conStr, cmd);
 			return result.trim();
-		} else if (config.type.equals("sql")) {
+		} else if (conStr.type.equals("sql")) {
 			// execute an sql command
-			Table result = SQLManager.executeSQL(config, cmd);
+			Table result = SQLManager.executeSQL(conStr, cmd);
 			return result;
-		} else if (config.type.equals("java")) {
+		} else if (conStr.type.equals("java")) {
 			// execute a java class
-			KmshLogger.log(1, "Executing Java Class> " + cmd);
 			try {
 				IAddOn addOn = (IAddOn) Class.forName(cmd).newInstance();
 				addOn.process(id);
-
+				H2Util.writeTag(id);
 				return "";
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block

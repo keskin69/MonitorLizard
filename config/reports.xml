@@ -9,11 +9,12 @@
 		</reportCondition>
 	</report>
 
-	<report name="RptDaily" mail="areca">
+	<report name="RptDaily" mail="arecax">
 		<title>KMSH/FÜS Bildirim Raporu</title>
 		<executeList>
 			<cmd>cmd2.4</cmd>
-			<cmd>Uptime</cmd>
+			<cmd>UpTime</cmd>
+			<cmd>TotalUpTime</cmd>
 			<cmd>cmd2.1</cmd>
 			<cmd>cmd2.2</cmd>
 			<cmd>cmd2.3</cmd>
@@ -35,7 +36,7 @@
 		</reportCondition>
 	</report>
 
-	<report name="KMSHStarted" mail="me" sms="me">
+	<report name="KMSHStarted" mail="areca" sms="me">
 		<title>KMSH/FÜS Started</title>
 		<executeList>
 			<cmd>cmd2.4</cmd>
@@ -45,7 +46,7 @@
 		</reportCondition>
 	</report>
 
-	<report name="PartitionControl" mail="me" sms="me">
+	<report name="PartitionControl" mail="areca" sms="me">
 		<title>KMSH Partition Hatası !!!</title>
 		<executeList>
 			<cmd>cmd1.13</cmd>

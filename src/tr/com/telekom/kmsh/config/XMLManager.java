@@ -199,6 +199,19 @@ public class XMLManager extends AConfigManager {
 		return null;
 	}
 
+	public CommandConfig findInGroup(String cmdId) {
+		// search also group configs
+		for (GroupCommandConfig cfg : group) {
+			CommandConfig cmd = cfg.findCommand(cmdId);
+
+			if (cmd != null) {
+				return cmd;
+			}
+		}
+
+		return null;
+	}
+
 	public MailConfig findMailConfig(String mail) {
 		for (MailConfig m : mailList) {
 			if (m.name.equals(mail)) {

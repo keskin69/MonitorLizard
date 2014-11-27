@@ -2,9 +2,9 @@
 <config>
 	<connectionsFile>./config/connections.xml</connectionsFile>
 	<commandsFile>./config/on_demand_commands.xml</commandsFile>
-	<commandsFile>./config/periodic_sql.xml</commandsFile>
 	<commandsFile>./config/periodic_ssh.xml</commandsFile>
 	<commandsFile>./config/periodic_class.xml</commandsFile>
+	<commandsFile>./config/periodic_sql.xml</commandsFile>
 	<commandsFile>./config/reports.xml</commandsFile>
 </config>
 
