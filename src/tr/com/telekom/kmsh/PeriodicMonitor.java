@@ -12,19 +12,24 @@ public class PeriodicMonitor {
 	public PeriodicMonitor(XMLManager conf) {
 		for (GroupCommandConfig grpConf : conf.group) {
 			// check last execution time for periodic commands
-			if (H2Util.getAge(grpConf.name) >= grpConf.period) {
-				KmshLogger.log(1, "Processing CommandList " + grpConf.name);
-				PeriodicManager keyMan = new PeriodicManager(grpConf);
+			if (grpConf.period != -1) {
+				if (H2Util.getAge(grpConf.name) >= grpConf.period) {
+					KmshLogger.log(1, "Processing CommandList " + grpConf.name);
+					PeriodicManager keyMan = new PeriodicManager(grpConf);
 
-				String content = keyMan.process(conf);
+					String content = keyMan.process(conf);
 
-				// write content to report log
-				KmshUtil.writeLog(grpConf.name + ".log", content);
+					// write content to report log
+					KmshUtil.writeLog(grpConf.name + ".log", content);
 
-				H2Util.writeTag(grpConf.name);
+					H2Util.writeTag(grpConf.name);
+				} else {
+					KmshLogger.log(1, "Skipping group commands for "
+							+ grpConf.name);
+				}
 			} else {
 				KmshLogger
-						.log(1, "Skipping group commands for " + grpConf.name);
+						.log(1, "Ignoring group commands for " + grpConf.name);
 			}
 		}
 	}

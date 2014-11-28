@@ -26,7 +26,7 @@
 		<cmd id="14" name="TimeMap" delim="[" field="2">TimeMap</cmd>
 	</group>
 
-	<group name="cmd2" period="30">
+	<group name="cmd2" period="20">
 		<connectBy>peste</connectBy>
 		<cmd id="1" name="İşlenmeyı bekleyen CDR Dosyası">ls -l /girdi/realtime_archieve | wc -l</cmd>
 		<cmd id="2" name="Taşınmayı bekleyen S12 CDR Dosyası">ls -l /girdi/realtime_cdr_s12 | wc -l</cmd>

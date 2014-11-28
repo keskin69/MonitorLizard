@@ -21,8 +21,19 @@ public class ConfigReader extends Properties {
 		return config;
 	}
 
-	public int getInt(String str) {
-		return new Integer(getProperty(str)).intValue();
+	public int getInt(String key) {
+		return new Integer(getProperty(key)).intValue();
+	}
+
+	public String getProperty(String key) {
+		String out = super.getProperty(key);
+
+		if (out == null) {
+			KmshLogger
+					.log(4, key + " not defined in configuration file" + file);
+		}
+
+		return out;
 	}
 
 	private ConfigReader() {
