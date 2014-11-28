@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 
@@ -18,6 +19,61 @@ public class H2Util {
 	public static final int COMMAND = 2;
 	public static final int DATE = 3;
 	public static final int VALUE = 4;
+
+	@SuppressWarnings("unchecked")
+	public static Table getWeeklySummary(String id) {
+		String sql = "select substring(date, 0, 11), value from tblkey where id='"
+				+ id
+				+ "' and date >'"
+				+ KmshUtil.getCurrentTimeStamp(-10)
+				+ "' order by date desc";
+		Table tbl = readAsTable(sql);
+
+		String prevDate = "";
+		for (int i = tbl.size()-1; i >= 0; i--) {
+			ArrayList<String> row = tbl.get(i);
+			String date = row.get(0);
+			if (prevDate.equals(date)) {
+				// remove previous value
+				tbl.remove(i+1);
+			}
+
+			prevDate = date;
+		}
+
+		return tbl;
+	}
+
+	public static Table readAsTable(String sql) {
+		Connection conn = null;
+		Table result = null;
+
+		ConfigReader conf = ConfigReader.getInstance();
+
+		try {
+			Class.forName(conf.getProperty("driver"));
+
+			conn = DriverManager.getConnection(
+					conf.getProperty("sqlConnection"),
+					conf.getProperty("dbUser"), conf.getProperty("dbPassword"));
+			Statement stat = conn.createStatement();
+
+			ResultSet rs = stat.executeQuery(sql);
+			result = new Table(rs);
+
+			conn.close();
+			stat.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+	}
 
 	public static void unregisterDrivers() {
 		Enumeration<java.sql.Driver> drivers = DriverManager.getDrivers();
@@ -68,7 +124,7 @@ public class H2Util {
 					conf.getProperty("dbUser"), conf.getProperty("dbPassword"));
 			Statement stat = conn.createStatement();
 			String sql = "select * from tblKey where id='" + id
-					+ "' order by date desc";
+					+ "' order by date desc limit 1";
 			ResultSet rs = stat.executeQuery(sql);
 
 			// read only one line
@@ -100,7 +156,7 @@ public class H2Util {
 
 	public static void writeDB(String id, String name, String command,
 			String value) {
-		String date = KmshUtil.getCurrentTimeStamp();
+		String date = KmshUtil.getCurrentTimeStamp(0);
 		writeDB(id, name, command, value, date);
 	}
 

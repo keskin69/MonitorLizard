@@ -19,6 +19,7 @@ import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class KmshUtil {
@@ -175,14 +176,14 @@ public class KmshUtil {
 		return date;
 	}
 
-	public static String getCurrentTimeStamp() {
-		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date now = new Date();
-		String strDate = sdfDate.format(now);
-		return strDate;
+	public static String getCurrentTimeStamp(int dayOffset) {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, dayOffset);
+
+		return formatter.format(cal.getTime()).toUpperCase();
 	}
 
 	public static Date getCurrentTime() {
-		return convertToDate(getCurrentTimeStamp());
+		return convertToDate(getCurrentTimeStamp(0));
 	}
 }

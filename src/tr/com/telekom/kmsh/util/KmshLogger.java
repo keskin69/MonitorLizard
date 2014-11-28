@@ -5,7 +5,7 @@ public class KmshLogger {
 
 	public static void log(int level, String str) {
 		if (level >= LEVEL) {
-			System.out.println(KmshUtil.getCurrentTimeStamp() + ": " + str);
+			System.out.println(KmshUtil.getCurrentTimeStamp(0) + ": " + str);
 		}
 	}
 }

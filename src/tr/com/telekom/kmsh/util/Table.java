@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @SuppressWarnings("rawtypes")
-public class Table extends ArrayList<ArrayList>  implements Serializable {
+public class Table extends ArrayList<ArrayList> implements Serializable {
 	/**
 	 * 
 	 */
@@ -59,5 +59,33 @@ public class Table extends ArrayList<ArrayList>  implements Serializable {
 		}
 
 		return output;
+	}
+
+	public String getHTML(String tblId) {
+		String out = "<TABLE id=\"" + tblId + "\" border=\"1\"><THEAD>";
+
+		for (int i = 0; i < size(); i++) {
+			@SuppressWarnings("unchecked")
+			ArrayList<String> row = get(i);
+			if (i == 1) {
+				out += "</THEAD><TBODY>";
+			}
+
+			out += "<TR>";
+			for (int j = 0; j < row.size(); j++) {
+
+				if (i == 0) {
+					out += "<TH>" + row.get(j) + "</TH>";
+				} else {
+					out += "<TD>" + row.get(j) + "</TD>";
+				}
+			}
+
+			out += "</TR>\n";
+		}
+
+		out += "</TBODY></TABLE><BR>";
+
+		return out;
 	}
 }
