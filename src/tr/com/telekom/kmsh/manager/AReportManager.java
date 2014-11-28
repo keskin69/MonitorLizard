@@ -24,7 +24,7 @@ public abstract class AReportManager {
 		boolean condition = true;
 		String result = null;
 
-		String before = H2Util.readDB(repConfig.name, "value");
+		String before = H2Util.readDB(repConfig.id, "value");
 
 		for (String cmdId : repConfig.commands) {
 			result = H2Util.readDB(cmdId, "value");
@@ -48,9 +48,9 @@ public abstract class AReportManager {
 				condition = false;
 			}
 
-			H2Util.writeDB(repConfig.name, "", "", "REP");
+			H2Util.writeDB(repConfig.id, "", "", "REP");
 		} else {
-			H2Util.writeDB(repConfig.name, "", "", "");
+			H2Util.writeDB(repConfig.id, "", "", "");
 		}
 
 		if (condition && repConfig.note != null) {

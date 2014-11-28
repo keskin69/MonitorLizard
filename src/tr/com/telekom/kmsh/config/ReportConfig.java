@@ -7,13 +7,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class ReportConfig extends AConfig {
-	public String name = null;
+	public String id = null;
 	public ArrayList<String> commands = null;
 	public String useMail = null;
-	public String title = null;
+	public String name = null;
 	public String useSms = null;
 	public ArrayList<Condition> condition = null;
 	public String note = null;
+	public int period = -1;
 
 	public ReportConfig() {
 		commands = new ArrayList<String>();
@@ -26,18 +27,25 @@ public class ReportConfig extends AConfig {
 
 			Element eElement = (Element) nNode;
 
-			name = eElement.getAttribute("name");
+			id = eElement.getAttribute("id");
 
 			try {
-				title = eElement.getElementsByTagName("title").item(0)
+				name = eElement.getElementsByTagName("name").item(0)
 						.getTextContent();
 			} catch (NullPointerException ex) {
-				title = "";
+				name = "";
 			}
 
 			try {
 				useMail = eElement.getAttribute("mail");
 			} catch (NullPointerException ex) {
+
+			}
+
+			try {
+				period = new Integer(eElement.getAttribute("period"))
+						.intValue();
+			} catch (NumberFormatException ex) {
 
 			}
 

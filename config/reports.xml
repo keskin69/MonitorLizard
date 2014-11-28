@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <reports>
-	<report name="DBCheck" mail="me" sms="mex">
+	<report id="DBCheck" mail="me" sms="me" period="5">
+	<name>H2 DB Kontrol</name>
 		<executeList>
 			<cmd>cmd2.4</cmd>
 		</executeList>
@@ -9,8 +10,8 @@
 		</reportCondition>
 	</report>
 
-	<report name="RptDaily" mail="arecax">
-		<title>KMSH/FÜS Bildirim Raporu</title>
+	<report id="RptDaily" mail="areca">
+		<name>KMSH/FÜS Bildirim Raporu</name>
 		<executeList>
 			<cmd>cmd2.4</cmd>
 			<cmd>UpTime</cmd>
@@ -24,8 +25,8 @@
 		</executeList>
 	</report>
 
-	<report name="KMSHStopped" mail="areca" sms="me">
-		<title>KMSH/FÜS Stopped</title>
+	<report id="KMSHStopped" mail="areca" sms="me" period="5">
+		<name>KMSH/FÜS Stopped</name>
 		<executeList>
 			<cmd>cmd2.4</cmd>
 		</executeList>
@@ -34,8 +35,8 @@
 		</reportCondition>
 	</report>
 
-	<report name="KMSHStarted" mail="areca" sms="me">
-		<title>KMSH/FÜS Started</title>
+	<report id="KMSHStarted" mail="areca" sms="me" period="5">
+		<name>KMSH/FÜS Started</name>
 		<executeList>
 			<cmd>cmd2.4</cmd>
 		</executeList>
@@ -44,8 +45,8 @@
 		</reportCondition>
 	</report>
 
-	<report name="PartitionControl" mail="areca" sms="me">
-		<title>KMSH Partition Hatası !!!</title>
+	<report id="PartitionControl" mail="areca" sms="me" period="15">
+		<name>KMSH Partition Hatası !!!</name>
 		<executeList>
 			<cmd>cmd1.13</cmd>
 		</executeList>
@@ -59,8 +60,8 @@
 		</note>
 	</report>
 
-	<report name="Test" mail="me" sms="mex">
-		<title>Test Rapouru</title>
+	<report id="Test" mail="mex" sms="mex">
+		<name>Test Rapouru</name>
 		<executeList>
 			<cmd>C2</cmd>
 			<cmd>UpTime</cmd>

@@ -19,7 +19,7 @@ public class ReportManager extends AReportManager {
 	}
 
 	private String getTextContent() {
-		String output = repConfig.title + "\n\n";
+		String output = repConfig.name + "\n\n";
 
 		for (ContentPart p : content) {
 
@@ -42,7 +42,7 @@ public class ReportManager extends AReportManager {
 	}
 
 	public String getHTMLContent() {
-		String output = repConfig.title + "<BR>";
+		String output = repConfig.name + "<BR>";
 
 		for (ContentPart p : content) {
 			if (p.body instanceof String) {
