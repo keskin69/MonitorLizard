@@ -19,7 +19,7 @@ public class SMTPManager {
 	public static String sendMail(MailConfig conf, String subject,
 			String content) {
 		String response = null;
-		KmshLogger.log(1, "Sending mail");
+		KmshLogger.log(0, "Sending mail");
 		InternetAddress[] addressTo = new InternetAddress[conf.receipents
 				.size()];
 		for (int i = 0; i < conf.receipents.size(); i++) {

@@ -24,13 +24,9 @@ public class NotifDelayReport extends AAddOn {
 	public String process(String cmdId) {
 		String out = null;
 
-		Object obj = CommandManager.execute(cmdId);
-		KmshUtil.serialize("notif_delay.srl", obj);
-		// Object obj = KmshUtil.deserialize("out.srl");
-		long totalDelay = 0;
-		int total = 0;
-		long min = Long.MAX_VALUE;
-		long max = 0;
+		// Object obj = CommandManager.execute(cmdId);
+		// KmshUtil.serialize("./log/notif_delay.srl", obj);
+		Object obj = KmshUtil.deserialize("./log/notif_delay.srl");
 
 		if (obj instanceof Table) {
 			Table tbl = (Table) obj;
@@ -38,24 +34,50 @@ public class NotifDelayReport extends AAddOn {
 			String t = null;
 			Date nn = null;
 			Date tt = null;
-			total = tbl.size();
+			int total = tbl.size();
+			String type = null;
+			int not80 = 0;
+			int not100 = 0;
+			int totalDelay = 0;
+			int min = Integer.MAX_VALUE;
+			int max = 0;
+			String type2 = "";
+			int kmsh = 0;
+			int fus = 0;
 
 			for (int i = 1; i < tbl.size(); i++) {
 				@SuppressWarnings("unchecked")
 				ArrayList<String> row = tbl.get(i);
 				n = row.get(0);
 				t = row.get(1);
+				type = row.get(2);
+				type2 = row.get(3);
 
 				nn = KmshUtil.convertFullDate(n);
 				tt = KmshUtil.convertFullDate(t);
-				long delay = (nn.getTime() - tt.getTime()) / (60 * 1000);
+				int delay = (int) ((nn.getTime() - tt.getTime()) / (60 * 1000));
 
-				if (delay < min) {
-					min = delay;
+				if (nn.getTime() > tt.getTime()) {
+					if (delay < min) {
+						min = delay;
+					}
+
 				}
 
 				if (delay > max) {
 					max = delay;
+				}
+
+				if (type.equals("YUZDE80")) {
+					not80++;
+				} else if (type.equals("YUZDE100")) {
+					not100++;
+				}
+
+				if (type2.equals("KMSH")) {
+					kmsh++;
+				} else {
+					fus++;
 				}
 
 				totalDelay += delay;
@@ -63,13 +85,21 @@ public class NotifDelayReport extends AAddOn {
 
 			H2Util.writeDB("ToplamBildirim", "Günlük Toplam Bildirim", "",
 					new Integer(total).toString());
-			H2Util.writeDB("MinBildirim", "En hızlı bildirim zamanı", "",
-					new Long(min).toString());
-			H2Util.writeDB("MaxBildirim", "En geç bildirim zamanı", "",
-					new Long(max).toString());
-			H2Util.writeDB("AveBildirim", "Ortalama bildirim zamanı", "",
-					new Long(totalDelay / total).toString());
-			
+			H2Util.writeDB("MinBildirim", "En hızlı bildirim zamanı  (Dakika)",
+					"", new Integer(min).toString());
+			H2Util.writeDB("MaxBildirim", "En geç bildirim zamanı (Dakika)",
+					"", new Integer(max).toString());
+			H2Util.writeDB("AveBildirim", "Ortalama bildirim zamanı  (Dakika)",
+					"", new Integer(totalDelay / total).toString());
+			H2Util.writeDB("KMSH80", "%80 KMSH Bildirim adedi", "",
+					new Integer(not80).toString());
+			H2Util.writeDB("KMSH100", "%100 KMSH Bildirim adedi", "",
+					new Integer(not100).toString());
+			H2Util.writeDB("KMSH", "Toplam KMSH Bildirim adedi", "",
+					new Integer(kmsh).toString());
+			H2Util.writeDB("FUS", "Toplam FÜS Bildirim adedi", "", new Integer(
+					fus).toString());
+
 			out = new Long(totalDelay / total).toString();
 		}
 

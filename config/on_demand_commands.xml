@@ -19,7 +19,7 @@
 		<command id="NotifDelay" name="Bildirimdeki Gecikme">
 			<connectBy>sinan</connectBy>
 			<cmd>select /* + parallel(x,8) */ notification_date,
-				triggering_event_date, event_type from
+				triggering_event_date, event_type, notification_type from
 				arc_abone_bildirim x where
 				notification_date like '#yesterday%'</cmd>
 		</command>

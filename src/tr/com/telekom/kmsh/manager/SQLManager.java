@@ -44,7 +44,7 @@ public class SQLManager {
 			e.printStackTrace();
 		}
 
-		KmshLogger.log(1, "Executing sql completed");
+		KmshLogger.log(0, "Executing sql completed");
 
 		return result;
 	}

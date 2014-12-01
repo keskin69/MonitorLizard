@@ -26,7 +26,7 @@ public class CDRDelayReport extends AAddOn {
 
 		Object obj = CommandManager.execute(cmdId);
 		KmshUtil.serialize("cdr_delay.srl", obj);
-		// Object obj = KmshUtil.deserialize("out.srl");
+		//Object obj = KmshUtil.deserialize("cdr_delay.srl");
 		long totalDelay = 0;
 		int total = 0;
 		long min = Long.MAX_VALUE;

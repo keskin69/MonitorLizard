@@ -78,7 +78,7 @@ public class XMLManager extends AConfigManager {
 	}
 
 	void readConnections(String file) {
-		KmshLogger.log(2, "Reading Connection File " + file);
+		KmshLogger.log(0, "Reading Connection File " + file);
 
 		File fXmlFile = new File(file);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -126,7 +126,7 @@ public class XMLManager extends AConfigManager {
 	}
 
 	void readCommands(String file) {
-		KmshLogger.log(2, "Reading Command File " + file);
+		KmshLogger.log(0, "Reading Command File " + file);
 
 		File fXmlFile = new File(file);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

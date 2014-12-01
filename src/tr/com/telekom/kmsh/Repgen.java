@@ -25,10 +25,10 @@ public class Repgen {
 						singleReport(conf, repConf);
 						found = true;
 					} else {
-						KmshLogger.log(2, "Skipping report" + repConf.id);
+						KmshLogger.log(0, "Skipping report" + repConf.id);
 					}
 				} else {
-					KmshLogger.log(2, "Ignoring report" + repConf.id);
+					KmshLogger.log(0, "Ignoring report" + repConf.id);
 				}
 			}
 		} else {
@@ -42,7 +42,7 @@ public class Repgen {
 		}
 
 		if (!found) {
-			KmshLogger.log(0, "Cannot find report definition for " + repName);
+			KmshLogger.log(3, "Cannot find report definition for " + repName);
 		}
 	}
 
@@ -55,7 +55,7 @@ public class Repgen {
 		content = report.getContent();
 
 		if (condition) {
-			KmshLogger.log(1, "Sending notifications ");
+			KmshLogger.log(0, "Sending notifications ");
 			// send mail
 			sendMail(conf, repConf, content);
 

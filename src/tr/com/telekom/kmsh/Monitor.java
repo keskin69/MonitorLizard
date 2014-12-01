@@ -22,8 +22,8 @@ public class Monitor {
 		BasicConfigurator.configure(new NullAppender());
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
-		String type = "-t";
-		String name = "Test";
+		String type = "-r";
+		String name = "RptDaily";
 
 		if (args.length == 2) {
 			confFile = args[0];
@@ -34,7 +34,7 @@ public class Monitor {
 			name = args[2];
 		}
 
-		KmshLogger.log(1, "Executing " + type + " " + name);
+		KmshLogger.log(0, "Executing " + type + " " + name);
 
 		ConfigReader.file = confFile;
 		ConfigReader conf = ConfigReader.getInstance();
@@ -65,7 +65,7 @@ public class Monitor {
 		} else if (type.equals("-init")) {
 			H2Util.init();
 		} else {
-			KmshLogger.log(4, "Unknown operation type" + type);
+			KmshLogger.log(3, "Unknown operation type" + type);
 		}
 
 		KmshLogger.log(1, "Operations completed");

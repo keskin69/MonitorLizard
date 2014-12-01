@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <reports>
 	<report id="DBCheck" mail="me" sms="me" period="5">
-	<name>H2 DB Kontrol</name>
+		<name>H2 DB Kontrol</name>
 		<executeList>
 			<cmd>cmd3.1</cmd>
 		</executeList>
@@ -16,6 +16,14 @@
 			<cmd>cmd3.1</cmd>
 			<cmd>UpTime</cmd>
 			<cmd>TotalUpTime</cmd>
+			<cmd>AveBildirim</cmd>
+			<cmd>MinBildirim</cmd>
+			<cmd>MaxBildirim</cmd>
+			<cmd>ToplamBildirim</cmd>
+			<cmd>KMSH</cmd>
+			<cmd>KMSH80</cmd>
+			<cmd>KMSH100</cmd>
+			<cmd>FUS</cmd>
 			<cmd>cmd1.14</cmd>
 		</executeList>
 	</report>
