@@ -9,20 +9,24 @@
 
 	<group name="sql1" period="-1">
 		<connectBy>sinan</connectBy>
-		<cmd name="İşlenen CDR" id="1">select /* +
-			parallel(x,16) */ COUNT(*) as
+		<cmd name="Dün İşlenen CDR" id="1">select /* +
+			parallel(x,16) */
+			COUNT(*) as
 			CDR from
 			ARC_CDR_RAW_DATA x
-			where process_date='#today'
+			where process_date
+			like'#yesterday%'
 		</cmd>
-		<cmd name="Bugün çıkılan bildirim" id="2">select /* + parallel(x,16) */
+	</group>
+	<group name="sql3" period="-1">
+		<cmd name="Dün çıkılan bildirim" id="2">select /* + parallel(x,16) */
 			COUNT(*) as TOPLAM,
 			NOTIFICATION_TYPE,
 			EVENT_TYPE from
 			ARC_ABONE_BILDIRIM x
 			where
 			NOTIFICATION_DATE LIKE
-			'#today%'
+			'#yesterday%'
 			GROUP BY
 			EVENT_TYPE,
 			NOTIFICATION_TYPE

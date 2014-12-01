@@ -10,12 +10,13 @@ public class PeriodicCommandConfig {
 	public String delim = null;
 	public String field = null;
 	public String id = null;
+	public String rule = null;
 
 	public PeriodicCommandConfig(String grpId, Element e) {
 		command = e.getTextContent();
 		command = KmshUtil.insertFunctionValue(command);
 		command = KmshUtil.strCheck(command);
-
+		rule = e.getAttribute("rule");
 		name = e.getAttribute("name");
 		if (name.equals("")) {
 			name = command;

@@ -1,3 +1,3 @@
 0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/areca/keskin/monitor/run.sh -t
 1,6,11,16,21,26,31,36,41,46,51,56 * * * * /home/areca/keskin/monitor/run.sh -r
-00 23 * * * /home/areca/keskin/monitor/run.sh -r  RptDaily
+00 02 * * * /home/areca/keskin/monitor/run.sh -r  RptDaily

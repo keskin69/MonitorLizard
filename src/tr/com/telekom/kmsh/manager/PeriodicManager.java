@@ -35,8 +35,8 @@ public class PeriodicManager {
 							+ cmd.field;
 				}
 
-				Object obj = CommandManager
-						.execute(connection, command, cmd.id);
+				Object obj = CommandManager.execute(connection, command,
+						cmd.id, cmd.rule);
 				String result = null;
 				if (obj instanceof String) {
 					result = (String) obj;

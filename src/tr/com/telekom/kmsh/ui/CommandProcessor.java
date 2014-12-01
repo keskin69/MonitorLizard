@@ -111,7 +111,7 @@ public class CommandProcessor {
 				result = "No active connection";
 			} else {
 				arg = insertVariables(arg);
-				Object obj = CommandManager.execute(conn, arg, "");
+				Object obj = CommandManager.execute(conn, arg, "", null);
 				if (obj instanceof String) {
 					result = (String) obj;
 				} else {

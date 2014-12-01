@@ -15,15 +15,17 @@ public class CDRDelayReport extends AAddOn {
 	public static void main(String[] args) {
 		ConfigReader.file = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
 
-		new CDRDelayReport().process("NotifDelay");
+		new CDRDelayReport().process("CDRDelay");
 	}
 
 	public void processRow(ResultSet rs) throws SQLException {
 	}
 
-	public void process(String cmdId) {
+	public String process(String cmdId) {
+		String out = null;
+
 		Object obj = CommandManager.execute(cmdId);
-		 KmshUtil.serialize("cdr_delay.srl", obj);
+		KmshUtil.serialize("cdr_delay.srl", obj);
 		// Object obj = KmshUtil.deserialize("out.srl");
 		long totalDelay = 0;
 		int total = 0;
@@ -67,6 +69,10 @@ public class CDRDelayReport extends AAddOn {
 					new Long(max).toString());
 			H2Util.writeDB("AveBildirim", "Ortalama bildirim zamanõ", "",
 					new Long(totalDelay / total).toString());
+
+			out = "Ave. notif:" + new Long(totalDelay / total).toString();
 		}
+
+		return out;
 	}
 }

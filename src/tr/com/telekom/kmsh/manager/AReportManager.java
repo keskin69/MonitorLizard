@@ -69,7 +69,7 @@ public abstract class AReportManager {
 			ConnectionConfig connection = conf
 					.findConnection(command.connectBy);
 			Object result = CommandManager.execute(connection, command.cmd,
-					cmdId);
+					cmdId, null);
 
 			addContent(command.name, result);
 		} else {

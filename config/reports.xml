@@ -3,35 +3,30 @@
 	<report id="DBCheck" mail="me" sms="me" period="5">
 	<name>H2 DB Kontrol</name>
 		<executeList>
-			<cmd>cmd2.4</cmd>
+			<cmd>cmd3.1</cmd>
 		</executeList>
 		<reportCondition>
-			<condition check="cmd2.4">^$</condition>
+			<condition check="cmd3.1">^$</condition>
 		</reportCondition>
 	</report>
 
 	<report id="RptDaily" mail="areca">
 		<name>KMSH/FÜS Bildirim Raporu</name>
 		<executeList>
-			<cmd>cmd2.4</cmd>
+			<cmd>cmd3.1</cmd>
 			<cmd>UpTime</cmd>
 			<cmd>TotalUpTime</cmd>
-			<cmd>cmd2.1</cmd>
-			<cmd>cmd2.2</cmd>
-			<cmd>cmd2.3</cmd>
-			<cmd>cmd1.1</cmd>
-			<cmd>cmd1.2</cmd>
-			<cmd>cmd1.3</cmd>
+			<cmd>cmd1.14</cmd>
 		</executeList>
 	</report>
 
 	<report id="KMSHStopped" mail="areca" sms="me" period="5">
 		<name>KMSH/FÜS Stopped</name>
 		<executeList>
-			<cmd>cmd2.4</cmd>
+			<cmd>cmd3.1</cmd>
 		</executeList>
 		<reportCondition>
-			<condition check="cmd2.4">(.*)stopped(.*)</condition>
+			<condition check="cmd3.1">(.*)stopped(.*)</condition>
 		</reportCondition>
 	</report>
 

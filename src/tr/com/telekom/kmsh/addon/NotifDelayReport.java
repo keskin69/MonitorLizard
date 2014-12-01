@@ -21,7 +21,9 @@ public class NotifDelayReport extends AAddOn {
 	public void processRow(ResultSet rs) throws SQLException {
 	}
 
-	public void process(String cmdId) {
+	public String process(String cmdId) {
+		String out = null;
+
 		Object obj = CommandManager.execute(cmdId);
 		KmshUtil.serialize("notif_delay.srl", obj);
 		// Object obj = KmshUtil.deserialize("out.srl");
@@ -67,6 +69,10 @@ public class NotifDelayReport extends AAddOn {
 					new Long(max).toString());
 			H2Util.writeDB("AveBildirim", "Ortalama bildirim zamanõ", "",
 					new Long(totalDelay / total).toString());
+			
+			out = new Long(totalDelay / total).toString();
 		}
+
+		return out;
 	}
 }

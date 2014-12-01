@@ -22,7 +22,7 @@ public class Monitor {
 		BasicConfigurator.configure(new NullAppender());
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
-		String type = "-r";
+		String type = "-t";
 		String name = "Test";
 
 		if (args.length == 2) {
@@ -44,7 +44,7 @@ public class Monitor {
 		xmlManager.readConfig(xmlFiles);
 
 		// TODO
-		// H2Util.writeDB("sql1", "", "", "2014-11-25 23:00:00", "");
+		// H2Util.writeDB("sql1", "", "", "2014-11-29 01:00:00", "");
 
 		if (type.equals("-t")) {
 			new PeriodicMonitor(xmlManager);
@@ -59,7 +59,7 @@ public class Monitor {
 			Object result = CommandManager.execute(name);
 			if (result instanceof String) {
 				KmshLogger.log(1, (String) result);
-			} else {
+			} else if (result instanceof Table) {
 				KmshLogger.log(1, ((Table) result).getString());
 			}
 		} else if (type.equals("-init")) {

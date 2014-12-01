@@ -33,9 +33,6 @@
 		<cmd id="3" name="Taşınmayı Bekleyen CDR Dosyası">ls -l
 			/girdi/realtime_cdr | wc -l
 		</cmd>
-		<cmd id="4" name="Status">cd
-			/girdi/ARECA_DEPLOYMENT/areca/bin/;./checkAreca.sh
-		</cmd>
 	</group>
 
 	<group name="cmd3" period="1">

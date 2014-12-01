@@ -18,13 +18,23 @@ public class CommandManager {
 		xmlManager.readConfig(xmlFiles);
 		CommandConfig cmdConfig = xmlManager.findCommand(id);
 
-		ConnectionConfig conn = xmlManager.findConnection(cmdConfig.connectBy);
-		Object obj = execute(conn, cmdConfig.cmd, cmdConfig.id);
+		Object obj = null;
+
+		if (cmdConfig != null) {
+			ConnectionConfig conn = xmlManager
+					.findConnection(cmdConfig.connectBy);
+			obj = execute(conn, cmdConfig.cmd, cmdConfig.id, null);
+
+		} else {
+			KmshLogger.log(4, "Command with " + id
+					+ " cannot found in the config files.");
+		}
 
 		return obj;
 	}
 
-	public static Object execute(ConnectionConfig conStr, String cmd, String id) {
+	public static Object execute(ConnectionConfig conStr, String cmd,
+			String id, String rule) {
 		KmshLogger.log(1, "Processing command " + id);
 
 		if (conStr.type.equals("ssh")) {
@@ -39,9 +49,9 @@ public class CommandManager {
 			// execute a java class
 			try {
 				IAddOn addOn = (IAddOn) Class.forName(cmd).newInstance();
-				addOn.process(id);
+				String result = addOn.process(rule);
 				H2Util.writeTag(id);
-				return "";
+				return result;
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

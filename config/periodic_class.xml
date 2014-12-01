@@ -2,12 +2,15 @@
 <commands>
 	<group name="class1" period="10">
 		<connectBy>java</connectBy>
-		<cmd id="1" name="Up/Down Zamanı">tr.com.telekom.kmsh.addon.UptimeGenerator</cmd>
+		<cmd id="1" name="Up/Down Zamanı" rule="cmd3.1">tr.com.telekom.kmsh.addon.UptimeGenerator
+		</cmd>
 	</group>
 
 	<group name="class2" period="-1">
 		<connectBy>java</connectBy>
-		<cmd id="1" name="Bildirimdeki Gecikmeler">tr.com.telekom.kmsh.addon.NotifDelayReport</cmd>
-		<cmd id="2" name="CDR İşlemedeki Gecikmeler">tr.com.telekom.kmsh.addon.CDRDelayReport</cmd>
+		<cmd id="1" name="Bildirimdeki Gecikmeler" rule="NotifDelay">tr.com.telekom.kmsh.addon.NotifDelayReport
+		</cmd>
+		<cmd id="2" name="CDR İşlemedeki Gecikmeler" rule="CDRDelay">tr.com.telekom.kmsh.addon.CDRDelayReport
+		</cmd>
 	</group>
 </commands>
