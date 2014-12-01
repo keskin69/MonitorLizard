@@ -21,11 +21,72 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class KmshUtil {
 	public static final DecimalFormat DecimalFmt = new DecimalFormat("#.##");
 	public static SimpleDateFormat formatter = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss");
+	public static SimpleDateFormat shortFmt = new SimpleDateFormat("yyyyMM");
+
+	public static void main(String[] args) {
+		String dateInString = "2014-10-30 10:20:56";
+		Date date = null;
+		try {
+			date = formatter.parse(dateInString);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println(getDonem(date));
+	}
+
+	public static boolean inPeriod(String period, Date dIn) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+		try {
+			Date d = sdf.parse(period);
+			Calendar sd = new GregorianCalendar();
+			sd.setTime(d);
+			sd.add(Calendar.DAY_OF_MONTH, -2);
+
+			Calendar ed = new GregorianCalendar();
+			ed.setTime(d);
+			ed.set(Calendar.DATE, ed.getActualMaximum(Calendar.DATE) - 2);
+
+			if (dIn.after(sd.getTime()) && dIn.before(ed.getTime())) {
+				return true;
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	public static String getDonem(Date date) {
+		String p = shortFmt.format(date.getTime());
+		if (inPeriod(p, date)) {
+			return p;
+		}
+
+		Calendar ed = new GregorianCalendar();
+		ed.setTime(date);
+		ed.add(Calendar.MONTH, -1);
+		p = shortFmt.format(ed.getTime());
+
+		if (inPeriod(p, date)) {
+			return p;
+		}
+
+		ed = new GregorianCalendar();
+		ed.setTime(date);
+		ed.add(Calendar.MONTH, +1);
+		p = shortFmt.format(ed.getTime());
+
+		return p;
+	}
 
 	public static void serialize(String fileName, Object obj) {
 		// serialize the List
@@ -151,7 +212,6 @@ public class KmshUtil {
 	}
 
 	public static Date convertToDate(String str) {
-
 		Date date = null;
 		try {
 			date = formatter.parse(str);

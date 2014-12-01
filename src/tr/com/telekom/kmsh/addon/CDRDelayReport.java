@@ -25,8 +25,8 @@ public class CDRDelayReport extends AAddOn {
 		String out = null;
 
 		Object obj = CommandManager.execute(cmdId);
-		KmshUtil.serialize("cdr_delay.srl", obj);
-		//Object obj = KmshUtil.deserialize("cdr_delay.srl");
+		// KmshUtil.serialize("./log/cdr_delay.srl", obj);
+		// Object obj = KmshUtil.deserialize("./log/cdr_delay.srl");
 		long totalDelay = 0;
 		int total = 0;
 		long min = Long.MAX_VALUE;
@@ -43,8 +43,8 @@ public class CDRDelayReport extends AAddOn {
 			for (int i = 1; i < tbl.size(); i++) {
 				@SuppressWarnings("unchecked")
 				ArrayList<String> row = tbl.get(i);
-				n = row.get(0);
-				t = row.get(1);
+				n = row.get(1);
+				t = row.get(0);
 
 				nn = KmshUtil.convertFullDate(n);
 				tt = KmshUtil.convertFullDate(t);
@@ -61,14 +61,17 @@ public class CDRDelayReport extends AAddOn {
 				totalDelay += delay;
 			}
 
-			H2Util.writeDB("ToplamBildirim", "Günlük Toplam Bildirim", "",
+			H2Util.writeDB("ToplamCDRIsleme", "G√ºnl√ºk Toplam ƒ∞≈ülenen CDR", "",
 					new Integer(total).toString());
-			H2Util.writeDB("MinBildirim", "En hızlı bildirim zamanı", "",
+			H2Util.writeDB("MinCDRIsleme",
+					"En hƒ±zlƒ± CDR ƒ∞≈üleme zamanƒ± (Dakika)", "",
 					new Long(min).toString());
-			H2Util.writeDB("MaxBildirim", "En geç bildirim zamanı", "",
+			H2Util.writeDB("MaxCDRIsleme",
+					"En yava≈ü CDR i≈üleme zamanƒ± (Dakika)", "",
 					new Long(max).toString());
-			H2Util.writeDB("AveBildirim", "Ortalama bildirim zamanı", "",
-					new Long(totalDelay / total).toString());
+			H2Util.writeDB("AveCDRIsleme",
+					"Ortalama CDR i≈üleme zamanƒ± (Dakika)", "", new Long(
+							totalDelay / total).toString());
 
 			out = "Ave. notif:" + new Long(totalDelay / total).toString();
 		}

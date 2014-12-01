@@ -24,9 +24,9 @@ public class NotifDelayReport extends AAddOn {
 	public String process(String cmdId) {
 		String out = null;
 
-		// Object obj = CommandManager.execute(cmdId);
+		Object obj = CommandManager.execute(cmdId);
 		// KmshUtil.serialize("./log/notif_delay.srl", obj);
-		Object obj = KmshUtil.deserialize("./log/notif_delay.srl");
+		// Object obj = KmshUtil.deserialize("./log/notif_delay.srl");
 
 		if (obj instanceof Table) {
 			Table tbl = (Table) obj;

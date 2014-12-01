@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import tr.com.telekom.kmsh.util.KmshUtil;
+
 public class Functions {
 	public static String yesterday() {
 		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
@@ -21,15 +23,19 @@ public class Functions {
 		return dateFormat.format(cal.getTime()).toUpperCase();
 	}
 
-	public static String getCustomerID(String aboneNo) {
-		return "";
-	}
-
 	public static String donem() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMM");
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, 0);
 
-		return dateFormat.format(cal.getTime()).toUpperCase();
+		return dateFormat.format(cal.getTime());
+	}
+
+	public static String prevDonem() {
+		// Bir gun onceye ait donem bilgisi
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -1);
+
+		return KmshUtil.getDonem(cal.getTime());
 	}
 }

@@ -15,7 +15,7 @@
 			CDR from
 			ARC_CDR_RAW_DATA x
 			where process_date
-			like'#yesterday%'
+			like'#yesterday%' and donem=#prevDonem
 		</cmd>
 	</group>
 	<group name="sql3" period="-1">
