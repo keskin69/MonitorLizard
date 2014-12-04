@@ -1,5 +1,13 @@
 package tr.com.telekom.kmsh;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.apache.log4j.varia.NullAppender;
@@ -18,12 +26,17 @@ public class Monitor {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		// check if another instance exists
+		if (!checkInstance()) {
+			return;
+		}
+
 		// Set up a simple configuration that logs on the console.
 		BasicConfigurator.configure(new NullAppender());
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
-		String type = "-r";
-		String name = "RptDaily";
+		String type = "-t";
+		String name = "";
 
 		if (args.length == 2) {
 			confFile = args[0];
@@ -69,5 +82,34 @@ public class Monitor {
 		}
 
 		KmshLogger.log(1, "Operations completed");
+	}
+
+	private static boolean checkInstance() {
+		try {
+			Runtime r = Runtime.getRuntime();
+			Process p = r.exec("ps -ef | grep repgen.jar");
+			p.waitFor();
+
+			BufferedReader b = new BufferedReader(new InputStreamReader(
+					p.getInputStream()));
+			String line = "";
+
+			while ((line = b.readLine()) != null) {
+				System.out.println(line);
+				if (!line.contains("grep")) {
+					return false;
+				}
+			}
+
+			b.close();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return true;
 	}
 }

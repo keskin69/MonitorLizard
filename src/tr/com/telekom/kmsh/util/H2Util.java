@@ -22,23 +22,26 @@ public class H2Util {
 
 	@SuppressWarnings("unchecked")
 	public static Table getWeeklySummary(String id) {
-		String sql = "select substring(date, 0, 11), value from tblkey where id='"
+		String sql = "select substring(date,0,10), value from tblkey where id='"
 				+ id
 				+ "' and date >'"
 				+ KmshUtil.getCurrentTimeStamp(-10)
 				+ "' order by date desc";
 		Table tbl = readAsTable(sql);
 
-		String prevDate = "";
-		for (int i = tbl.size()-1; i >= 0; i--) {
-			ArrayList<String> row = tbl.get(i);
-			String date = row.get(0);
-			if (prevDate.equals(date)) {
-				// remove previous value
-				tbl.remove(i+1);
-			}
+		if (tbl != null) {
+			String prevDate = "";
+			for (int i = tbl.size() - 1; i >= 0; i--) {
+				ArrayList<String> row = tbl.get(i);
+				String date = row.get(0);
 
-			prevDate = date;
+				if (prevDate.equals(date)) {
+					// remove previous value
+					tbl.remove(i + 1);
+				}
+
+				prevDate = date;
+			}
 		}
 
 		return tbl;

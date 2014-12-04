@@ -18,14 +18,14 @@ public class NotifDelayReport extends AAddOn {
 		new NotifDelayReport().process("NotifDelay");
 	}
 
-	public void processRow(ResultSet rs) throws SQLException {
+	public void processH2Row(ResultSet rs) throws SQLException {
 	}
 
 	public String process(String cmdId) {
 		String out = null;
 
 		Object obj = CommandManager.execute(cmdId);
-		// KmshUtil.serialize("./log/notif_delay.srl", obj);
+		//KmshUtil.serialize("./log/notif_delay.srl", obj);
 		// Object obj = KmshUtil.deserialize("./log/notif_delay.srl");
 
 		if (obj instanceof Table) {

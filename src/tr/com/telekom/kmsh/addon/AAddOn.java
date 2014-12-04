@@ -24,7 +24,7 @@ public abstract class AAddOn implements IAddOn {
 
 			ResultSet rs = stat.executeQuery(sql);
 			while (rs.next()) {
-				processRow(rs);
+				processH2Row(rs);
 			}
 
 			conn.close();

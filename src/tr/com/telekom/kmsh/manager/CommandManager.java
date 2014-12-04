@@ -38,11 +38,11 @@ public class CommandManager {
 		KmshLogger.log(1, "Processing command " + id);
 
 		if (conStr.type.equals("ssh")) {
-			// execute an ssh command
+			// execute an SSH command
 			String result = SSHManager.executeCommand(conStr, cmd);
 			return result.trim();
 		} else if (conStr.type.equals("sql")) {
-			// execute an sql command
+			// execute an SQL command
 			Table result = SQLManager.executeSQL(conStr, cmd);
 			return result;
 		} else if (conStr.type.equals("java")) {
@@ -51,6 +51,7 @@ public class CommandManager {
 				IAddOn addOn = (IAddOn) Class.forName(cmd).newInstance();
 				String result = addOn.process(rule);
 				H2Util.writeTag(id);
+
 				return result;
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block

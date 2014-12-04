@@ -1,54 +1,60 @@
 package tr.com.telekom.kmsh.addon;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Statement;
 import java.util.Date;
 
-import tr.com.telekom.kmsh.manager.CommandManager;
+import tr.com.telekom.kmsh.config.CommandConfig;
+import tr.com.telekom.kmsh.config.ConnectionConfig;
+import tr.com.telekom.kmsh.config.XMLManager;
+import tr.com.telekom.kmsh.manager.SQLManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
 import tr.com.telekom.kmsh.util.H2Util;
-import tr.com.telekom.kmsh.util.KmshUtil;
-import tr.com.telekom.kmsh.util.Table;
+import tr.com.telekom.kmsh.util.KmshLogger;
 
 public class CDRDelayReport extends AAddOn {
+	long totalDelay = 0;
+	int total = 0;
+	long min = Long.MAX_VALUE;
+	long max = 0;
+
 	public static void main(String[] args) {
 		ConfigReader.file = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
 
 		new CDRDelayReport().process("CDRDelay");
 	}
 
-	public void processRow(ResultSet rs) throws SQLException {
+	public void processH2Row(ResultSet rs) throws SQLException {
 	}
 
 	public String process(String cmdId) {
 		String out = null;
 
-		Object obj = CommandManager.execute(cmdId);
-		// KmshUtil.serialize("./log/cdr_delay.srl", obj);
-		// Object obj = KmshUtil.deserialize("./log/cdr_delay.srl");
-		long totalDelay = 0;
-		int total = 0;
-		long min = Long.MAX_VALUE;
-		long max = 0;
+		String xmlFiles = conf.getProperty("base")
+				+ conf.getProperty("xmlFiles");
+		XMLManager xmlManager = new XMLManager();
+		xmlManager.readConfig(xmlFiles);
+		CommandConfig cmdConfig = xmlManager.findCommand(cmdId);
+		ConnectionConfig cfg = xmlManager.findConnection(cmdConfig.connectBy);
+		Connection conn = SQLManager.connect(cfg);
 
-		if (obj instanceof Table) {
-			Table tbl = (Table) obj;
-			String n = null;
-			String t = null;
-			Date nn = null;
-			Date tt = null;
-			total = tbl.size();
+		try {
+			Statement statement = conn.createStatement();
 
-			for (int i = 1; i < tbl.size(); i++) {
-				@SuppressWarnings("unchecked")
-				ArrayList<String> row = tbl.get(i);
-				n = row.get(1);
-				t = row.get(0);
+			KmshLogger.log(1, "Executing " + cmdConfig.cmd);
+			ResultSet rs = statement.executeQuery(cmdConfig.cmd);
 
-				nn = KmshUtil.convertFullDate(n);
-				tt = KmshUtil.convertFullDate(t);
-				long delay = (nn.getTime() - tt.getTime()) / (60 * 1000);
+			KmshLogger.log(1, "Processing data");
+
+			while (rs.next()) {
+				total++;
+
+				Date call = rs.getDate("arama_zamani");
+				Date process = rs.getDate("process_date");
+
+				long delay = (process.getTime() - call.getTime()) / (60 * 1000);
 
 				if (delay < min) {
 					min = delay;
@@ -60,21 +66,22 @@ public class CDRDelayReport extends AAddOn {
 
 				totalDelay += delay;
 			}
-
-			H2Util.writeDB("ToplamCDRIsleme", "Günlük Toplam İşlenen CDR", "",
-					new Integer(total).toString());
-			H2Util.writeDB("MinCDRIsleme",
-					"En hızlı CDR İşleme zamanı (Dakika)", "",
-					new Long(min).toString());
-			H2Util.writeDB("MaxCDRIsleme",
-					"En yavaş CDR işleme zamanı (Dakika)", "",
-					new Long(max).toString());
-			H2Util.writeDB("AveCDRIsleme",
-					"Ortalama CDR işleme zamanı (Dakika)", "", new Long(
-							totalDelay / total).toString());
-
-			out = "Ave. notif:" + new Long(totalDelay / total).toString();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+
+		H2Util.writeDB("ToplamCDRIsleme", "Günlük Toplam İşlenen CDR", "",
+				new Integer(total).toString());
+		H2Util.writeDB("MinCDRIsleme", "En hızlı CDR İşleme zamanı (Dakika)",
+				"", new Long(min).toString());
+		H2Util.writeDB("MaxCDRIsleme", "En yavaş CDR işleme zamanı (Dakika)",
+				"", new Long(max).toString());
+		H2Util.writeDB("AveCDRIsleme", "Ortalama CDR işleme zamanı (Dakika)",
+				"", new Long(totalDelay / total).toString());
+
+		out = "Ave. notif:" + new Long(totalDelay / total).toString();
+
+		KmshLogger.log(1, "Completed:" + cmdConfig.cmd);
 
 		return out;
 	}

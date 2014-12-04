@@ -13,7 +13,7 @@ public class UptimeGenerator extends AAddOn {
 	private Date prevTime = null;
 	private Date curTime = null;
 
-	public void processRow(ResultSet rs) throws SQLException {
+	public void processH2Row(ResultSet rs) throws SQLException {
 		String d = rs.getString(1);
 		curTime = KmshUtil.convertToDate(d);
 		if (prevTime == null) {

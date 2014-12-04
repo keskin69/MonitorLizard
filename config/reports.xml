@@ -10,7 +10,7 @@
 		</reportCondition>
 	</report>
 
-	<report id="RptDaily" mail="areca">
+	<report id="RptDaily" mail="areca" period="1440">
 		<name>KMSH/FÜS Bildirim Raporu</name>
 		<executeList>
 			<cmd>cmd3.1</cmd>

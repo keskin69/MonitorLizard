@@ -10,7 +10,10 @@
 		<connectBy>java</connectBy>
 		<cmd id="1" name="Bildirimdeki Gecikmeler" rule="NotifDelay">tr.com.telekom.kmsh.addon.NotifDelayReport
 		</cmd>
-		<cmd id="2" name="CDR İşlemedeki Gecikmeler" rule="CDRDelay">tr.com.telekom.kmsh.addon.CDRDelayReport
+	</group>
+
+	<group name="class3" period="-1">
+		<cmd id="1" name="CDR İşlemedeki Gecikmeler" rule="CDRDelay">tr.com.telekom.kmsh.addon.CDRDelayReport
 		</cmd>
 	</group>
 </commands>

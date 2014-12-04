@@ -17,8 +17,6 @@
 			where process_date
 			like'#yesterday%' and donem=#prevDonem
 		</cmd>
-	</group>
-	<group name="sql3" period="-1">
 		<cmd name="Dün çıkılan bildirim" id="2">select /* + parallel(x,16) */
 			COUNT(*) as TOPLAM,
 			NOTIFICATION_TYPE,

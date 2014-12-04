@@ -14,7 +14,7 @@ public class GroupCommandConfig extends AConfig {
 	public String base = null;
 	public String connectBy = null;
 	public ArrayList<PeriodicCommandConfig> commandList = null;
-	public int period = 0;
+	public int period = -1;
 
 	public GroupCommandConfig() {
 		commandList = new ArrayList<PeriodicCommandConfig>();

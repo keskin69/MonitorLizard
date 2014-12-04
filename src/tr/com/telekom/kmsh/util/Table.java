@@ -32,7 +32,6 @@ public class Table extends ArrayList<ArrayList> implements Serializable {
 				row = new ArrayList<String>();
 				for (int i = 1; i <= columnsNumber; i++) {
 					String d = rs.getString(i);
-					d = d.trim();
 					row.add(d);
 				}
 

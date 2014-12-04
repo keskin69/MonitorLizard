@@ -26,7 +26,7 @@
 
 		<command id="CDRDelay" name="CDR İşleme Gecikme">
 			<connectBy>sinan</connectBy>
-			<cmd>select /* + parallel(x,8) */ arama_zamani, process_date from
+			<cmd>select /* + parallel(x,16) */ arama_zamani, process_date from
 				arc_in_rated_cdr x where
 				process_date like '#yesterday%' and donem=#prevDonem</cmd>
 		</command>
