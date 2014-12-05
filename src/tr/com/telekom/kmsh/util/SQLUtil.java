@@ -13,7 +13,7 @@ import org.h2.Driver;
 
 import tr.com.telekom.kmsh.config.PeriodicCommandConfig;
 
-public class H2Util {
+public class SQLUtil {
 	public static final int ID = 0;
 	public static final int NAME = 1;
 	public static final int COMMAND = 2;
@@ -64,9 +64,8 @@ public class H2Util {
 			ResultSet rs = stat.executeQuery(sql);
 			result = new Table(rs);
 
-			conn.close();
 			stat.close();
-
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,9 +134,8 @@ public class H2Util {
 				out = rs.getString(field);
 			}
 
-			conn.close();
 			stat.close();
-
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

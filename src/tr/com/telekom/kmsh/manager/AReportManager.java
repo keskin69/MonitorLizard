@@ -7,7 +7,7 @@ import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.ReportConfig;
 import tr.com.telekom.kmsh.manager.ReportManager.ContentPart;
-import tr.com.telekom.kmsh.util.H2Util;
+import tr.com.telekom.kmsh.util.SQLUtil;
 
 public abstract class AReportManager {
 	protected ReportConfig repConfig = null;
@@ -24,14 +24,14 @@ public abstract class AReportManager {
 		boolean condition = true;
 		String result = null;
 
-		String before = H2Util.readDB(repConfig.id, "value");
+		String before = SQLUtil.readDB(repConfig.id, "value");
 
 		for (String cmdId : repConfig.commands) {
-			result = H2Util.readDB(cmdId, "value");
+			result = SQLUtil.readDB(cmdId, "value");
 			if (result.equals("")) {
 				execute(conf, cmdId);
 			} else {
-				String title = H2Util.readDB(cmdId, "name");
+				String title = SQLUtil.readDB(cmdId, "name");
 				addContent(title, result);
 			}
 		}
@@ -48,9 +48,9 @@ public abstract class AReportManager {
 				condition = false;
 			}
 
-			H2Util.writeDB(repConfig.id, "", "", "REP");
+			SQLUtil.writeDB(repConfig.id, "", "", "REP");
 		} else {
-			H2Util.writeDB(repConfig.id, "", "", "");
+			SQLUtil.writeDB(repConfig.id, "", "", "");
 		}
 
 		if (condition && repConfig.note != null) {

@@ -5,7 +5,7 @@ import tr.com.telekom.kmsh.config.CommandConfig;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
-import tr.com.telekom.kmsh.util.H2Util;
+import tr.com.telekom.kmsh.util.SQLUtil;
 import tr.com.telekom.kmsh.util.KmshLogger;
 import tr.com.telekom.kmsh.util.Table;
 
@@ -50,7 +50,7 @@ public class CommandManager {
 			try {
 				IAddOn addOn = (IAddOn) Class.forName(cmd).newInstance();
 				String result = addOn.process(rule);
-				H2Util.writeTag(id);
+				SQLUtil.writeTag(id);
 
 				return result;
 			} catch (ClassNotFoundException e) {

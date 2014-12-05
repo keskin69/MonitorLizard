@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import tr.com.telekom.kmsh.util.H2Util;
+import tr.com.telekom.kmsh.util.SQLUtil;
 
 public class Condition {
 	private String commandId = null;
@@ -18,7 +18,7 @@ public class Condition {
 	}
 
 	public boolean checkRule() {
-		String value = H2Util.readDB(commandId, "value");
+		String value = SQLUtil.readDB(commandId, "value");
 		Pattern r = Pattern.compile(rule);
 		Matcher m = r.matcher(value);
 		return m.find();

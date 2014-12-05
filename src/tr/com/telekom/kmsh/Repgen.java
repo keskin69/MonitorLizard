@@ -7,7 +7,7 @@ import tr.com.telekom.kmsh.config.SMSConfig;
 import tr.com.telekom.kmsh.manager.ReportManager;
 import tr.com.telekom.kmsh.manager.SMSManager;
 import tr.com.telekom.kmsh.manager.SMTPManager;
-import tr.com.telekom.kmsh.util.H2Util;
+import tr.com.telekom.kmsh.util.SQLUtil;
 import tr.com.telekom.kmsh.util.KmshUtil;
 import tr.com.telekom.kmsh.util.KmshLogger;
 
@@ -42,7 +42,7 @@ public class Repgen {
 		String content = null;
 
 		if (repConf.period != -1) {
-			if (H2Util.getAge(repConf.id) >= repConf.period) {
+			if (SQLUtil.getAge(repConf.id) >= repConf.period) {
 				ReportManager report = new ReportManager(repConf);
 				KmshLogger.log(1, "Processing Report " + repConf.id);
 				boolean condition = report.process(conf);
@@ -58,7 +58,7 @@ public class Repgen {
 				}
 
 				// write a tag
-				H2Util.writeTag(repConf.id);
+				SQLUtil.writeTag(repConf.id);
 
 				// write content to report log
 				KmshUtil.writeLog(repConf.id + ".log", content);

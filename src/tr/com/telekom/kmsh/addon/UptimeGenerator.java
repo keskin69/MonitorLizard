@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-import tr.com.telekom.kmsh.util.H2Util;
+import tr.com.telekom.kmsh.util.SQLUtil;
 import tr.com.telekom.kmsh.util.KmshUtil;
 
 public class UptimeGenerator extends AAddOn {
@@ -40,18 +40,18 @@ public class UptimeGenerator extends AAddOn {
 		// write results to db
 		double upRatio = (uptime * 100D) / (uptime + downtime + 0D);
 		String value = KmshUtil.DecimalFmt.format(upRatio);
-		H2Util.writeDB("UpTime", "UpTime%", "", value);
+		SQLUtil.writeDB("UpTime", "UpTime%", "", value);
 		out = "Uptime:" + value;
 
 		double downRatio = (downtime * 100D) / (uptime + downtime + 0D);
 		value = KmshUtil.DecimalFmt.format(downRatio);
-		H2Util.writeDB("DownTime", "DownTime%", "", value);
+		SQLUtil.writeDB("DownTime", "DownTime%", "", value);
 
 		value = KmshUtil.DecimalFmt.format(downtime);
-		H2Util.writeDB("TotalDownTime", "Total Down Time(Min.)", "", value);
+		SQLUtil.writeDB("TotalDownTime", "Total Down Time(Min.)", "", value);
 
 		value = KmshUtil.DecimalFmt.format(uptime);
-		H2Util.writeDB("TotalUpTime", "Total Up Time (Min.)", "", value);
+		SQLUtil.writeDB("TotalUpTime", "Total Up Time (Min.)", "", value);
 
 		return out;
 	}

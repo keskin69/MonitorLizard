@@ -15,7 +15,7 @@ import org.apache.log4j.varia.NullAppender;
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.manager.CommandManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
-import tr.com.telekom.kmsh.util.H2Util;
+import tr.com.telekom.kmsh.util.SQLUtil;
 import tr.com.telekom.kmsh.util.KmshLogger;
 import tr.com.telekom.kmsh.util.Table;
 
@@ -76,7 +76,7 @@ public class Monitor {
 				KmshLogger.log(1, ((Table) result).getString());
 			}
 		} else if (type.equals("-init")) {
-			H2Util.init();
+			SQLUtil.init();
 		} else {
 			KmshLogger.log(3, "Unknown operation type" + type);
 		}

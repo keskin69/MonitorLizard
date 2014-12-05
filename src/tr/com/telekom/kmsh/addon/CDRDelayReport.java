@@ -11,7 +11,7 @@ import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.manager.SQLManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
-import tr.com.telekom.kmsh.util.H2Util;
+import tr.com.telekom.kmsh.util.SQLUtil;
 import tr.com.telekom.kmsh.util.KmshLogger;
 
 public class CDRDelayReport extends AAddOn {
@@ -19,6 +19,7 @@ public class CDRDelayReport extends AAddOn {
 	int total = 0;
 	long min = Long.MAX_VALUE;
 	long max = 0;
+	int pageSize = 1000;
 
 	public static void main(String[] args) {
 		ConfigReader.file = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
@@ -41,22 +42,27 @@ public class CDRDelayReport extends AAddOn {
 		Connection conn = SQLManager.connect(cfg);
 
 		try {
+			ResultSet rs = null;
+
 			Statement statement = conn.createStatement();
+			statement.setFetchDirection(ResultSet.FETCH_FORWARD);
 
 			KmshLogger.log(1, "Executing " + cmdConfig.cmd);
-			ResultSet rs = statement.executeQuery(cmdConfig.cmd);
+
+			rs = statement.executeQuery(cmdConfig.cmd);
 
 			KmshLogger.log(1, "Processing data");
+			Date call = null;
+			Date process = null;
+			long delay = 0;
 
 			while (rs.next()) {
-				total++;
+				call = rs.getDate("arama_zamani");
+				process = rs.getDate("process_date");
 
-				Date call = rs.getDate("arama_zamani");
-				Date process = rs.getDate("process_date");
+				delay = (process.getTime() - call.getTime()) / (60 * 1000);
 
-				long delay = (process.getTime() - call.getTime()) / (60 * 1000);
-
-				if (delay < min) {
+				if (delay < min && delay>0) {
 					min = delay;
 				}
 
@@ -66,17 +72,20 @@ public class CDRDelayReport extends AAddOn {
 
 				totalDelay += delay;
 			}
+
+			rs.close();
+			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		H2Util.writeDB("ToplamCDRIsleme", "Günlük Toplam İşlenen CDR", "",
+		SQLUtil.writeDB("ToplamCDRIsleme", "Günlük Toplam İşlenen CDR", "",
 				new Integer(total).toString());
-		H2Util.writeDB("MinCDRIsleme", "En hızlı CDR İşleme zamanı (Dakika)",
+		SQLUtil.writeDB("MinCDRIsleme", "En hızlı CDR İşleme zamanı (Dakika)",
 				"", new Long(min).toString());
-		H2Util.writeDB("MaxCDRIsleme", "En yavaş CDR işleme zamanı (Dakika)",
+		SQLUtil.writeDB("MaxCDRIsleme", "En yavaş CDR işleme zamanı (Dakika)",
 				"", new Long(max).toString());
-		H2Util.writeDB("AveCDRIsleme", "Ortalama CDR işleme zamanı (Dakika)",
+		SQLUtil.writeDB("AveCDRIsleme", "Ortalama CDR işleme zamanı (Dakika)",
 				"", new Long(totalDelay / total).toString());
 
 		out = "Ave. notif:" + new Long(totalDelay / total).toString();

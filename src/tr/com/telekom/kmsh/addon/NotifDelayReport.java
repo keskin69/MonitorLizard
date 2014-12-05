@@ -7,7 +7,7 @@ import java.util.Date;
 
 import tr.com.telekom.kmsh.manager.CommandManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
-import tr.com.telekom.kmsh.util.H2Util;
+import tr.com.telekom.kmsh.util.SQLUtil;
 import tr.com.telekom.kmsh.util.KmshUtil;
 import tr.com.telekom.kmsh.util.Table;
 
@@ -83,21 +83,21 @@ public class NotifDelayReport extends AAddOn {
 				totalDelay += delay;
 			}
 
-			H2Util.writeDB("ToplamBildirim", "Günlük Toplam Bildirim", "",
+			SQLUtil.writeDB("ToplamBildirim", "Günlük Toplam Bildirim", "",
 					new Integer(total).toString());
-			H2Util.writeDB("MinBildirim", "En hızlı bildirim zamanı  (Dakika)",
+			SQLUtil.writeDB("MinBildirim", "En hızlı bildirim zamanı  (Dakika)",
 					"", new Integer(min).toString());
-			H2Util.writeDB("MaxBildirim", "En geç bildirim zamanı (Dakika)",
+			SQLUtil.writeDB("MaxBildirim", "En geç bildirim zamanı (Dakika)",
 					"", new Integer(max).toString());
-			H2Util.writeDB("AveBildirim", "Ortalama bildirim zamanı  (Dakika)",
+			SQLUtil.writeDB("AveBildirim", "Ortalama bildirim zamanı  (Dakika)",
 					"", new Integer(totalDelay / total).toString());
-			H2Util.writeDB("KMSH80", "%80 KMSH Bildirim adedi", "",
+			SQLUtil.writeDB("KMSH80", "%80 KMSH Bildirim adedi", "",
 					new Integer(not80).toString());
-			H2Util.writeDB("KMSH100", "%100 KMSH Bildirim adedi", "",
+			SQLUtil.writeDB("KMSH100", "%100 KMSH Bildirim adedi", "",
 					new Integer(not100).toString());
-			H2Util.writeDB("KMSH", "Toplam KMSH Bildirim adedi", "",
+			SQLUtil.writeDB("KMSH", "Toplam KMSH Bildirim adedi", "",
 					new Integer(kmsh).toString());
-			H2Util.writeDB("FUS", "Toplam FÜS Bildirim adedi", "", new Integer(
+			SQLUtil.writeDB("FUS", "Toplam FÜS Bildirim adedi", "", new Integer(
 					fus).toString());
 
 			out = new Long(totalDelay / total).toString();

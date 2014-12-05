@@ -1,5 +1,4 @@
 web: uptime report
-
 web:select report on a web page and display the content dynamically
 
 core:db password hide
