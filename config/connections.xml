@@ -17,6 +17,16 @@
 				<receipent>mustafa.keskin@t2.com.tr</receipent>
 			</receipents>
 		</mail>
+		
+		<mail name="TT">
+			<password>ENC(HV9U7ovxvBLBbKHpmUTC7oGv8RWwzKEn)</password>
+			<sender>mustafa.keskin@t2.com.tr</sender>
+			<receipents>
+				<receipent>areca@t2.com.tr</receipent>
+				<receipent>mustafa.keskin@t2.com.tr</receipent>
+				<receipent>tuncay.tiryaki@turktelekom.com.tr</receipent>
+			</receipents>
+		</mail>
 
 		<mail name="partition">
 			<password>ENC(HV9U7ovxvBLBbKHpmUTC7oGv8RWwzKEn)</password>

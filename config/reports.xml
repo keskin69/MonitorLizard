@@ -10,7 +10,7 @@
 		</reportCondition>
 	</report>
 
-	<report id="RptDaily" mail="areca" period="1440">
+	<report id="RptDaily" mail="areca" period="-1">
 		<name>KMSH/FÜS Bildirim Raporu</name>
 		<executeList>
 			<cmd>cmd3.1</cmd>
@@ -24,10 +24,6 @@
 			<cmd>KMSH80</cmd>
 			<cmd>KMSH100</cmd>
 			<cmd>FUS</cmd>
-			<cmd>AveCDRIsleme</cmd>
-			<cmd>MinCDRIsleme</cmd>
-			<cmd>MaxCDRIsleme</cmd>
-			<cmd>ToplamCDRIsleme</cmd>
 			<cmd>cmd1.14</cmd>
 		</executeList>
 	</report>
