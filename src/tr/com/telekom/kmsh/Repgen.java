@@ -20,7 +20,16 @@ public class Repgen {
 		if (repName.equals("")) {
 			// execute all reports
 			for (ReportConfig repConf : conf.reportList) {
-				singleReport(conf, repConf);
+				if (repConf.period != -1) {
+					if (SQLUtil.getAge(repConf.id) >= repConf.period) {
+						singleReport(conf, repConf);
+					} else {
+						KmshLogger.log(0, "Skipping report " + repConf.id);
+					}
+				} else {
+					KmshLogger.log(0, "Ignoring report " + repConf.id);
+				}
+
 				found = true;
 			}
 		} else {
@@ -41,34 +50,23 @@ public class Repgen {
 	private void singleReport(XMLManager conf, ReportConfig repConf) {
 		String content = null;
 
-		if (repConf.period != -1) {
-			if (SQLUtil.getAge(repConf.id) >= repConf.period) {
-				ReportManager report = new ReportManager(repConf);
-				KmshLogger.log(1, "Processing Report " + repConf.id);
-				boolean condition = report.process(conf);
-				content = report.getContent();
+		ReportManager report = new ReportManager(repConf);
+		KmshLogger.log(1, "Processing Report " + repConf.id);
+		boolean condition = report.process(conf);
+		content = report.getContent();
 
-				if (condition) {
-					KmshLogger.log(0, "Sending notifications ");
-					// send mail
-					sendMail(conf, repConf, content);
+		if (condition) {
+			KmshLogger.log(0, "Sending notifications ");
+			// send mail
+			sendMail(conf, repConf, content);
 
-					// send SMS
-					sendSMS(conf, repConf, content);
-				}
-
-				// write a tag
-				SQLUtil.writeTag(repConf.id);
-
-				// write content to report log
-				KmshUtil.writeLog(repConf.id + ".log", content);
-				KmshLogger.log(0, content);
-			} else {
-				KmshLogger.log(0, "Skipping report" + repConf.id);
-			}
-		} else {
-			KmshLogger.log(0, "Ignoring report" + repConf.id);
+			// send SMS
+			sendSMS(conf, repConf, content);
 		}
+
+		// write content to report log
+		KmshUtil.writeLog(repConf.id + ".log", content);
+		KmshLogger.log(0, content);
 	}
 
 	private void sendMail(XMLManager conf, ReportConfig repConf, String content) {

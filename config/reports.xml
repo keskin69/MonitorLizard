@@ -41,10 +41,10 @@
 	<report id="KMSHStarted" mail="areca" sms="me" period="5">
 		<name>KMSH/FÜS Started</name>
 		<executeList>
-			<cmd>cmd2.4</cmd>
+			<cmd>cmd3.1</cmd>
 		</executeList>
 		<reportCondition>
-			<condition check="cmd2.4">(.*)running(.*)</condition>
+			<condition check="cmd3.1">(.*)running(.*)</condition>
 		</reportCondition>
 	</report>
 

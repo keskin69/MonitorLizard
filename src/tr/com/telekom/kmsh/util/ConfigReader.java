@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import tr.com.telekom.kmsh.config.AConfigManager;
+
 public class ConfigReader extends Properties {
 	/**
 	 * 
@@ -31,6 +33,10 @@ public class ConfigReader extends Properties {
 		if (out == null) {
 			KmshLogger
 					.log(4, key + " not defined in configuration file" + file);
+		}
+
+		if (out.startsWith("ENC(")) {
+			out = AConfigManager.decrypt(out.substring(4, out.length() - 1));
 		}
 
 		return out;

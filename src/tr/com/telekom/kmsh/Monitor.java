@@ -35,8 +35,8 @@ public class Monitor {
 		BasicConfigurator.configure(new NullAppender());
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
-		String type = "-t";
-		String name = "";
+		String type = "-r";
+		String name = "KMSHStarted";
 
 		if (args.length == 2) {
 			confFile = args[0];

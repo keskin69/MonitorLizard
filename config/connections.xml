@@ -13,7 +13,7 @@
 			<password>ENC(HV9U7ovxvBLBbKHpmUTC7oGv8RWwzKEn)</password>
 			<sender>mustafa.keskin@t2.com.tr</sender>
 			<receipents>
-				<receipent>areca@t2.com.tr</receipent>
+				<receipentx>areca@t2.com.tr</receipentx>
 				<receipent>mustafa.keskin@t2.com.tr</receipent>
 			</receipents>
 		</mail>

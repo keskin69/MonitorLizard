@@ -5,7 +5,7 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 public abstract class AConfigManager {
 	private static final String PASSWORD = "ARECA";
 
-	protected final static String decrypt(String str) {
+	public final static String decrypt(String str) {
 		StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 		encryptor.setPassword(PASSWORD);
 

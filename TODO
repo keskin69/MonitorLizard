@@ -1,12 +1,7 @@
 web: uptime report
-web:select report on a web page and display the content dynamically
 
-core:db password hide
 core:obfuscate
-web:monitor gorsel
-core: add time to exceptions/exceptions via logs
-core:terminal without a window (a seperate project)
-core:web terminal (a seperate project)
-
 
 informer: nice xml view for notification messages
+
+cdr generator:

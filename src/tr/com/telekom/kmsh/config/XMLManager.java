@@ -227,5 +227,7 @@ public class XMLManager extends AConfigManager {
 		System.out.println(encrypt("areca1234"));
 		System.out.println(encrypt("Gecici_123"));
 		System.out.println(encrypt("Areca123!"));
+		System.out.println(encrypt("sa"));
+		System.out.println(encrypt(""));
 	}
 }

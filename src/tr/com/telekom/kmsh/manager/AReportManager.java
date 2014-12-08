@@ -28,12 +28,8 @@ public abstract class AReportManager {
 
 		for (String cmdId : repConfig.commands) {
 			result = SQLUtil.readDB(cmdId, "value");
-			if (result.equals("")) {
-				execute(conf, cmdId);
-			} else {
-				String title = SQLUtil.readDB(cmdId, "name");
-				addContent(title, result);
-			}
+			String title = SQLUtil.readDB(cmdId, "name");
+			addContent(title, result);
 		}
 
 		if (repConfig.condition.size() == 0) {
