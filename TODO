@@ -1,7 +1,1 @@
-web: uptime report
-
 core:obfuscate
-
-informer: nice xml view for notification messages
-
-cdr generator:

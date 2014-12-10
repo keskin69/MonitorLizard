@@ -25,7 +25,7 @@ public class NotifDelayReport extends AAddOn {
 		String out = null;
 
 		Object obj = CommandManager.execute(cmdId);
-		//KmshUtil.serialize("./log/notif_delay.srl", obj);
+		// KmshUtil.serialize("./log/notif_delay.srl", obj);
 		// Object obj = KmshUtil.deserialize("./log/notif_delay.srl");
 
 		if (obj instanceof Table) {
@@ -44,6 +44,10 @@ public class NotifDelayReport extends AAddOn {
 			String type2 = "";
 			int kmsh = 0;
 			int fus = 0;
+			String stat;
+			int del0 = 0;
+			int del1 = 0;
+			int del6 = 0;
 
 			for (int i = 1; i < tbl.size(); i++) {
 				@SuppressWarnings("unchecked")
@@ -52,6 +56,7 @@ public class NotifDelayReport extends AAddOn {
 				t = row.get(1);
 				type = row.get(2);
 				type2 = row.get(3);
+				stat = row.get(4);
 
 				nn = KmshUtil.convertFullDate(n);
 				tt = KmshUtil.convertFullDate(t);
@@ -80,25 +85,45 @@ public class NotifDelayReport extends AAddOn {
 					fus++;
 				}
 
+				if (stat.equals("0")) {
+					del0++;
+				} else if (stat.equals("1")) {
+					del1++;
+				} else if (stat.equals("6")) {
+					del6++;
+				}
+
 				totalDelay += delay;
 			}
 
-			SQLUtil.writeDB("ToplamBildirim", "GŸnlŸk Toplam Bildirim", "",
+			SQLUtil.writeDB("ToplamBildirim", "GÃ¼nlÃ¼k Toplam Bildirim", "",
 					new Integer(total).toString());
-			SQLUtil.writeDB("MinBildirim", "En hõzlõ bildirim zamanõ  (Dakika)",
-					"", new Integer(min).toString());
-			SQLUtil.writeDB("MaxBildirim", "En ge bildirim zamanõ (Dakika)",
+			SQLUtil.writeDB("MinBildirim",
+					"En hÄ±zlÄ± bildirim zamanÄ±  (Dakika)", "",
+					new Integer(min).toString());
+			SQLUtil.writeDB("MaxBildirim", "En geÃ§ bildirim zamanÄ± (Dakika)",
 					"", new Integer(max).toString());
-			SQLUtil.writeDB("AveBildirim", "Ortalama bildirim zamanõ  (Dakika)",
-					"", new Integer(totalDelay / total).toString());
+			SQLUtil.writeDB("AveBildirim",
+					"Ortalama bildirim zamanÄ±  (Dakika)", "", new Integer(
+							totalDelay / total).toString());
 			SQLUtil.writeDB("KMSH80", "%80 KMSH Bildirim adedi", "",
 					new Integer(not80).toString());
 			SQLUtil.writeDB("KMSH100", "%100 KMSH Bildirim adedi", "",
 					new Integer(not100).toString());
 			SQLUtil.writeDB("KMSH", "Toplam KMSH Bildirim adedi", "",
 					new Integer(kmsh).toString());
-			SQLUtil.writeDB("FUS", "Toplam F†S Bildirim adedi", "", new Integer(
-					fus).toString());
+			SQLUtil.writeDB("FUS", "Toplam FÃœS Bildirim adedi", "",
+					new Integer(fus).toString());
+
+			SQLUtil.writeDB("DeliveryPending", "Ä°letilmeyen Bildrim", "",
+					new Integer(del0).toString());
+
+			SQLUtil.writeDB("DeliveryCompleted", "Ä°letilen Bildrim", "",
+					new Integer(del1).toString());
+
+			SQLUtil.writeDB("DeliveryCancelled",
+					"Ä°letimi Ä°ptal Edilen Bildrim", "",
+					new Integer(del6).toString());
 
 			out = new Long(totalDelay / total).toString();
 		}

@@ -17,7 +17,7 @@
 				<receipent>mustafa.keskin@t2.com.tr</receipent>
 			</receipents>
 		</mail>
-		
+
 		<mail name="TT">
 			<password>ENC(HV9U7ovxvBLBbKHpmUTC7oGv8RWwzKEn)</password>
 			<sender>mustafa.keskin@t2.com.tr</sender>
@@ -39,9 +39,8 @@
 	</mails>
 
 	<smsList>
-		<sms name="acil">
+		<sms name="me">
 			<number>+905335140175</number>
-			<number>+905327001728</number>
 		</sms>
 	</smsList>
 
