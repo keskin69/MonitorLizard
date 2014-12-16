@@ -83,7 +83,7 @@ public class Table extends ArrayList<ArrayList> implements Serializable {
 			out += "</TR>\n";
 		}
 
-		out += "</TBODY></TABLE><BR>";
+		out += "</TBODY></TABLE><BR>\n";
 
 		return out;
 	}

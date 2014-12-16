@@ -99,12 +99,12 @@ public class NotifDelayReport extends AAddOn {
 			SQLUtil.writeDB("ToplamBildirim", "Günlük Toplam Bildirim", "",
 					new Integer(total).toString());
 			SQLUtil.writeDB("MinBildirim",
-					"En hızlı bildirim zamanı  (Dakika)", "",
+					"En hızlı bildirim zamanı (Dakika)", "",
 					new Integer(min).toString());
 			SQLUtil.writeDB("MaxBildirim", "En geç bildirim zamanı (Dakika)",
 					"", new Integer(max).toString());
 			SQLUtil.writeDB("AveBildirim",
-					"Ortalama bildirim zamanı  (Dakika)", "", new Integer(
+					"Ortalama bildirim zamanı (Dakika)", "", new Integer(
 							totalDelay / total).toString());
 			SQLUtil.writeDB("KMSH80", "%80 KMSH Bildirim adedi", "",
 					new Integer(not80).toString());

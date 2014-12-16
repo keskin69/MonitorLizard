@@ -24,6 +24,7 @@
 		</cmd>
 		<cmd id="13" name="Partition Hatası">Partition</cmd>
 		<cmd id="14" name="TimeMap" delim="[" field="2">TimeMap</cmd>
+		<cmd id="15" name="ABSCheck">code: -99</cmd>
 	</group>
 
 	<group name="cmd2" period="20">

@@ -36,7 +36,7 @@ public class Monitor {
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
 		String type = "-r";
-		String name = "KMSHStarted";
+		String name = "ABSDown";
 
 		if (args.length == 2) {
 			confFile = args[0];

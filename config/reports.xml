@@ -25,11 +25,25 @@
 			<cmd>KMSH100</cmd>
 			<cmd>FUS</cmd>
 			<cmd>cmd1.14</cmd>
+			<cmd>DeliveryPending</cmd>
+			<cmd>DeliveryCompleted</cmd>
+			<cmd>DeliveryCancelled</cmd>
 		</executeList>
 	</report>
 
+	<report id="ABSDown" mail="areca" sms="me" period="30">
+		<name>ABS Servis Problemi</name>
+		<executeList>
+			<cmd>cmd1.15</cmd>
+		</executeList>
+		<reportCondition>
+			<condition check="cmd1.15">(.*)code: -99(.*)</condition>
+		</reportCondition>
+		<note>ABS Servisi ayakta değil ya da bildirim kabul edemiyor</note>
+	</report>
+
 	<report id="KMSHStopped" mail="areca" sms="me" period="5">
-		<name>KMSH/FÜS Stopped</name>
+		<name>KMSH/FÜS Durdu</name>
 		<executeList>
 			<cmd>cmd3.1</cmd>
 		</executeList>
@@ -39,7 +53,7 @@
 	</report>
 
 	<report id="KMSHStarted" mail="areca" sms="me" period="5">
-		<name>KMSH/FÜS Started</name>
+		<name>KMSH/FÜS Başlatıldı</name>
 		<executeList>
 			<cmd>cmd3.1</cmd>
 		</executeList>
@@ -49,7 +63,7 @@
 	</report>
 
 	<report id="PartitionControl" mail="areca" sms="me" period="15">
-		<name>KMSH Partition Hatası !!!</name>
+		<name>KMSH Partition Hatası</name>
 		<executeList>
 			<cmd>cmd1.13</cmd>
 		</executeList>
