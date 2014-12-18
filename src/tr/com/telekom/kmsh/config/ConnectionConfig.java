@@ -4,7 +4,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class ConnectionConfig extends AConfig {
-	public String name = null;
 	public String type = null;
 	public String user = null;
 	public String password = null;

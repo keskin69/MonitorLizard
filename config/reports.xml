@@ -12,6 +12,10 @@
 
 	<report id="RptDaily" mail="areca" period="-1">
 		<name>KMSH/FÜS Bildirim Raporu</name>
+		<activate>
+			<at>00:10</at>
+			<at>12:10</at>
+		</activate>
 		<executeList>
 			<cmd>cmd3.1</cmd>
 			<cmd>UpTime</cmd>
@@ -28,6 +32,8 @@
 			<cmd>DeliveryPending</cmd>
 			<cmd>DeliveryCompleted</cmd>
 			<cmd>DeliveryCancelled</cmd>
+			<cmd>ToplamDosya</cmd>
+			<cmd>AveDosya</cmd>
 		</executeList>
 	</report>
 

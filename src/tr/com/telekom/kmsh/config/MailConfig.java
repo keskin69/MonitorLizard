@@ -7,7 +7,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class MailConfig extends AConfig {
-	public String name = null;
 	public String password = null;
 	public String sender = null;
 	public ArrayList<String> receipents = null;

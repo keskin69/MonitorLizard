@@ -7,7 +7,6 @@ import tr.com.telekom.kmsh.config.SMSConfig;
 import tr.com.telekom.kmsh.manager.ReportManager;
 import tr.com.telekom.kmsh.manager.SMSManager;
 import tr.com.telekom.kmsh.manager.SMTPManager;
-import tr.com.telekom.kmsh.util.SQLUtil;
 import tr.com.telekom.kmsh.util.KmshUtil;
 import tr.com.telekom.kmsh.util.KmshLogger;
 
@@ -18,19 +17,13 @@ public class Repgen {
 		boolean found = false;
 
 		if (repName.equals("")) {
+			found = true;
+
 			// execute all reports
 			for (ReportConfig repConf : conf.reportList) {
-				if (repConf.period != -1) {
-					if (SQLUtil.getAge(repConf.id) >= repConf.period) {
-						singleReport(conf, repConf);
-					} else {
-						KmshLogger.log(0, "Skipping report " + repConf.id);
-					}
-				} else {
-					KmshLogger.log(0, "Ignoring report " + repConf.id);
+				if (repConf.canExecute(repConf.runAt)) {
+					singleReport(conf, repConf);
 				}
-
-				found = true;
 			}
 		} else {
 			// execute single report

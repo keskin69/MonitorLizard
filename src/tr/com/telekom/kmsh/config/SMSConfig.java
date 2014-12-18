@@ -8,7 +8,6 @@ import org.w3c.dom.NodeList;
 
 public class SMSConfig extends AConfig {
 	public ArrayList<String> number = null;
-	public String name = null;
 
 	public SMSConfig() {
 		number = new ArrayList<String>();

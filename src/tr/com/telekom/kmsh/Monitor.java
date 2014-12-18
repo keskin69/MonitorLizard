@@ -1,12 +1,8 @@
 package tr.com.telekom.kmsh;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -15,8 +11,8 @@ import org.apache.log4j.varia.NullAppender;
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.manager.CommandManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
-import tr.com.telekom.kmsh.util.SQLUtil;
 import tr.com.telekom.kmsh.util.KmshLogger;
+import tr.com.telekom.kmsh.util.SQLUtil;
 import tr.com.telekom.kmsh.util.Table;
 
 public class Monitor {
@@ -36,7 +32,7 @@ public class Monitor {
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
 		String type = "-r";
-		String name = "ABSDown";
+		String name = "";
 
 		if (args.length == 2) {
 			confFile = args[0];

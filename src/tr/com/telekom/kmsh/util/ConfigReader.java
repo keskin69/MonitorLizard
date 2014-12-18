@@ -17,6 +17,10 @@ public class ConfigReader extends Properties {
 
 	public static ConfigReader getInstance() {
 		if (config == null) {
+			if (file == null) {
+				KmshLogger.log(4, "Config file name not set");
+			}
+
 			config = new ConfigReader();
 		}
 
@@ -31,11 +35,9 @@ public class ConfigReader extends Properties {
 		String out = super.getProperty(key);
 
 		if (out == null) {
-			KmshLogger
-					.log(4, key + " not defined in configuration file" + file);
-		}
-
-		if (out.startsWith("ENC(")) {
+			KmshLogger.log(4, key + " not defined in configuration file "
+					+ file);
+		} else if (out.startsWith("ENC(")) {
 			out = AConfigManager.decrypt(out.substring(4, out.length() - 1));
 		}
 
@@ -51,6 +53,8 @@ public class ConfigReader extends Properties {
 
 			// load a properties file
 			load(input);
+
+			KmshLogger.log(0, this.size() + " entry in config file");
 
 		} catch (IOException io) {
 			io.printStackTrace();

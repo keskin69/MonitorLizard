@@ -9,15 +9,14 @@ import org.w3c.dom.NodeList;
 import tr.com.telekom.kmsh.util.KmshUtil;
 
 public class GroupCommandConfig extends AConfig {
-
-	public String name = null;
 	public String base = null;
 	public String connectBy = null;
 	public ArrayList<PeriodicCommandConfig> commandList = null;
-	public int period = -1;
+	public ArrayList<String> runAt = null;
 
 	public GroupCommandConfig() {
 		commandList = new ArrayList<PeriodicCommandConfig>();
+		runAt = new ArrayList<String>();
 	}
 
 	public CommandConfig findCommand(String id) {
@@ -66,6 +65,14 @@ public class GroupCommandConfig extends AConfig {
 				Element e = (Element) n;
 
 				commandList.add(new PeriodicCommandConfig(name, e));
+			}
+
+			node = eElement.getElementsByTagName("at");
+			for (int i = 0; i < node.getLength(); i++) {
+				Node n = node.item(i);
+				Element e = (Element) n;
+
+				runAt.add(e.getTextContent());
 			}
 		}
 	}

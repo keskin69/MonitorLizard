@@ -9,7 +9,6 @@ public class CommandConfig extends AConfig {
 	public String id = null;
 	public String connectBy = null;
 	public String cmd = null;
-	public String name = null;
 
 	public CommandConfig(Node node) {
 		parseXML(node);
