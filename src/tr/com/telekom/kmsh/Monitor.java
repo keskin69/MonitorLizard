@@ -12,7 +12,7 @@ import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.manager.CommandManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
 import tr.com.telekom.kmsh.util.KmshLogger;
-import tr.com.telekom.kmsh.util.SQLUtil;
+import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.Table;
 
 public class Monitor {
@@ -32,7 +32,7 @@ public class Monitor {
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
 		String type = "-r";
-		String name = "";
+		String name = "PartitionControl";
 
 		if (args.length == 2) {
 			confFile = args[0];
@@ -46,11 +46,7 @@ public class Monitor {
 		KmshLogger.log(0, "Executing " + type + " " + name);
 
 		ConfigReader.file = confFile;
-		ConfigReader conf = ConfigReader.getInstance();
-		String xmlFiles = conf.getProperty("base")
-				+ conf.getProperty("xmlFiles");
 		XMLManager xmlManager = new XMLManager();
-		xmlManager.readConfig(xmlFiles);
 
 		// TODO
 		// H2Util.writeDB("sql1", "", "", "2014-11-29 01:00:00", "");
@@ -65,6 +61,7 @@ public class Monitor {
 			// TODO terminal without a window
 			new TerminalWindow(confFile);
 		} else if (type.equals("-c")) {
+			// Executes commands in on_demand_command list
 			Object result = CommandManager.execute(name);
 			if (result instanceof String) {
 				KmshLogger.log(1, (String) result);
@@ -72,7 +69,7 @@ public class Monitor {
 				KmshLogger.log(1, ((Table) result).getString());
 			}
 		} else if (type.equals("-init")) {
-			SQLUtil.init();
+			H2Util.init();
 		} else {
 			KmshLogger.log(3, "Unknown operation type" + type);
 		}

@@ -179,6 +179,7 @@ public class KmshUtil {
 			try {
 				String commandClass = ConfigReader.getInstance().getProperty(
 						"commandClass");
+
 				for (Method method : Class.forName(commandClass)
 						.getDeclaredMethods()) {
 					if (method.getName().equals(func)) {

@@ -8,6 +8,7 @@ public class ConnectionConfig extends AConfig {
 	public String user = null;
 	public String password = null;
 	public String host = null;
+	public String driver = null;
 
 	public ConnectionConfig() {
 	}
@@ -19,22 +20,10 @@ public class ConnectionConfig extends AConfig {
 			name = eElement.getAttribute("name");
 			type = eElement.getAttribute("type");
 
-			try {
-				password = eElement.getElementsByTagName("password").item(0)
-						.getTextContent();
-
-				if (password.startsWith("ENC(")) {
-					password = XMLManager.decrypt(password.substring(4,
-							password.length() - 1));
-				}
-
-				user = eElement.getElementsByTagName("user").item(0)
-						.getTextContent();
-				host = eElement.getElementsByTagName("host").item(0)
-						.getTextContent();
-			} catch (NullPointerException ex) {
-
-			}
+			user = AConfigManager.readValue(eElement, "user");
+			password = AConfigManager.readValue(eElement, "password");
+			host = AConfigManager.readValue(eElement, "host");
+			driver = AConfigManager.readValue(eElement, "driver");
 		}
 	}
 }

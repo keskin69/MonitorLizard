@@ -4,18 +4,14 @@ import tr.com.telekom.kmsh.addon.IAddOn;
 import tr.com.telekom.kmsh.config.CommandConfig;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.XMLManager;
-import tr.com.telekom.kmsh.util.ConfigReader;
-import tr.com.telekom.kmsh.util.SQLUtil;
+import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.KmshLogger;
+import tr.com.telekom.kmsh.util.SQLUtil;
 import tr.com.telekom.kmsh.util.Table;
 
 public class CommandManager {
 	public static Object execute(String id) {
-		ConfigReader conf = ConfigReader.getInstance();
-		String xmlFiles = conf.getProperty("base")
-				+ conf.getProperty("xmlFiles");
 		XMLManager xmlManager = new XMLManager();
-		xmlManager.readConfig(xmlFiles);
 		CommandConfig cmdConfig = xmlManager.findCommand(id);
 
 		Object obj = null;
@@ -43,14 +39,14 @@ public class CommandManager {
 			return result.trim();
 		} else if (conStr.type.equals("sql")) {
 			// execute an SQL command
-			Table result = SQLManager.executeSQL(conStr, cmd);
+			Table result = SQLUtil.executeSQL(conStr, cmd);
 			return result;
 		} else if (conStr.type.equals("java")) {
 			// execute a java class
 			try {
 				IAddOn addOn = (IAddOn) Class.forName(cmd).newInstance();
 				String result = addOn.process(rule);
-				SQLUtil.writeTag(id);
+				H2Util.writeTag(id);
 
 				return result;
 			} catch (ClassNotFoundException e) {

@@ -18,8 +18,8 @@ public class CommandProcessor {
 	private Map<String, String> variables = null;
 
 	public CommandProcessor(String configFile) {
+		ConfigReader.file = configFile;
 		XMLManager conf = new XMLManager();
-		conf.readConfig(configFile);
 		connectionList = conf.connectionList;
 
 		variables = new HashMap<String, String>();

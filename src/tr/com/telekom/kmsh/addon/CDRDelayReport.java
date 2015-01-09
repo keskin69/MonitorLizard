@@ -9,10 +9,10 @@ import java.util.Date;
 import tr.com.telekom.kmsh.config.CommandConfig;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.XMLManager;
-import tr.com.telekom.kmsh.manager.SQLManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
-import tr.com.telekom.kmsh.util.SQLUtil;
+import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.KmshLogger;
+import tr.com.telekom.kmsh.util.SQLUtil;
 
 public class CDRDelayReport extends AAddOn {
 	long totalDelay = 0;
@@ -33,13 +33,11 @@ public class CDRDelayReport extends AAddOn {
 	public String process(String cmdId) {
 		String out = null;
 
-		String xmlFiles = conf.getProperty("base")
-				+ conf.getProperty("xmlFiles");
 		XMLManager xmlManager = new XMLManager();
-		xmlManager.readConfig(xmlFiles);
+
 		CommandConfig cmdConfig = xmlManager.findCommand(cmdId);
 		ConnectionConfig cfg = xmlManager.findConnection(cmdConfig.connectBy);
-		Connection conn = SQLManager.connect(cfg);
+		Connection conn = SQLUtil.connect(cfg);
 
 		try {
 			ResultSet rs = null;
@@ -62,7 +60,7 @@ public class CDRDelayReport extends AAddOn {
 
 				delay = (process.getTime() - call.getTime()) / (60 * 1000);
 
-				if (delay < min && delay>0) {
+				if (delay < min && delay > 0) {
 					min = delay;
 				}
 
@@ -79,13 +77,13 @@ public class CDRDelayReport extends AAddOn {
 			e.printStackTrace();
 		}
 
-		SQLUtil.writeDB("ToplamCDRIsleme", "Günlük Toplam İşlenen CDR", "",
+		H2Util.writeDB("ToplamCDRIsleme", "Günlük Toplam İşlenen CDR", "",
 				new Integer(total).toString());
-		SQLUtil.writeDB("MinCDRIsleme", "En hızlı CDR İşleme zamanı (Dakika)",
+		H2Util.writeDB("MinCDRIsleme", "En hızlı CDR İşleme zamanı (Dakika)",
 				"", new Long(min).toString());
-		SQLUtil.writeDB("MaxCDRIsleme", "En yavaş CDR işleme zamanı (Dakika)",
+		H2Util.writeDB("MaxCDRIsleme", "En yavaş CDR işleme zamanı (Dakika)",
 				"", new Long(max).toString());
-		SQLUtil.writeDB("AveCDRIsleme", "Ortalama CDR işleme zamanı (Dakika)",
+		H2Util.writeDB("AveCDRIsleme", "Ortalama CDR işleme zamanı (Dakika)",
 				"", new Long(totalDelay / total).toString());
 
 		out = "Ave. notif:" + new Long(totalDelay / total).toString();

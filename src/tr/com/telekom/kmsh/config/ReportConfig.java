@@ -6,6 +6,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import tr.com.telekom.kmsh.util.KmshUtil;
+
 public class ReportConfig extends AConfig {
 	public String id = null;
 	public ArrayList<String> commands = null;
@@ -28,12 +30,7 @@ public class ReportConfig extends AConfig {
 
 			id = eElement.getAttribute("id");
 
-			try {
-				name = eElement.getElementsByTagName("name").item(0)
-						.getTextContent();
-			} catch (NullPointerException ex) {
-				name = "";
-			}
+			name = AConfigManager.readValue(eElement, "name");
 
 			try {
 				useMail = eElement.getAttribute("mail");
@@ -66,6 +63,7 @@ public class ReportConfig extends AConfig {
 			try {
 				note = eElement.getElementsByTagName("note").item(0)
 						.getTextContent();
+				note = KmshUtil.strCheck(note);
 			} catch (NullPointerException ex) {
 
 			}
@@ -74,7 +72,7 @@ public class ReportConfig extends AConfig {
 			for (int i = 0; i < node.getLength(); i++) {
 				commands.add(node.item(i).getTextContent());
 			}
-			
+
 			node = eElement.getElementsByTagName("at");
 			for (int i = 0; i < node.getLength(); i++) {
 				Node n = node.item(i);

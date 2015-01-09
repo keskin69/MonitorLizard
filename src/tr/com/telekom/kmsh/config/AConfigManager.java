@@ -1,6 +1,7 @@
 package tr.com.telekom.kmsh.config;
 
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.w3c.dom.Element;
 
 public abstract class AConfigManager {
 	private static final String PASSWORD = "ARECA";
@@ -19,7 +20,25 @@ public abstract class AConfigManager {
 		return encryptor.encrypt(in);
 	}
 
+	public static String readValue(Element e, String field) {
+		String value = null;
+		try {
+			value = e.getElementsByTagName(field).item(0).getTextContent();
+
+			if (value.startsWith("ENC(")) {
+				value = XMLManager.decrypt(value.substring(4,
+						value.length() - 1));
+			}
+		} catch (NullPointerException ex) {
+			value = "";
+		}
+
+		return value;
+	}
+
 	abstract void readConfig(String confFile);
+
 	abstract void readConnections(String confFile);
+
 	abstract void readCommands(String confFile);
 }

@@ -20,14 +20,8 @@ public class MailConfig extends AConfig {
 			Element eElement = (Element) nNode;
 
 			name = eElement.getAttribute("name");
-			password = eElement.getElementsByTagName("password").item(0)
-					.getTextContent();
-			if (password.startsWith("ENC(")) {
-				password = XMLManager.decrypt(password.substring(4,
-						password.length() - 1));
-			}
-			sender = eElement.getElementsByTagName("sender").item(0)
-					.getTextContent();
+			password = AConfigManager.readValue(eElement, "password");
+			sender = AConfigManager.readValue(eElement, "sender");
 
 			NodeList node = eElement.getElementsByTagName("receipent");
 			for (int i = 0; i < node.getLength(); i++) {

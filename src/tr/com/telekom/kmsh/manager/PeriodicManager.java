@@ -4,7 +4,7 @@ import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.ConnectionConfig;
 import tr.com.telekom.kmsh.config.PeriodicCommandConfig;
 import tr.com.telekom.kmsh.config.GroupCommandConfig;
-import tr.com.telekom.kmsh.util.SQLUtil;
+import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.Table;
 
 public class PeriodicManager {
@@ -23,7 +23,7 @@ public class PeriodicManager {
 			for (PeriodicCommandConfig cmd : groupConf.commandList) {
 				String command = "";
 
-				if (groupConf.base == null) {
+				if (groupConf.base.equals("")) {
 					command = cmd.command;
 				} else {
 					command = groupConf.base + " \"" + cmd.command
@@ -45,7 +45,7 @@ public class PeriodicManager {
 				}
 
 				if (!result.equals("")) {
-					SQLUtil.writeDB(cmd, result);
+					H2Util.writeDB(cmd, result);
 					out += cmd.command + "=" + result + ";";
 				}
 			}

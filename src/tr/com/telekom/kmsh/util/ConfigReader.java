@@ -18,7 +18,8 @@ public class ConfigReader extends Properties {
 	public static ConfigReader getInstance() {
 		if (config == null) {
 			if (file == null) {
-				KmshLogger.log(4, "Config file name not set");
+				KmshLogger.log(4,
+						"Cannot continue. Config file name has not been set");
 			}
 
 			config = new ConfigReader();

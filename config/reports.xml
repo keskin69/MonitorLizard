@@ -10,11 +10,11 @@
 		</reportCondition>
 	</report>
 
-	<report id="RptDaily" mail="areca" period="-1">
+	<report id="RptDaily" mail="areca">
 		<name>KMSH/FÜS Bildirim Raporu</name>
 		<activate>
 			<at>00:10</at>
-			<at>12:10</at>
+			<at>13:30</at>
 		</activate>
 		<executeList>
 			<cmd>cmd3.1</cmd>
@@ -34,6 +34,8 @@
 			<cmd>DeliveryCancelled</cmd>
 			<cmd>ToplamDosya</cmd>
 			<cmd>AveDosya</cmd>
+			<cmd>MinDosya</cmd>
+			<cmd>MaxDosya</cmd>
 		</executeList>
 	</report>
 
@@ -68,7 +70,7 @@
 		</reportCondition>
 	</report>
 
-	<report id="PartitionControl" mail="areca" sms="me" period="15">
+	<report id="PartitionControl" mail="partition" sms="me" period="-1">
 		<name>KMSH Partition Hatası</name>
 		<executeList>
 			<cmd>cmd1.13</cmd>
@@ -83,7 +85,7 @@
 		</note>
 	</report>
 
-	<report id="Test" mail="mex" sms="mex">
+	<report id="Test" mail="me" sms="mex">
 		<name>Test Rapouru</name>
 		<executeList>
 			<cmd>C2</cmd>

@@ -24,18 +24,13 @@ public class CommandConfig extends AConfig {
 		id = eElement.getAttribute("id");
 		name = eElement.getAttribute("name");
 
-		try {
-			connectBy = eElement.getElementsByTagName("connectBy").item(0)
-					.getTextContent();
-		} catch (NullPointerException ex) {
-		}
+		connectBy = AConfigManager.readValue(eElement, "connectBy");
 
 		try {
-			cmd = eElement.getElementsByTagName("cmd").item(0).getTextContent();
+			cmd = AConfigManager.readValue(eElement, "cmd");
 			cmd = KmshUtil.insertFunctionValue(cmd);
 			cmd = KmshUtil.strCheck(cmd);
 		} catch (NullPointerException ex) {
 		}
-
 	}
 }

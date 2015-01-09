@@ -6,7 +6,7 @@ import java.util.Calendar;
 import org.w3c.dom.Node;
 
 import tr.com.telekom.kmsh.util.KmshLogger;
-import tr.com.telekom.kmsh.util.SQLUtil;
+import tr.com.telekom.kmsh.util.H2Util;
 
 public abstract class AConfig {
 	public String name = null;
@@ -21,10 +21,10 @@ public abstract class AConfig {
 	public boolean canExecute(ArrayList<String> runAt) {
 		if (period != -1) {
 			// period specified => Check age
-			if (SQLUtil.getAge(name) >= period) {
+			if (H2Util.getAge(name) >= period) {
 				return true;
 			} else {
-				KmshLogger.log(0, "Skipping group command execution for "
+				KmshLogger.log(1, "Skipping group command execution for "
 						+ name);
 			}
 		} else {
@@ -39,15 +39,15 @@ public abstract class AConfig {
 					int time = new Integer(str[0]).intValue() * 60
 							+ new Integer(str[1]).intValue();
 
-					if (Math.abs(time - n) <= 5) {
+					if ((time - n) <= 10 && (time - n) >= 0) {
 						return true;
 					}
 				}
 
-				KmshLogger.log(0, "Skipping group command execution for "
+				KmshLogger.log(1, "Skipping group command execution for "
 						+ name);
 			} else {
-				KmshLogger.log(0, "Ignoring group command execution for "
+				KmshLogger.log(1, "Ignoring group command execution for "
 						+ name);
 			}
 		}

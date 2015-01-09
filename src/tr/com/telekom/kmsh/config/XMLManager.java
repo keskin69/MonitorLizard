@@ -32,9 +32,14 @@ public class XMLManager extends AConfigManager {
 		commandList = new ArrayList<CommandConfig>();
 		smsList = new ArrayList<SMSConfig>();
 		group = new ArrayList<GroupCommandConfig>();
+
+		ConfigReader conf = ConfigReader.getInstance();
+		String xmlFiles = conf.getProperty("base")
+				+ conf.getProperty("xmlFiles");
+		readConfig(xmlFiles);
 	}
 
-	public void readConfig(String file) {
+	protected void readConfig(String file) {
 		File fXmlFile = new File(file);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;

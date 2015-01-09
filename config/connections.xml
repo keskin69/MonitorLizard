@@ -13,7 +13,7 @@
 			<password>ENC(HV9U7ovxvBLBbKHpmUTC7oGv8RWwzKEn)</password>
 			<sender>mustafa.keskin@t2.com.tr</sender>
 			<receipents>
-				<receipentx>areca@t2.com.tr</receipentx>
+				<receipent>areca@t2.com.tr</receipent>
 				<receipent>mustafa.keskin@t2.com.tr</receipent>
 			</receipents>
 		</mail>
@@ -33,6 +33,7 @@
 			<sender>mustafa.keskin@t2.com.tr</sender>
 			<receipents>
 				<receipent>areca@t2.com.tr</receipent>
+				<receipent>mustafa.keskin@t2.com.tr</receipent>
 				<receipent>mustafa.samatli@turktelekom.com.tr</receipent>
 			</receipents>
 		</mail>
@@ -81,6 +82,13 @@
 			<user>areca</user>
 			<password>ENC(vYG3rldXX1tf7uYVxi+7L92Yt2QCny0k)</password>
 			<host>10.6.42.86</host>
+		</connection>
+
+		<connection name="h2" type="h2">
+			<user>ENC(ppFqc3mwwIBPqGRP5xjSRg==)</user>
+			<password>ENC(IrUWKApL6+7cr+wa1KfEuQ==)</password>
+			<host>jdbc:h2:tcp://10.6.42.68:9092/~/kmsh</host>
+			<driver>org.h2.Driver</driver>
 		</connection>
 	</connections>
 </config>

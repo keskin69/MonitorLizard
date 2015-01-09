@@ -44,20 +44,10 @@ public class GroupCommandConfig extends AConfig {
 				period = new Integer(p).intValue();
 			}
 
-			try {
-				connectBy = eElement.getElementsByTagName("connectBy").item(0)
-						.getTextContent();
-			} catch (NullPointerException ex) {
-				connectBy = "";
-			}
+			connectBy = AConfigManager.readValue(eElement, "connectBy");
 
-			try {
-				base = eElement.getElementsByTagName("base").item(0)
-						.getTextContent();
-				base = KmshUtil.strCheck(base);
-			} catch (NullPointerException ex) {
-
-			}
+			base = AConfigManager.readValue(eElement, "base");
+			base = KmshUtil.strCheck(base);
 
 			NodeList node = eElement.getElementsByTagName("cmd");
 			for (int i = 0; i < node.getLength(); i++) {

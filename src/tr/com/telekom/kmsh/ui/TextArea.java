@@ -29,8 +29,8 @@ public class TextArea extends JTextArea {
 		history = new String[HIST_SIZE];
 	}
 
-	public void setCommander(String file) {
-		commander = new CommandProcessor(file);
+	public void setCommander(String configFile) {
+		commander = new CommandProcessor(configFile);
 	}
 
 	public String getLastCommand() {

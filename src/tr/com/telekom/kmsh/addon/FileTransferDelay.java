@@ -8,7 +8,7 @@ import java.util.Date;
 import tr.com.telekom.kmsh.manager.CommandManager;
 import tr.com.telekom.kmsh.util.ConfigReader;
 import tr.com.telekom.kmsh.util.KmshUtil;
-import tr.com.telekom.kmsh.util.SQLUtil;
+import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.Table;
 
 public class FileTransferDelay extends AAddOn {
@@ -63,14 +63,14 @@ public class FileTransferDelay extends AAddOn {
 
 			out = new Long(totalDelay / total).toString();
 
-			SQLUtil.writeDB("ToplamDosya", "Günlük İşlenen Dosya", "",
+			H2Util.writeDB("ToplamDosya", "Günlük İşlenen Dosya", "",
 					new Integer(total).toString());
-			SQLUtil.writeDB("MinDosya", "En hızlı dosya işleme (Dakika)", "",
+			H2Util.writeDB("MinDosya", "En hızlı dosya işleme (Dakika)", "",
 					new Integer(min).toString());
-			SQLUtil.writeDB("MaxDosya",
+			H2Util.writeDB("MaxDosya",
 					"En yavaş dosya işleme zamanı (Dakika)", "", new Integer(
 							max).toString());
-			SQLUtil.writeDB("AveDosya",
+			H2Util.writeDB("AveDosya",
 					"Ortalama dosya işleme zamanı (Dakika)", "", new Integer(
 							totalDelay / total).toString());
 		}

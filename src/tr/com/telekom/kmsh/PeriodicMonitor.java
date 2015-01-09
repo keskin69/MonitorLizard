@@ -3,7 +3,7 @@ package tr.com.telekom.kmsh;
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.GroupCommandConfig;
 import tr.com.telekom.kmsh.manager.PeriodicManager;
-import tr.com.telekom.kmsh.util.SQLUtil;
+import tr.com.telekom.kmsh.util.H2Util;
 import tr.com.telekom.kmsh.util.KmshUtil;
 import tr.com.telekom.kmsh.util.KmshLogger;
 
@@ -22,7 +22,7 @@ public class PeriodicMonitor {
 				// write content to report log
 				KmshUtil.writeLog(grpConf.name + ".log", content);
 
-				SQLUtil.writeTag(grpConf.name);
+				H2Util.writeTag(grpConf.name);
 			}
 		}
 	}
