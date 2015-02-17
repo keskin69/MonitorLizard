@@ -26,6 +26,7 @@
 		<cmd id="14" name="TimeMap" delim="[" field="2">TimeMap</cmd>
 		<cmd id="15" name="ABSCheck">code: -99</cmd>
 		<cmd id="16" name="ABSRetry" delim="=" field="2">ABS RETRY.queueCount</cmd>
+		<cmd id="17" name="JDBC Hatası">Could not get JDBC Connection</cmd>
 	</group>
 
 	<group name="cmd2" period="20">

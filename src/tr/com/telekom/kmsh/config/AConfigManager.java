@@ -26,8 +26,7 @@ public abstract class AConfigManager {
 			value = e.getElementsByTagName(field).item(0).getTextContent();
 
 			if (value.startsWith("ENC(")) {
-				value = XMLManager.decrypt(value.substring(4,
-						value.length() - 1));
+				value = decrypt(value.substring(4, value.length() - 1));
 			}
 		} catch (NullPointerException ex) {
 			value = "";

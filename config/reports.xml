@@ -33,6 +33,10 @@
 			<cmd>DeliveryCompleted</cmd>
 			<cmd>DeliveryCancelled</cmd>
 			<cmd>ToplamDosya</cmd>
+			<cmd>cmd1.1</cmd>
+			<cmd>cmd2.1</cmd>
+			<cmd>cmd2.2</cmd>
+			<cmd>cmd2.3</cmd>
 			<cmd>AveDosya</cmd>
 			<cmd>MinDosya</cmd>
 			<cmd>MaxDosya</cmd>
@@ -48,6 +52,28 @@
 			<condition check="cmd1.15">(.*)code: -99(.*)</condition>
 		</reportCondition>
 		<note>ABS Servisi ayakta değil ya da bildirim kabul edemiyor</note>
+	</report>
+
+
+	<report id="JDBCProblem" mail="areca" sms="me" period="30">
+		<name>JDBC Baglanti Problemi</name>
+		<executeList>
+			<cmd>cmd1.17</cmd>
+		</executeList>
+		<reportCondition>
+			<condition check="cmd1.17">(.*)Could not get JDBC Connection(.*)</condition>
+		</reportCondition>
+		<note>JDBC Baglantisi Alinamiyor. Cok fazla acik connection var.</note>
+	</report>
+	
+	<report id="GenelHata" mail="me" sms="me" period="30">
+		<name>CDR Dosyası İşlenemiyor</name>
+		<executeList>
+			<cmd>cmd2.1</cmd>
+		</executeList>
+		<reportCondition>
+			<condition check="cmd2.1">"\\d\\d\\d"</condition>
+		</reportCondition>
 	</report>
 
 	<report id="KMSHStopped" mail="areca" sms="me" period="5">

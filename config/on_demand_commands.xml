@@ -6,6 +6,13 @@
 			<cmd>tail -500 /girdi/ARECA_DEPLOYMENT/areca/log/areca.out</cmd>
 		</command>
 
+		<command id="cmdTimeMap" name="TimeMapValue">
+			<connectBy>peste</connectBy>
+			<cmd>tail -500 /girdi/ARECA_DEPLOYMENT/areca/log/areca.out | grep
+				TimeMap | tail -1
+			</cmd>
+		</command>
+
 		<command id="C2" name="Hata logu">
 			<connectBy>peste</connectBy>
 			<cmd>tail -50 /girdi/ARECA_DEPLOYMENT/areca/log/areca.err</cmd>
@@ -20,21 +27,21 @@
 			<connectBy>sinan</connectBy>
 			<cmd>select /* + parallel(x,8) */ notification_date,
 				triggering_event_date, event_type, notification_type, status from
-				arc_abone_bildirim x where
+				arx_abone_bildirim x where
 				notification_date like '#today%'</cmd>
 		</command>
 
 		<command id="FileDelay" name="Dosya İşlemedeki Gecikme">
 			<connectBy>sinan</connectBy>
 			<cmd>select /* + parallel(x,8) */ file_date, process_date from
-				arc_cdr_file x where
+				arx_cdr_file x where
 				process_date like '#today%'</cmd>
 		</command>
 
 		<command id="CDRDelay" name="CDR İşleme Gecikme">
 			<connectBy>sinan</connectBy>
 			<cmd>select /* + parallel(x,16) */ arama_zamani, process_date from
-				arc_in_rated_cdr x where
+				arx_in_rated_cdr x where
 				process_date like '#yesterday%' and
 				donem=#prevDonem
 			</cmd>

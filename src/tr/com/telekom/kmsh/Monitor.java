@@ -3,6 +3,8 @@ package tr.com.telekom.kmsh;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -31,7 +33,7 @@ public class Monitor {
 		BasicConfigurator.configure(new NullAppender());
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
-		String type = "-r";
+		String type = "-win";
 		String name = "PartitionControl";
 
 		if (args.length == 2) {

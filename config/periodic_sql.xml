@@ -2,7 +2,7 @@
 <commands>
 	<group name="sql2" period="1">
 		<connectBy>sinan</connectBy>
-		<cmd name="TestSQL" id="1">select COUNT(*) from TAH_DONEM where
+		<cmd name="TestSQL" id="1">select COUNT(*) from ARX_SEQUENCE where
 			donem=#donem
 		</cmd>
 	</group>
@@ -13,7 +13,7 @@
 			parallel(x,16) */
 			COUNT(*) as
 			CDR from
-			ARC_CDR_RAW_DATA x
+			ARX_CDR_RAW_DATA x
 			where process_date
 			like'#yesterday%' and donem=#prevDonem
 		</cmd>
@@ -21,7 +21,7 @@
 			COUNT(*) as TOPLAM,
 			NOTIFICATION_TYPE,
 			EVENT_TYPE from
-			ARC_ABONE_BILDIRIM x
+			ARX_ABONE_BILDIRIM x
 			where
 			NOTIFICATION_DATE LIKE
 			'#yesterday%'
