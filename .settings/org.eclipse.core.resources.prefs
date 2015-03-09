@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
-encoding//config/config.xml=UTF-8
+encoding//config_kmsh/config.xml=UTF-8
 encoding//src/tr/com/telekom/kmsh/Repgen.java=UTF-8
 encoding//src/tr/com/telekom/kmsh/addon/CDRDelayReport.java=UTF-8
 encoding//src/tr/com/telekom/kmsh/addon/FileTransferDelay.java=UTF-8

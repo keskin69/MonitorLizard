@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<mails>
+		<mail name="me">
+			<password>ENC(HV9U7ovxvBLBbKHpmUTC7oGv8RWwzKEn)</password>
+			<sender>mustafa.keskin@t2.com.tr</sender>
+			<receipents>
+				<receipent>keskin69@gmail.com</receipent>
+			</receipents>
+		</mail>
+
+		<mail name="areca">
+			<password>ENC(HV9U7ovxvBLBbKHpmUTC7oGv8RWwzKEn)</password>
+			<sender>mustafa.keskin@t2.com.tr</sender>
+			<receipents>
+				<receipent>areca@t2.com.tr</receipent>
+				<receipent>mustafa.keskin@t2.com.tr</receipent>
+			</receipents>
+		</mail>
+	</mails>
+
+	<smsList>
+		<sms name="me">
+			<number>+905335140175</number>
+		</sms>
+	</smsList>
+
+	<connections>
+		<connection name="sinan" type="sql">
+			<user>BILLING_USER</user>
+			<password>ENC(Xs9qYrSyDyFStKTO/GJsC4Hqaizqm1ci)</password>
+			<host>jdbc:oracle:thin:@10.6.42.80:1521:ARECA</host>
+		</connection>
+
+		<connection name="bemba" type="ssh">
+			<user>areca</user>
+			<password>ENC(vYG3rldXX1tf7uYVxi+7L92Yt2QCny0k)</password>
+			<host>10.6.42.86</host>
+		</connection>
+
+		<connection name="h2" type="h2">
+			<user>ENC(ppFqc3mwwIBPqGRP5xjSRg==)</user>
+			<password>ENC(IrUWKApL6+7cr+wa1KfEuQ==)</password>
+			<host>jdbc:h2:tcp://10.6.42.68:9092/~/ohm</host>
+			<driver>org.h2.Driver</driver>
+		</connection>
+	</connections>
+</config>

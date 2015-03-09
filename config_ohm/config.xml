@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<connectionsFile>./config/connections.xml</connectionsFile>
+	<commandsFile>./config/periodic_sql.xml</commandsFile>
+	<commandsFile>./config/reports.xml</commandsFile>
+</config>
+

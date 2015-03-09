@@ -3,8 +3,6 @@ package tr.com.telekom.kmsh;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -19,11 +17,13 @@ import tr.com.telekom.kmsh.util.Table;
 
 public class Monitor {
 	static Logger logger = Logger.getLogger(Monitor.class);
+	final static String version = "V0.1";
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		System.out.println("Starting repgen " + version + " application");
 		// check if another instance exists
 		if (!checkInstance()) {
 			return;
@@ -33,8 +33,8 @@ public class Monitor {
 		BasicConfigurator.configure(new NullAppender());
 
 		String confFile = "/Users/mustafakeskin/Documents/workspace/MonitorLizard/monitor.cfg";
-		String type = "-win";
-		String name = "PartitionControl";
+		String type = "-r";
+		String name = "GenelHata";
 
 		if (args.length == 2) {
 			confFile = args[0];
@@ -90,7 +90,7 @@ public class Monitor {
 			String line = "";
 
 			while ((line = b.readLine()) != null) {
-				System.out.println(line);
+				System.out.println("Application already running");
 				if (!line.contains("grep")) {
 					return false;
 				}

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reports>
+	<report id="RptDaily" mail="areca">
+		<name>KMSH/FÜS Bildirim Raporu</name>
+		<activate>
+			<at>00:10</at>
+			<at>13:30</at>
+		</activate>
+		<executeList>
+			<cmd>cmd2.1</cmd>
+			<cmd>cmd3.1</cmd>
+			<cmd>UpTime</cmd>
+			<cmd>TotalUpTime</cmd>
+			<cmd>AveBildirim</cmd>
+			<cmd>MinBildirim</cmd>
+			<cmd>MaxBildirim</cmd>
+			<cmd>ToplamBildirim</cmd>
+			<cmd>KMSH</cmd>
+			<cmd>KMSH80</cmd>
+			<cmd>KMSH100</cmd>
+			<cmd>FUS</cmd>
+			<cmd>cmd1.14</cmd>
+			<cmd>DeliveryPending</cmd>
+			<cmd>DeliveryCompleted</cmd>
+			<cmd>DeliveryCancelled</cmd>
+			<cmd>ToplamDosya</cmd>
+			<cmd>cmd1.1</cmd>
+			<cmd>cmd2.2</cmd>
+			<cmd>cmd2.3</cmd>
+			<cmd>AveDosya</cmd>
+			<cmd>MinDosya</cmd>
+			<cmd>MaxDosya</cmd>
+		</executeList>
+	</report>
+
+
+
+	<report id="JDBCProblem" mail="areca" sms="me" period="30">
+		<name>JDBC Baglanti Problemi</name>
+		<executeList>
+			<cmd>cmd1.17</cmd>
+		</executeList>
+		<reportCondition>
+			<condition check="cmd1.17">(.*)Could not get JDBC Connection(.*)
+			</condition>
+		</reportCondition>
+		<note>JDBC Baglantisi Alinamiyor. Cok fazla acik connection var.
+		</note>
+	</report>
+
+	<report id="GenelHata" mail="areca" sms="me" period="30">
+		<name>Hata: CDR Dosyası İşlenemiyor</name>
+		<executeList>
+			<cmd>cmd2.1</cmd>
+		</executeList>
+		<reportCondition>
+			<condition check="cmd2.1">\d\d\d</condition>
+		</reportCondition>
+	</report>
+
+	<report id="KMSHStopped" mail="areca" sms="me" period="5">
+		<name>KMSH/FÜS Durdu</name>
+		<executeList>
+			<cmd>cmd3.1</cmd>
+		</executeList>
+		<reportCondition>
+			<condition check="cmd3.1">(.*)stopped(.*)</condition>
+		</reportCondition>
+	</report>
+
+	<report id="KMSHStarted" mail="areca" sms="me" period="5">
+		<name>KMSH/FÜS Başlatıldı</name>
+		<executeList>
+			<cmd>cmd3.1</cmd>
+		</executeList>
+		<reportCondition>
+			<condition check="cmd3.1">(.*)running(.*)</condition>
+		</reportCondition>
+	</report>
+
+	<report id="PartitionControl" mail="partition" sms="me" period="-1">
+		<name>KMSH Partition Hatası</name>
+		<executeList>
+			<cmd>cmd1.13</cmd>
+		</executeList>
+		<reportCondition>
+			<condition check="cmd1.13">(.*)Partition error(.*)
+			</condition>
+		</reportCondition>
+		<note>Acil olarak mustafa.samatli@turktelekom.com.tr'ye e-mail
+			ile
+			bildirimde bulunun.
+		</note>
+	</report>
+
+	<report id="Test" mail="me" sms="mex">
+		<name>Test Rapouru</name>
+		<executeList>
+			<cmd>C2</cmd>
+			<cmd>UpTime</cmd>
+		</executeList>
+		<note>Test note satırı</note>
+	</report>
+</reports>

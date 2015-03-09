@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<commands>
+		<command id="ExceptionCheck" name="Check for Exception">
+			<connectBy>peste</connectBy>
+			<cmd>tail -500 /girdi/ARECA_DEPLOYMENT/areca/log/areca.out</cmd>
+		</command>
+
+		<command id="cmdTimeMap" name="TimeMapValue">
+			<connectBy>peste</connectBy>
+			<cmd>tail -500 /girdi/ARECA_DEPLOYMENT/areca/log/areca.out | grep
+				TimeMap | tail -1
+			</cmd>
+		</command>
+
+		<command id="C2" name="Hata logu">
+			<connectBy>peste</connectBy>
+			<cmd>tail -50 /girdi/ARECA_DEPLOYMENT/areca/log/areca.err</cmd>
+		</command>
+
+		<command id="cmdLog" name="Log">
+			<connectBy>peste</connectBy>
+			<cmd>tail -500 /girdi/ARECA_DEPLOYMENT/areca/log/areca.out</cmd>
+		</command>
+
+		<command id="NotifDelay" name="Bildirimdeki Gecikme">
+			<connectBy>sinan</connectBy>
+			<cmd>select /* + parallel(x,8) */ notification_date,
+				triggering_event_date, event_type, notification_type, status from
+				arx_abone_bildirim x where
+				notification_date like '#today%'</cmd>
+		</command>
+
+		<command id="FileDelay" name="Dosya İşlemedeki Gecikme">
+			<connectBy>sinan</connectBy>
+			<cmd>select /* + parallel(x,8) */ file_date, process_date from
+				arx_cdr_file x where
+				process_date like '#today%'</cmd>
+		</command>
+
+		<command id="CDRDelay" name="CDR İşleme Gecikme">
+			<connectBy>sinan</connectBy>
+			<cmd>select /* + parallel(x,16) */ arama_zamani, process_date from
+				arx_in_rated_cdr x where
+				process_date like '#yesterday%' and
+				donem=#prevDonem
+			</cmd>
+		</command>
+	</commands>
+</config>
