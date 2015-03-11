@@ -13,7 +13,7 @@ import tr.com.telekom.kmsh.util.KmshLogger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SMSManager {
+public class TwilioConnector {
 	// Find your Account Sid and Token at twilio.com/user/account
 	public static final String ACCOUNT_SID = "ACa105df99a0908a2c593dd91123fbd4b1";
 	public static final String AUTH_TOKEN = "690c578ec253b596d8221b7044947ed4";

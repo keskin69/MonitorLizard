@@ -1,12 +1,15 @@
 package tr.com.telekom.kmsh;
 
+import net.gpedro.integrations.slack.SlackApi;
+import net.gpedro.integrations.slack.SlackMessage;
 import tr.com.telekom.kmsh.config.XMLManager;
 import tr.com.telekom.kmsh.config.MailConfig;
 import tr.com.telekom.kmsh.config.ReportConfig;
 import tr.com.telekom.kmsh.config.SMSConfig;
 import tr.com.telekom.kmsh.manager.ReportManager;
-import tr.com.telekom.kmsh.manager.SMSManager;
+import tr.com.telekom.kmsh.manager.TwilioConnector;
 import tr.com.telekom.kmsh.manager.SMTPManager;
+import tr.com.telekom.kmsh.util.ConfigReader;
 import tr.com.telekom.kmsh.util.KmshUtil;
 import tr.com.telekom.kmsh.util.KmshLogger;
 
@@ -73,6 +76,15 @@ public class Repgen {
 
 				KmshLogger.log(0, "SMTP Response: " + response);
 			}
+
+			String slackUrl = ConfigReader.getInstance()
+					.getProperty("slackURL");
+			String slackGroup = ConfigReader.getInstance().getProperty(
+					"slackGroup");
+			KmshLogger.log(1, "Sending message to slack group " + slackGroup);
+
+			SlackApi api = new SlackApi(slackUrl);
+			api.call(new SlackMessage(slackGroup, null, content));
 		}
 	}
 
@@ -84,7 +96,7 @@ public class Repgen {
 			if (sms != null) {
 				try {
 					for (String number : sms.number) {
-						SMSManager.sendSMS(content, number);
+						TwilioConnector.sendSMS(content, number);
 					}
 				} catch (TwilioRestException e) {
 					// TODO Auto-generated catch block

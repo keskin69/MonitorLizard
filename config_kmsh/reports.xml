@@ -113,10 +113,9 @@
 		</note>
 	</report>
 
-	<report id="Test" mail="me" sms="mex">
+	<report id="Test" mail="mex" sms="mex" period="-1">
 		<name>Test Rapouru</name>
 		<executeList>
-			<cmd>C2</cmd>
 			<cmd>UpTime</cmd>
 		</executeList>
 		<note>Test note satırı</note>

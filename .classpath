@@ -17,5 +17,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/Users/mustafakeskin/Documents/workspace/slack-webhook-master/slack.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
