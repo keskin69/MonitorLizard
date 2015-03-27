@@ -13,18 +13,19 @@
 	<report id="RptDaily" mail="areca">
 		<name>KMSH/FÜS Bildirim Raporu</name>
 		<activate>
-			<at>00:10</at>
+			<at>23:50</at>
 			<at>13:30</at>
+			<at>08:00</at>
 		</activate>
 		<executeList>
 			<cmd>cmd2.1</cmd>
+			<cmd>ToplamBildirim</cmd>
 			<cmd>cmd3.1</cmd>
 			<cmd>UpTime</cmd>
 			<cmd>TotalUpTime</cmd>
 			<cmd>AveBildirim</cmd>
 			<cmd>MinBildirim</cmd>
 			<cmd>MaxBildirim</cmd>
-			<cmd>ToplamBildirim</cmd>
 			<cmd>KMSH</cmd>
 			<cmd>KMSH80</cmd>
 			<cmd>KMSH100</cmd>
@@ -113,7 +114,14 @@
 		</note>
 	</report>
 
-	<report id="Test" mail="mex" sms="mex" period="-1">
+	<report id="RawCDR" sms="me" period="720">
+		<name>Bu dönem işlenmeyi bekleyen Raw CDR status=0</name>
+		<executeList>
+			<cmd>sql3.1</cmd>
+		</executeList>
+	</report>
+
+	<report id="Test" mail="me" period="-1">
 		<name>Test Rapouru</name>
 		<executeList>
 			<cmd>UpTime</cmd>

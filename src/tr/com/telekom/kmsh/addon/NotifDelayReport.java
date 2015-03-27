@@ -95,6 +95,10 @@ public class NotifDelayReport extends AAddOn {
 
 				totalDelay += delay;
 			}
+			
+			if (min==0) {
+				min = 1;
+			}
 
 			H2Util.writeDB("ToplamBildirim", "Günlük Toplam Bildirim", "",
 					new Integer(total).toString());

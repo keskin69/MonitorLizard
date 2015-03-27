@@ -10,6 +10,7 @@
 		<activate>
 			<at>23:50</at>
 			<at>13:00</at>
+			<at>09:30</at>
 		</activate>
 		<connectBy>java</connectBy>
 		<cmd id="1" name="Bildirimdeki Gecikmeler" rule="NotifDelay">tr.com.telekom.kmsh.addon.NotifDelayReport

@@ -61,18 +61,20 @@ public class FileTransferDelay extends AAddOn {
 				totalDelay += delay;
 			}
 
+			if (min == 0) {
+				min = 1;
+			}
+
 			out = new Long(totalDelay / total).toString();
 
 			H2Util.writeDB("ToplamDosya", "Günlük İşlenen Dosya", "",
 					new Integer(total).toString());
 			H2Util.writeDB("MinDosya", "En hızlı dosya işleme (Dakika)", "",
 					new Integer(min).toString());
-			H2Util.writeDB("MaxDosya",
-					"En yavaş dosya işleme zamanı (Dakika)", "", new Integer(
-							max).toString());
-			H2Util.writeDB("AveDosya",
-					"Ortalama dosya işleme zamanı (Dakika)", "", new Integer(
-							totalDelay / total).toString());
+			H2Util.writeDB("MaxDosya", "En yavaş dosya işleme zamanı (Dakika)",
+					"", new Integer(max).toString());
+			H2Util.writeDB("AveDosya", "Ortalama dosya işleme zamanı (Dakika)",
+					"", new Integer(totalDelay / total).toString());
 		}
 
 		return out;
