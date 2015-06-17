@@ -8,6 +8,7 @@ import com.twilio.sdk.resource.instance.Message;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import tr.com.telekom.kmsh.util.ConfigReader;
 import tr.com.telekom.kmsh.util.KmshLogger;
 
 import java.util.ArrayList;
@@ -15,8 +16,15 @@ import java.util.List;
 
 public class TwilioConnector {
 	// Find your Account Sid and Token at twilio.com/user/account
-	public static final String ACCOUNT_SID = "ACa105df99a0908a2c593dd91123fbd4b1";
-	public static final String AUTH_TOKEN = "690c578ec253b596d8221b7044947ed4";
+
+	private static String ACCOUNT_SID;
+	private static String AUTH_TOKEN;
+
+	static {
+		ConfigReader conf = ConfigReader.getInstance();
+		ACCOUNT_SID = conf.getProperty("ACCOUNT_SID");
+		AUTH_TOKEN = conf.getProperty("AUTH_TOKEN");
+	}
 
 	public static void sendSMS(String content, String smsNo)
 			throws TwilioRestException {

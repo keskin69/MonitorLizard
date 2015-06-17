@@ -19,6 +19,7 @@
 		</activate>
 		<executeList>
 			<cmd>cmd2.1</cmd>
+			<cmd>cmd2.4</cmd>
 			<cmd>ToplamBildirim</cmd>
 			<cmd>cmd3.1</cmd>
 			<cmd>UpTime</cmd>
@@ -114,7 +115,7 @@
 		</note>
 	</report>
 
-	<report id="RawCDR" sms="me" period="720">
+	<report id="RawCDR" sms="me" period="-1">
 		<name>Bu dönem işlenmeyi bekleyen Raw CDR status=0</name>
 		<executeList>
 			<cmd>sql3.1</cmd>

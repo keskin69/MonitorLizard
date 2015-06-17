@@ -68,7 +68,7 @@
 
 		<connection name="peste" type="ssh">
 			<user>areca</user>
-			<password>ENC(vYG3rldXX1tf7uYVxi+7L92Yt2QCny0k)</password>
+			<password>xsw21qaz</password>
 			<host>10.6.42.68</host>
 		</connection>
 

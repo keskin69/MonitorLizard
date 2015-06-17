@@ -3,12 +3,13 @@ package tr.com.telekom.kmsh.functions;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import tr.com.telekom.kmsh.util.KmshUtil;
 
 public class Functions {
 	public static String yesterday() {
-		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
+		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy", Locale.US);
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -1);
 
@@ -16,7 +17,7 @@ public class Functions {
 	}
 
 	public static String today() {
-		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
+		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy", Locale.US);
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, 0);
 
@@ -24,7 +25,7 @@ public class Functions {
 	}
 
 	public static String donem() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMM");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMM", Locale.US);
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, 0);
 

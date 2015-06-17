@@ -25,17 +25,20 @@
 		<cmd id="13" name="Partition Hatası">Partition</cmd>
 		<cmd id="14" name="TimeMap" delim="[" field="2">TimeMap</cmd>
 		<cmd id="15" name="ABSCheck">code: -99</cmd>
-		<cmd id="16" name="ABSRetry" delim="=" field="2">ABS RETRY.queueCount</cmd>
+		<cmd id="16" name="ABSRetry" delim="=" field="2">ABS RETRY.queueCount
+		</cmd>
 		<cmd id="17" name="JDBC Hatası">Could not get JDBC Connection</cmd>
 	</group>
 
 	<group name="cmd2" period="20">
 		<connectBy>peste</connectBy>
-		<cmd id="1" name="İşlenmeyı bekleyen CDR Dosyası">ls -l /girdi/realtime_archieve | wc -l</cmd>
+		<cmd id="1" name="İşlenmeyı bekleyen Areca CDR Dosyası">ls -l /girdi/realtime_archieve_legacy | wc -l
+		</cmd>
 		<cmd id="2" name="Taşınmayı bekleyen S12 CDR Dosyası">ls -l /girdi/realtime_cdr_s12 | wc -l</cmd>
 		<cmd id="3" name="Taşınmayı Bekleyen CDR Dosyası">ls -l
 			/girdi/realtime_cdr | wc -l
 		</cmd>
+		<cmd id="4" name="İşlenmeyı bekleyen PCOM CDR Dosyası">ls -l /girdi/realtime_archieve_pcom | wc -l</cmd>
 	</group>
 
 	<group name="cmd3" period="1">

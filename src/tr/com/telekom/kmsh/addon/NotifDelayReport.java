@@ -95,8 +95,8 @@ public class NotifDelayReport extends AAddOn {
 
 				totalDelay += delay;
 			}
-			
-			if (min==0) {
+
+			if (min == 0) {
 				min = 1;
 			}
 
@@ -114,8 +114,8 @@ public class NotifDelayReport extends AAddOn {
 					new Integer(not100).toString());
 			H2Util.writeDB("KMSH", "Toplam KMSH Bildirim adedi", "",
 					new Integer(kmsh).toString());
-			H2Util.writeDB("FUS", "Toplam FÜS Bildirim adedi", "",
-					new Integer(fus).toString());
+			H2Util.writeDB("FUS", "Toplam FÜS Bildirim adedi", "", new Integer(
+					fus).toString());
 
 			H2Util.writeDB("DeliveryPending", "İletilmeyen Bildrim", "",
 					new Integer(del0).toString());
@@ -123,9 +123,8 @@ public class NotifDelayReport extends AAddOn {
 			H2Util.writeDB("DeliveryCompleted", "İletilen Bildrim", "",
 					new Integer(del1).toString());
 
-			H2Util.writeDB("DeliveryCancelled",
-					"İletimi İptal Edilen Bildrim", "",
-					new Integer(del6).toString());
+			H2Util.writeDB("DeliveryCancelled", "İletimi İptal Edilen Bildrim",
+					"", new Integer(del6).toString());
 
 			out = new Long(totalDelay / total).toString();
 		}
